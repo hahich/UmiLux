@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">        
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="./assets/img/banner.png" alt="Slide 1">
+                <div class="carousel-text">
+                    <h1>Forest Style <br> Mechanical Keyboard</h1>
+                    <p>Discount 50% On Products & Free Shipping.</p>
+                    <button class="shop-now">Shop Now</button>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://umino-demo.myshopify.com/cdn/shop/files/s3_e1.jpg?v=1680835111&width=2000"
+                    alt="Slide 2">
+                <div class="carousel-text">
+                    <h1>Forest Style <br> Mechanical Keyboard</h1>
+                    <p>Discount 50% On Products & Free Shipping.</p>
+                    <button class="shop-now">Shop Now</button>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="./assets/img/banner.png" alt="Slide 3">
+                <div class="carousel-text">
+                    <h1>Forest Style <br> Mechanical Keyboard</h1>
+                    <p>Discount 50% On Products & Free Shipping.</p>
+                    <button class="shop-now">Shop Now</button>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-buttons">
+            <button class="carousel-button prev">
+                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M5.77754 9.66681C5.92988 9.81915 6.00605 10.0008 6.00605 10.2117C6.00605 10.4109 5.92988 10.5809 5.77754 10.7215C5.63691 10.8738 5.46113 10.95 5.25019 10.95C5.03926 10.95 4.86348 10.8738 4.72285 10.7215L0.222851 6.2215C0.070507 6.08087 -0.00566483 5.91095 -0.00566483 5.71173C-0.00566483 5.50079 0.070507 5.31915 0.222851 5.16681L4.72285 0.666809C4.86348 0.526184 5.03926 0.455872 5.25019 0.455872C5.46113 0.455872 5.63691 0.526184 5.77754 0.666809C5.92988 0.819153 6.00605 1.00079 6.00605 1.21173C6.00605 1.41095 5.92988 1.58087 5.77754 1.7215L1.80488 5.69415L5.77754 9.66681Z"
+                        fill="#111111" />
+                </svg>
+            </button>
+            <button class="carousel-button next">
+                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M1.27754 10.7215C1.13691 10.8738 0.961132 10.95 0.750195 10.95C0.539257 10.95 0.363476 10.8738 0.222851 10.7215C0.070507 10.5809 -0.00566483 10.4109 -0.00566483 10.2117C-0.00566483 10.0008 0.070507 9.81915 0.222851 9.66681L4.19551 5.69415L0.222851 1.7215C0.070507 1.58087 -0.00566483 1.41095 -0.00566483 1.21173C-0.00566483 1.00079 0.070507 0.819153 0.222851 0.666809C0.363476 0.526184 0.539257 0.455872 0.750195 0.455872C0.961132 0.455872 1.13691 0.526184 1.27754 0.666809L5.77754 5.16681C5.92988 5.31915 6.00605 5.50079 6.00605 5.71173C6.00605 5.91095 5.92988 6.08087 5.77754 6.2215L1.27754 10.7215Z"
+                        fill="#111111" />
+                </svg>
+            </button>
+        </div>
+        <div class="carousel-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const prevButton = document.querySelector('.prev');
+            const nextButton = document.querySelector('.next');
+            const carousel = document.querySelector('.carousel');
+            const inner = document.querySelector('.carousel-inner');
+            const items = document.querySelectorAll('.carousel-item');
+            const dots = document.querySelectorAll('.dot');
+            let currentIndex = 0;
+            let interval;
+
+            function updateCarousel() {
+                inner.style.transform = `translateX(-${currentIndex * 100}%)`;
+                items.forEach((item, index) => {
+                    item.classList.toggle('active', index === currentIndex);
+                });
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+
+            function goToSlide(index) {
+                currentIndex = (index + items.length) % items.length;
+                updateCarousel();
+            }
+
+            function nextSlide() {
+                goToSlide(currentIndex + 1);
+            }
+
+            function prevSlide() {
+                goToSlide(currentIndex - 1);
+            }
+
+            function startAutoSlide() {
+                interval = setInterval(nextSlide, 5000);
+            }
+
+            function stopAutoSlide() {
+                clearInterval(interval);
+            }
+
+            prevButton.addEventListener('click', () => {
+                stopAutoSlide();
+                prevSlide();
+                startAutoSlide();
+            });
+
+            nextButton.addEventListener('click', () => {
+                stopAutoSlide();
+                nextSlide();
+                startAutoSlide();
+            });
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    stopAutoSlide();
+                    goToSlide(index);
+                    startAutoSlide();
+                });
+            });
+
+            carousel.addEventListener('mouseenter', stopAutoSlide);
+            carousel.addEventListener('mouseleave', startAutoSlide);
+
+            startAutoSlide();
+        });
+
+    </script>
+</body>
+
+</html>

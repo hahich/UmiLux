@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Menu with Categories</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 250px;
+            height: 100%;
+            background-color: white;
+            z-index: 1000;
+            transition: left 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        .mobile-menu-overlay.active {
+            left: 0;
+        }
+
+        .mobile-menu-overlay.gray {
+            background-color: #ccc;
+        }
+
+        .mobile-menu-header {
+            background-color: #ff4500;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-menu-header span {
+            font-size: 16px;
+        }
+
+        .mobile-menu-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .mobile-categories-btn {
+            cursor: pointer;
+            color: #ccc;
+        }
+
+        .mobile-close-btn {
+            cursor: pointer;
+        }
+
+        .mobile-menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-menu-list li {
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-menu-list li:hover {
+            background-color: #f5f5f5;
+        }
+
+        .mobile-menu-overlay.gray .menu-list li {
+            background-color: #ccc;
+        }
+
+        .mobile-menu-overlay.gray .menu-list li:hover {
+            background-color: #b0b0b0;
+        }
+
+        .mobile-clock {
+            margin-left: 5px;
+        }
+
+        .mobile-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .mobile-backdrop.active {
+            display: block;
+        }
+
+        .mobile-menu-btn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+        }
+
+        .mobile-sub-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 250px;
+            height: 100%;
+            background-color: white;
+            z-index: 1001;
+            transition: left 0.3s ease-in-out;
+        }
+
+        .mobile-sub-menu.active {
+            left: 0;
+        }
+
+        .mobile-sub-menu-header {
+            background-color: #ff4500;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-back-btn {
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .mobile-arrow {
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Nút mở menu -->
+    <button class="btn mobile-menu-btn d-block d-xl-none" onclick="toggleMenu()">☰</button>
+
+    <!-- Menu chính -->
+    <div class="mobile-menu-overlay" id="menuOverlay">
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-title">
+                <span>MENU</span>
+                <span class="mobile-categories-btn" onclick="toggleSubMenu('categories')">CATEGORIES</span>
+                <div class="mobile-close-btn" onclick="toggleMenu()">
+                    <svg height="20px" width="20px" fill="#ccc" xmlns="http://www.w3.org/2000/svg" id="Flat"
+                        viewBox="0 0 256 256">
+                        <path
+                            d="M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <ul class="mobile-menu-list">
+            <li onclick="toggleSubMenu('home')">Home <span class="mobile-arrow">
+                    <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1.27754 10.7215C1.13691 10.8738 0.961132 10.95 0.750195 10.95C0.539257 10.95 0.363476 10.8738 0.222851 10.7215C0.070507 10.5809 -0.00566483 10.4109 -0.00566483 10.2117C-0.00566483 10.0008 0.070507 9.81915 0.222851 9.66681L4.19551 5.69415L0.222851 1.7215C0.070507 1.58087 -0.00566483 1.41095 -0.00566483 1.21173C-0.00566483 1.00079 0.070507 0.819153 0.222851 0.666809C0.363476 0.526184 0.539257 0.455872 0.750195 0.455872C0.961132 0.455872 1.13691 0.526184 1.27754 0.666809L5.77754 5.16681C5.92988 5.31915 6.00605 5.50079 6.00605 5.71173C6.00605 5.91095 5.92988 6.08087 5.77754 6.2215L1.27754 10.7215Z"
+                            fill="#111111" />
+                    </svg>
+                </span>
+            </li>
+
+            <li onclick="toggleSubMenu('shop')">Shop <span class="mobile-arrow">
+                    <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1.27754 10.7215C1.13691 10.8738 0.961132 10.95 0.750195 10.95C0.539257 10.95 0.363476 10.8738 0.222851 10.7215C0.070507 10.5809 -0.00566483 10.4109 -0.00566483 10.2117C-0.00566483 10.0008 0.070507 9.81915 0.222851 9.66681L4.19551 5.69415L0.222851 1.7215C0.070507 1.58087 -0.00566483 1.41095 -0.00566483 1.21173C-0.00566483 1.00079 0.070507 0.819153 0.222851 0.666809C0.363476 0.526184 0.539257 0.455872 0.750195 0.455872C0.961132 0.455872 1.13691 0.526184 1.27754 0.666809L5.77754 5.16681C5.92988 5.31915 6.00605 5.50079 6.00605 5.71173C6.00605 5.91095 5.92988 6.08087 5.77754 6.2215L1.27754 10.7215Z"
+                            fill="#111111" />
+                    </svg>
+                </span>
+            </li>
+
+            <li onclick="toggleSubMenu('product')">Product <span class="mobile-arrow">
+                    <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1.27754 10.7215C1.13691 10.8738 0.961132 10.95 0.750195 10.95C0.539257 10.95 0.363476 10.8738 0.222851 10.7215C0.070507 10.5809 -0.00566483 10.4109 -0.00566483 10.2117C-0.00566483 10.0008 0.070507 9.81915 0.222851 9.66681L4.19551 5.69415L0.222851 1.7215C0.070507 1.58087 -0.00566483 1.41095 -0.00566483 1.21173C-0.00566483 1.00079 0.070507 0.819153 0.222851 0.666809C0.363476 0.526184 0.539257 0.455872 0.750195 0.455872C0.961132 0.455872 1.13691 0.526184 1.27754 0.666809L5.77754 5.16681C5.92988 5.31915 6.00605 5.50079 6.00605 5.71173C6.00605 5.91095 5.92988 6.08087 5.77754 6.2215L1.27754 10.7215Z"
+                            fill="#111111" />
+                    </svg>
+                </span>
+            </li>
+
+            <li onclick="toggleSubMenu('blog')">Blog <span class="mobile-arrow">
+                    <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1.27754 10.7215C1.13691 10.8738 0.961132 10.95 0.750195 10.95C0.539257 10.95 0.363476 10.8738 0.222851 10.7215C0.070507 10.5809 -0.00566483 10.4109 -0.00566483 10.2117C-0.00566483 10.0008 0.070507 9.81915 0.222851 9.66681L4.19551 5.69415L0.222851 1.7215C0.070507 1.58087 -0.00566483 1.41095 -0.00566483 1.21173C-0.00566483 1.00079 0.070507 0.819153 0.222851 0.666809C0.363476 0.526184 0.539257 0.455872 0.750195 0.455872C0.961132 0.455872 1.13691 0.526184 1.27754 0.666809L5.77754 5.16681C5.92988 5.31915 6.00605 5.50079 6.00605 5.71173C6.00605 5.91095 5.92988 6.08087 5.77754 6.2215L1.27754 10.7215Z"
+                            fill="#111111" />
+                    </svg>
+                </span>
+            </li>
+
+            <li onclick="toggleSubMenu('page')">Page <span class="mobile-arrow">
+                    <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1.27754 10.7215C1.13691 10.8738 0.961132 10.95 0.750195 10.95C0.539257 10.95 0.363476 10.8738 0.222851 10.7215C0.070507 10.5809 -0.00566483 10.4109 -0.00566483 10.2117C-0.00566483 10.0008 0.070507 9.81915 0.222851 9.66681L4.19551 5.69415L0.222851 1.7215C0.070507 1.58087 -0.00566483 1.41095 -0.00566483 1.21173C-0.00566483 1.00079 0.070507 0.819153 0.222851 0.666809C0.363476 0.526184 0.539257 0.455872 0.750195 0.455872C0.961132 0.455872 1.13691 0.526184 1.27754 0.666809L5.77754 5.16681C5.92988 5.31915 6.00605 5.50079 6.00605 5.71173C6.00605 5.91095 5.92988 6.08087 5.77754 6.2215L1.27754 10.7215Z"
+                            fill="#111111" />
+                    </svg>
+                </span>
+            </li>
+
+            <li>Sale</li>
+            <li>Buy Uminol</li>
+            <li>Recently Viewed</li>
+        </ul>
+    </div>
+
+    <!-- Menu con (Categories) -->
+    <div class="mobile-sub-menu" id="subMenu-categories">
+        <div class="mobile-sub-menu-header">
+            <span class="mobile-back-btn" onclick="toggleSubMenu('categories')">
+                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M5.77754 9.66681C5.92988 9.81915 6.00605 10.0008 6.00605 10.2117C6.00605 10.4109 5.92988 10.5809 5.77754 10.7215C5.63691 10.8738 5.46113 10.95 5.25019 10.95C5.03926 10.95 4.86348 10.8738 4.72285 10.7215L0.222851 6.2215C0.070507 6.08087 -0.00566483 5.91095 -0.00566483 5.71173C-0.00566483 5.50079 0.070507 5.31915 0.222851 5.16681L4.72285 0.666809C4.86348 0.526184 5.03926 0.455872 5.25019 0.455872C5.46113 0.455872 5.63691 0.526184 5.77754 0.666809C5.92988 0.819153 6.00605 1.00079 6.00605 1.21173C6.00605 1.41095 5.92988 1.58087 5.77754 1.7215L1.80488 5.69415L5.77754 9.66681Z"
+                        fill="#ffffff" />
+                </svg>
+            </span>
+            <span>CATEGORIES</span>
+            <span class="mobile-close-btn" onclick="closeAll()">
+                <svg height="20px" width="20px" fill="#ccc" xmlns="http://www.w3.org/2000/svg" id="Flat"
+                    viewBox="0 0 256 256">
+                    <path
+                        d="M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" />
+                </svg>
+            </span>
+        </div>
+        <ul class="mobile-menu-list">
+            <li>Electronics</li>
+            <li>Fashion</li>
+            <li>Home & Garden</li>
+            <li>Sports</li>
+            <li>Books</li>
+            <li>Beauty</li>
+            <li>Health</li>
+            <li>Toys</li>
+        </ul>
+    </div>
+
+    <!-- Menu con (Home) -->
+    <div class="mobile-sub-menu" id="subMenu-home">
+        <div class="mobile-sub-menu-header">
+            <span class="mobile-back-btn" onclick="toggleSubMenu('home')">
+                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M5.77754 9.66681C5.92988 9.81915 6.00605 10.0008 6.00605 10.2117C6.00605 10.4109 5.92988 10.5809 5.77754 10.7215C5.63691 10.8738 5.46113 10.95 5.25019 10.95C5.03926 10.95 4.86348 10.8738 4.72285 10.7215L0.222851 6.2215C0.070507 6.08087 -0.00566483 5.91095 -0.00566483 5.71173C-0.00566483 5.50079 0.070507 5.31915 0.222851 5.16681L4.72285 0.666809C4.86348 0.526184 5.03926 0.455872 5.25019 0.455872C5.46113 0.455872 5.63691 0.526184 5.77754 0.666809C5.92988 0.819153 6.00605 1.00079 6.00605 1.21173C6.00605 1.41095 5.92988 1.58087 5.77754 1.7215L1.80488 5.69415L5.77754 9.66681Z"
+                        fill="#ffffff" />
+                </svg>
+            </span>
+            <span>HOME</span>
+            <span class="mobile-close-btn" onclick="closeAll()">
+                <svg height="20px" width="20px" fill="#ccc" xmlns="http://www.w3.org/2000/svg" id="Flat"
+                    viewBox="0 0 256 256">
+                    <path
+                        d="M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" />
+                </svg>
+            </span>
+        </div>
+        <ul class="mobile-menu-list">
+            <li>Welcome</li>
+            <li>Features</li>
+            <li>Testimonials</li>
+            <li>About Us</li>
+        </ul>
+    </div>
+
+    <!-- Menu con (Shop) -->
+    <div class="mobile-sub-menu" id="subMenu-shop">
+        <div class="mobile-sub-menu-header">
+            <span class="mobile-back-btn" onclick="toggleSubMenu('shop')">
+                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M5.77754 9.66681C5.92988 9.81915 6.00605 10.0008 6.00605 10.2117C6.00605 10.4109 5.92988 10.5809 5.77754 10.7215C5.63691 10.8738 5.46113 10.95 5.25019 10.95C5.03926 10.95 4.86348 10.8738 4.72285 10.7215L0.222851 6.2215C0.070507 6.08087 -0.00566483 5.91095 -0.00566483 5.71173C-0.00566483 5.50079 0.070507 5.31915 0.222851 5.16681L4.72285 0.666809C4.86348 0.526184 5.03926 0.455872 5.25019 0.455872C5.46113 0.455872 5.63691 0.526184 5.77754 0.666809C5.92988 0.819153 6.00605 1.00079 6.00605 1.21173C6.00605 1.41095 5.92988 1.58087 5.77754 1.7215L1.80488 5.69415L5.77754 9.66681Z"
+                        fill="#ffffff" />
+                </svg>
+            </span>
+            <span>SHOP</span>
+            <span class="mobile-close-btn" onclick="closeAll()">
+                <svg height="20px" width="20px" fill="#ccc" xmlns="http://www.w3.org/2000/svg" id="Flat"
+                    viewBox="0 0 256 256">
+                    <path
+                        d="M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" />
+                </svg>
+            </span>
+        </div>
+        <ul class="mobile-menu-list">
+            <li>All Products</li>
+            <li>New Arrivals</li>
+            <li>Best Sellers</li>
+            <li>Deals</li>
+        </ul>
+    </div>
+
+    <!-- Menu con (Product) -->
+    <div class="mobile-sub-menu" id="subMenu-product">
+        <div class="mobile-sub-menu-header">
+            <span class="mobile-back-btn" onclick="toggleSubMenu('product')">
+                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M5.77754 9.66681C5.92988 9.81915 6.00605 10.0008 6.00605 10.2117C6.00605 10.4109 5.92988 10.5809 5.77754 10.7215C5.63691 10.8738 5.46113 10.95 5.25019 10.95C5.03926 10.95 4.86348 10.8738 4.72285 10.7215L0.222851 6.2215C0.070507 6.08087 -0.00566483 5.91095 -0.00566483 5.71173C-0.00566483 5.50079 0.070507 5.31915 0.222851 5.16681L4.72285 0.666809C4.86348 0.526184 5.03926 0.455872 5.25019 0.455872C5.46113 0.455872 5.63691 0.526184 5.77754 0.666809C5.92988 0.819153 6.00605 1.00079 6.00605 1.21173C6.00605 1.41095 5.92988 1.58087 5.77754 1.7215L1.80488 5.69415L5.77754 9.66681Z"
+                        fill="#ffffff" />
+                </svg>
+            </span>
+            <span>PRODUCT</span>
+            <span class="mobile-close-btn" onclick="closeAll()">
+                <svg height="20px" width="20px" fill="#ccc" xmlns="http://www.w3.org/2000/svg" id="Flat"
+                    viewBox="0 0 256 256">
+                    <path
+                        d="M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" />
+                </svg>
+            </span>
+        </div>
+        <ul class="mobile-menu-list">
+            <li>Product Details</li>
+            <li>Reviews</li>
+            <li>Specifications</li>
+            <li>Related Items</li>
+        </ul>
+    </div>
+
+    <!-- Menu con (Blog) -->
+    <div class="mobile-sub-menu" id="subMenu-blog">
+        <div class="mobile-sub-menu-header">
+            <span class="back-btn" onclick="toggleSubMenu('blog')">
+                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M5.77754 9.66681C5.92988 9.81915 6.00605 10.0008 6.00605 10.2117C6.00605 10.4109 5.92988 10.5809 5.77754 10.7215C5.63691 10.8738 5.46113 10.95 5.25019 10.95C5.03926 10.95 4.86348 10.8738 4.72285 10.7215L0.222851 6.2215C0.070507 6.08087 -0.00566483 5.91095 -0.00566483 5.71173C-0.00566483 5.50079 0.070507 5.31915 0.222851 5.16681L4.72285 0.666809C4.86348 0.526184 5.03926 0.455872 5.25019 0.455872C5.46113 0.455872 5.63691 0.526184 5.77754 0.666809C5.92988 0.819153 6.00605 1.00079 6.00605 1.21173C6.00605 1.41095 5.92988 1.58087 5.77754 1.7215L1.80488 5.69415L5.77754 9.66681Z"
+                        fill="#ffffff" />
+                </svg>
+            </span>
+            <span>BLOG</span>
+            <span class="mobile-close-btn" onclick="closeAll()">
+                <svg height="20px" width="20px" fill="#ccc" xmlns="http://www.w3.org/2000/svg" id="Flat"
+                    viewBox="0 0 256 256">
+                    <path
+                        d="M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" />
+                </svg>
+            </span>
+        </div>
+        <ul class="mobile-menu-list">
+            <li>Latest Posts</li>
+            <li>Categories</li>
+            <li>Archives</li>
+            <li>Authors</li>
+        </ul>
+    </div>
+
+    <!-- Menu con (Page) -->
+    <div class="mobile-sub-menu" id="subMenu-page">
+        <div class="mobile-sub-menu-header">
+            <span class="mobile-back-btn" onclick="toggleSubMenu('page')">
+                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M5.77754 9.66681C5.92988 9.81915 6.00605 10.0008 6.00605 10.2117C6.00605 10.4109 5.92988 10.5809 5.77754 10.7215C5.63691 10.8738 5.46113 10.95 5.25019 10.95C5.03926 10.95 4.86348 10.8738 4.72285 10.7215L0.222851 6.2215C0.070507 6.08087 -0.00566483 5.91095 -0.00566483 5.71173C-0.00566483 5.50079 0.070507 5.31915 0.222851 5.16681L4.72285 0.666809C4.86348 0.526184 5.03926 0.455872 5.25019 0.455872C5.46113 0.455872 5.63691 0.526184 5.77754 0.666809C5.92988 0.819153 6.00605 1.00079 6.00605 1.21173C6.00605 1.41095 5.92988 1.58087 5.77754 1.7215L1.80488 5.69415L5.77754 9.66681Z"
+                        fill="#ffffff" />
+                </svg>
+            </span>
+            <span>PAGE</span>
+            <span class=" mobile-close-btn" onclick="closeAll()">
+                <svg height="20px" width="20px" fill="#ccc" xmlns="http://www.w3.org/2000/svg" id="Flat"
+                    viewBox="0 0 256 256">
+                    <path
+                        d="M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" />
+                </svg>
+            </span>
+        </div>
+        <ul class="mobile-menu-list">
+            <li>Contact</li>
+            <li>FAQ</li>
+            <li>Terms of Service</li>
+            <li>Privacy Policy</li>
+        </ul>
+    </div>
+
+    <!-- Backdrop -->
+    <div class="mobile-backdrop" id="backdrop" onclick="closeAll()"></div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        function toggleMenu() {
+            const menuOverlay = document.getElementById('menuOverlay');
+            const backdrop = document.getElementById('backdrop');
+            menuOverlay.classList.toggle('active');
+            backdrop.classList.toggle('active');
+            // Reset màu khi đóng/mở menu chính
+            menuOverlay.classList.remove('gray');
+            // Đóng tất cả submenu
+            document.querySelectorAll('.mobile-sub-menu').forEach(subMenu => {
+                subMenu.classList.remove('active');
+            });
+        }
+
+        function toggleSubMenu(menuId) {
+            const subMenu = document.getElementById(`subMenu-${menuId}`);
+            const menuOverlay = document.getElementById('menuOverlay');
+            const isActive = subMenu.classList.contains('active');
+
+            // Đóng tất cả submenu trước
+            document.querySelectorAll('.mobile-sub-menu').forEach(subMenu => {
+                subMenu.classList.remove('active');
+            });
+
+            // Nếu submenu chưa active, mở nó và đổi màu menu chính
+            if (!isActive) {
+                subMenu.classList.add('active');
+                menuOverlay.classList.add('gray');
+            } else {
+                // Nếu submenu đang active, đóng nó và bỏ màu xám
+                menuOverlay.classList.remove('gray');
+            }
+        }
+
+        function closeAll() {
+            const menuOverlay = document.getElementById('menuOverlay');
+            const backdrop = document.getElementById('backdrop');
+            menuOverlay.classList.remove('active');
+            backdrop.classList.remove('active');
+            // Đóng tất cả submenu
+            document.querySelectorAll('.mobile-sub-menu').forEach(subMenu => {
+                subMenu.classList.remove('active');
+            });
+            // Reset màu
+            menuOverlay.classList.remove('gray');
+        }
+    </script>
+</body>
+
+</html>
