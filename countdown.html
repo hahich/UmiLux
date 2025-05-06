@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đếm Ngược 3 Ngày</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .countdown-container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .label {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+        }
+
+        .time-value {
+            font-size: 2.5em;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .time-label {
+            font-size: 0.9em;
+            color: #666;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="countdown-container">
+        <div class="label">Thời gian còn lại:</div>
+        <div class="countdown">
+            <div class="time-unit">
+                <span class="time-value" id="days">00</span>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="hours">00</span>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="minutes">00</span>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="seconds">00</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if there's a stored end time in localStorage
+        let countDownDate = localStorage.getItem('countDownEndTime');
+
+        // If no stored end time, set a new one for 3 days from now
+        if (!countDownDate) {
+            countDownDate = new Date().getTime() + (3 * 24 * 60 * 60 * 1000);
+            localStorage.setItem('countDownEndTime', countDownDate);
+        } else {
+            // Parse the stored end time
+            countDownDate = parseInt(countDownDate);
+        }
+
+        // Update the countdown every 1 second
+        const x = setInterval(function () {
+            // Get today's date and time
+            const now = new Date().getTime();
+
+            // Find the distance between now and the countdown date
+            const distance = countDownDate - now;
+
+            // Calculate time components
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Update each time unit
+            document.getElementById("days").textContent = String(days).padStart(2, '0');
+            document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+            document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+
+            
+        }, 1000);
+    </script>
+</body>
+
+</html>

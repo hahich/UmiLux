@@ -1,6 +1,6 @@
-/* menu mobile */
+/* Mobile Menu */
 .mobile-menu-btn {
-    border: none !important;
+    border: none;
 }
 
 .mobile-menu-overlay {
@@ -9,9 +9,9 @@
     left: -100%;
     width: 250px;
     height: 100%;
-    background-color: white;
+    background: var(--white);
     z-index: 1000;
-    transition: left 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    transition: left 0.3s ease-in-out;
 }
 
 .mobile-menu-overlay.active {
@@ -19,16 +19,16 @@
 }
 
 .mobile-menu-overlay.gray {
-    background-color: #ccc;
+    background: var(--gray);
 }
 
 .mobile-menu-header {
-    background-color: #ff4500;
-    color: white;
+    background: #ff4500;
+    color: var(--white);
     padding: 10px 20px;
-    display: flex;
+    display: var(--flex);
     justify-content: space-between;
-    align-items: center;
+    align-items: var(--center);
 }
 
 .mobile-menu-header span {
@@ -36,19 +36,19 @@
 }
 
 .mobile-menu-title {
-    display: flex;
+    display: var(--flex);
     justify-content: space-between;
-    align-items: center;
+    align-items: var(--center);
     width: 100%;
 }
 
-.mobile-categories-btn {
-    cursor: pointer;
-    color: #ccc;
-}
-
+.mobile-categories-btn,
 .mobile-close-btn {
     cursor: pointer;
+}
+
+.mobile-categories-btn {
+    color: var(--gray);
 }
 
 .mobile-menu-list {
@@ -62,34 +62,28 @@
     border-bottom: 1px solid #ddd;
     font-size: 16px;
     cursor: pointer;
-    display: flex;
+    display: var(--flex);
     justify-content: space-between;
-    align-items: center;
+    align-items: var(--center);
+    transition: background 0.2s;
 }
 
 .mobile-menu-list li:hover {
-    background-color: #f5f5f5;
+    background: #f5f5f5;
 }
 
-.mobile-menu-overlay.gray .menu-list li {
-    background-color: #ccc;
+.mobile-menu-overlay.gray .mobile-menu-list li {
+    background: var(--gray);
 }
 
-.mobile-menu-overlay.gray .menu-list li:hover {
-    background-color: #b0b0b0;
-}
-
-.mobile-clock {
-    margin-left: 5px;
+.mobile-menu-overlay.gray .mobile-menu-list li:hover {
+    background: #b0b0b0;
 }
 
 .mobile-backdrop {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
     z-index: 999;
     display: none;
 }
@@ -104,7 +98,7 @@
     left: -100%;
     width: 250px;
     height: 100%;
-    background-color: white;
+    background: var(--white);
     z-index: 1001;
     transition: left 0.3s ease-in-out;
 }
@@ -114,17 +108,17 @@
 }
 
 .mobile-sub-menu-header {
-    background-color: #ff4500;
-    color: white;
+    background: #ff4500;
+    color: var(--white);
     padding: 10px 20px;
-    display: flex;
+    display: var(--flex);
     justify-content: space-between;
-    align-items: center;
+    align-items: var(--center);
 }
 
 .mobile-back-btn {
     cursor: pointer;
-    display: var(--display-flex);
+    display: var(--flex);
 }
 
 .mobile-arrow {
@@ -132,11 +126,9 @@
     color: #666;
 }
 
-/* tablet */
-@media screen and (min-width: 768px) and (max-width: 1024px) {
+/* Responsive */
+@media (min-width: 768px) and (max-width: 1024px) {
     .banner-item img {
-        width: 100%;
-        max-height: 100%;
         height: 450px;
         object-fit: none;
         object-position: 55% 7%;
@@ -145,13 +137,24 @@
     .banner-text h1 {
         font-size: 30px;
     }
+
+    .slider-container {
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .product {
+        flex: 0 0 25%;
+    }
+
+    .slider {
+        display: flex;
+        flex-wrap: nowrap;
+    }
 }
 
-/* mobile */
-@media screen and (max-width: 767px) {
+@media (max-width: 767px) {
     .banner-item img {
-        max-width: 100%;
-        max-height: 100%;
         height: 400px;
         object-fit: none;
         object-position: 55% 7%;
@@ -159,5 +162,38 @@
 
     .banner-text h1 {
         font-size: clamp(20px, 5vw, 30px);
+    }
+
+    .slider-container {
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .product {
+        flex: 0 0 33.3333%;
+    }
+
+    .section-categories-shop {
+        width: 100%;
+        height: 328px;
+    }
+
+    .section-bottom-card {
+        flex: 0 0 25%;
+    }
+}
+
+@media (max-width: 576px) {
+    .product {
+        flex: 0 0 50%;
+    }
+
+    .section-categories-shop {
+        width: 100%;
+        height: 328px;
+    }
+
+    .section-bottom-card {
+        flex: 0 0 50%;
     }
 }

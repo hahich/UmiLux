@@ -52,7 +52,7 @@ document.addEventListener('click', function (event) {
     }
 });
 
-// Carousel
+// Slider
 document.addEventListener('DOMContentLoaded', () => {
     const prevButton = document.querySelector('.prev');
     const nextButton = document.querySelector('.next');
@@ -166,3 +166,186 @@ function closeAll() {
     // Reset màu
     menuOverlay.classList.remove('gray');
 }
+
+// slider sale
+document.addEventListener('DOMContentLoaded', () => {
+    const sliderContainer = document.getElementById('sliderContainer');
+    const slider = document.getElementById('slider');
+    const products = document.querySelectorAll('.product');
+    const totalProducts = products.length;
+
+    if (!sliderContainer) {
+        console.error('Element with id "sliderContainer" not found.');
+        return;
+    }
+
+    let isDragging = false;
+    let startPos = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+    let currentIndex = 0;
+
+    function getItemsPerSlide() {
+        if (window.innerWidth < 576) return 2;
+        if (window.innerWidth <= 768) return 3;
+        if (window.innerWidth <= 1024) return 4;
+        return 8; // 8 products for desktop
+    }
+
+    function updateSlider() {
+        const itemsPerSlide = getItemsPerSlide();
+        const maxIndex = Math.ceil(totalProducts / itemsPerSlide) - 1;
+        if (currentIndex > maxIndex) currentIndex = maxIndex;
+        if (currentIndex < 0) currentIndex = 0;
+
+        currentTranslate = -(currentIndex * (100 / itemsPerSlide)) * itemsPerSlide;
+        prevTranslate = currentTranslate;
+        slider.style.transform = `translateX(${currentTranslate}%)`;
+    }
+
+    function touchStart(event) {
+        isDragging = true;
+        startPos = getPositionX(event);
+        slider.style.transition = 'none';
+    }
+
+    function touchMove(event) {
+        if (isDragging) {
+            const currentPosition = getPositionX(event);
+            const itemsPerSlide = getItemsPerSlide();
+            currentTranslate = prevTranslate + ((currentPosition - startPos) / sliderContainer.offsetWidth) * 100;
+            slider.style.transform = `translateX(${currentTranslate}%)`;
+        }
+    }
+
+    function touchEnd() {
+        isDragging = false;
+        slider.style.transition = 'transform 0.5s ease';
+        const itemsPerSlide = getItemsPerSlide();
+        const movedBy = currentTranslate - prevTranslate;
+
+        if (movedBy < -10 && currentIndex < Math.ceil(totalProducts / itemsPerSlide) - 1) {
+            currentIndex++;
+        } else if (movedBy > 10 && currentIndex > 0) {
+            currentIndex--;
+        }
+
+        updateSlider();
+    }
+
+    function getPositionX(event) {
+        return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+    }
+
+    sliderContainer.addEventListener('mousedown', touchStart);
+    sliderContainer.addEventListener('mousemove', touchMove);
+    sliderContainer.addEventListener('mouseup', touchEnd);
+    sliderContainer.addEventListener('mouseleave', touchEnd);
+    sliderContainer.addEventListener('touchstart', touchStart);
+    sliderContainer.addEventListener('touchmove', touchMove);
+    sliderContainer.addEventListener('touchend', touchEnd);
+
+    window.addEventListener('resize', updateSlider);
+    updateSlider();
+});
+
+// Countdown time
+let countDowns = localStorage.getItem('countDownEndTime');
+
+if (!countDowns) {
+    countDowns = new Date().getTime() + (856 * 24 * 60 * 60 * 1000)
+    localStorage.setItem('countDownEndTime', countDowns);
+} else {
+    countDowns = parseInt(countDowns)
+}
+
+const x = setInterval(function () {
+    const now = new Date().getTime();
+
+    const distance = countDowns - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById('days').textContent = String(days).padStart(2, '0');
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+}, 1000);
+
+// products deals
+document.addEventListener('DOMContentLoaded', () => {
+    const sliderDealsCard = document.getElementById('section-slider-card');
+    const dealsCard = document.querySelectorAll('.section-bottom-card');
+    const containerDeals = document.querySelector('.slider-container-deals');
+    let cardDealsWidth = dealsCard[0].offsetWidth + 10;
+    let currentIndexDeals = 0;
+    let cardsToShowDeals = 5;
+    let autoSlideDealsInterval
+
+    function updateCardToShow() {
+        if (window.innerWidth <= 576) {
+            cardsToShowDeals = 2;
+        } else if (window.innerWidth <= 1024) {
+            cardsToShowDeals = 4;
+        } else {
+            cardsToShowDeals = 5;
+        }
+    }
+
+    function updateSliderDeals() {
+        cardDealsWidth = dealsCard[0].offsetWidth + 10;
+        const maxIndex = Math.max(0, dealsCard.length - cardsToShowDeals);
+        currentIndexDeals = Math.min(currentIndexDeals, maxIndex);
+        sliderDealsCard.style.transform = `translateX(-${currentIndexDeals * cardDealsWidth}px)`;
+    }
+
+    function startAutoSliderDeals() {
+        clearInterval(autoSlideDealsInterval);
+        autoSlideDealsInterval = setInterval(() => {
+            const maxIndex = Math.max(0, dealsCard.length - cardsToShowDeals);
+            if (currentIndexDeals < maxIndex) {
+                currentIndexDeals++;
+            } else {
+                currentIndexDeals = 0;
+            }
+            updateSliderDeals();
+        }, 5000);
+    }
+
+    function stopAutoSlideDeals() {
+        clearInterval(autoSlideDealsInterval);
+    }
+
+    updateCardToShow();
+    updateSliderDeals();
+    startAutoSliderDeals();
+
+    window.addEventListener('resize', () => {
+        updateCardToShow();
+        updateSliderDeals();
+    });
+
+    containerDeals.addEventListener('wheel', (event) => {
+        event.preventDefault();
+        stopAutoSlideDeals();
+        const maxIndex = Math.max(0, dealsCard.length - cardsToShowDeals);
+        if (event.deltaY > 0 && currentIndexDeals < maxIndex) {
+            currentIndexDeals++;
+        } else if (event.deltaY < 0 && currentIndexDeals > 0) {
+            currentIndexDeals--;
+        }
+        updateSliderDeals();
+        startAutoSliderDeals();
+    });
+
+    containerDeals.addEventListener('mouseenter', () => {
+        stopAutoSlideDeals();
+    });
+
+    containerDeals.addEventListener('mouseleave', () => {
+        startAutoSliderDeals();
+    });
+});

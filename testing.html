@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/responsive.css">
+    <style>
+        #section-deals-day {
+            text-transform: capitalize;
+            width: var(--container-width);
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .section-deals-header {
+            display: var(--flex);
+            justify-content: var(--space-between);
+        }
+
+        .section-deals-right,
+        .section-deals-timer {
+            display: var(--flex);
+            justify-content: var(--center);
+            align-items: var(--center);
+            gap: 10px;
+        }
+
+        .timer {
+            background-color: var(--red-color);
+            color: var(--white);
+            padding: 7px 18px;
+            font-size: 14px;
+        }
+
+        .section-bottom-products {
+            display: var(--flex);
+            justify-content: var(--space-between);
+            align-items: var(--center);
+        }
+
+        .section-bottom-card {
+            height: 100%;
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .section-discount {
+            background-color: var(--light-navy-blue);
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: var(--white);
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 12px;
+        }
+
+        .section-img img {
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .section-card-text {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .section-text-s {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+        }
+
+        .section-text-name {
+            font-size: var(--fs-14);
+            text-transform: capitalize;
+            font-weight: 500;
+        }
+
+        .section-text-price {
+            font-size: 18px;
+            color: var(--light-navy-blue);
+            padding-top: 10px;
+        }
+
+
+        /* rating */
+        .rating-wrapper {
+            display: flex;
+            flex-direction: row;
+            text-align: left;
+        }
+
+        .rating:not(:checked)>input {
+            position: absolute;
+            appearance: none;
+        }
+
+        .rating:not(:checked)>label {
+            float: right;
+            cursor: pointer;
+            font-size: 15px;
+            color: var(--gray);
+        }
+
+        .rating:not(:checked)>label:before {
+            content: '★';
+        }
+
+        .rating>input:checked+label:hover,
+        .rating>input:checked+label:hover~label,
+        .rating>input:checked~label:hover,
+        .rating>input:checked~label:hover~label,
+        .rating>label:hover~input:checked~label {
+            color: var(--yellow);
+        }
+
+        .rating:not(:checked)>label:hover,
+        .rating:not(:checked)>label:hover~label {
+            color: var(--yellow);
+        }
+
+        .rating>input:checked~label {
+            color: var(--yellow);
+        }
+
+        @media (max-width: 767px) {
+            .section-bottom-card {
+                flex: 0 0 25%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section-bottom-card {
+                flex: 0 0 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section id="section-deals-day">
+        <div class="section-deals-header flex-column flex-lg-row align-items-start align-items-lg-center">
+            <div class="section-deals-left">
+                <h1 class="section-deals-text">Top Deals Of The Day</h1>
+            </div>
+
+            <div class="section-deals-right">
+                <p>Hurry up! Offer ends in:</p>
+                <div class="section-deals-timer">
+                    <div class="timer days" id="days">0</div>
+                    <div class="timer hours" id="hours">0</div>
+                    <div class="timer minutes" id="minutes">0</div>
+                    <div class="timer seconds" id="seconds">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider" style="background-color: #E5E8EC; margin: 15px 0 30px 0;"></div>
+
+        <div class="slider-container-deals">
+            <div class="section-bottom-products" id="section-slider-card">
+                <div class="section-bottom-card">
+                    <div class="section-discount">-50%</div>
+                    <div class="section-img">
+                        <img src="./assets/img/products_deals/deals-1.jpg" alt="galaxy s21 ultra" loading="lazy">
+                    </div>
+                    <div class="section-card-text">
+                        <p class="section-text-s">Toshiba</p>
+                        <p class="section-text-name">Galaxy S21 Ultra 5G 128GB Unlocked<br>International Version</p>
+                        <div class="rating-wrapper">
+                            <div class="rating">
+                                <input value="5" type="radio" id="star5_1">
+                                <label title="text" for="star5_1"></label>
+                                <input value="4" type="radio" id="star4_1">
+                                <label title="text" for="star4_1"></label>
+                                <input value="3" type="radio" id="star3_1">
+                                <label title="text" for="star3_1"></label>
+                                <input value="2" type="radio" id="star2_1">
+                                <label title="text" for="star2_1"></label>
+                                <input value="1" type="radio" id="star1_1">
+                                <label title="text" for="star1_1"></label>
+                            </div>
+                        </div>
+                        <p class="section-text-price">$569.00 <span class="section-text-s">$156.00</span></p>
+                    </div>
+                </div>
+
+                <div class="section-bottom-card">
+                    <div class="section-discount">-50%</div>
+                    <div class="section-img">
+                        <img src="./assets/img/products_deals/deals-2.jpg" alt="galaxy s21 ultra" loading="lazy">
+                    </div>
+                    <div class="section-card-text">
+                        <p class="section-text-s">Toshiba</p>
+                        <p class="section-text-name">Galaxy S21 Ultra 5G 128GB Unlocked<br>International Version</p>
+                        <div class="rating-wrapper">
+                            <div class="rating">
+                                <input value="5" type="radio" id="star5_2">
+                                <label title="text" for="star5_2"></label>
+                                <input value="4" type="radio" id="star4_2">
+                                <label title="text" for="star4_2"></label>
+                                <input value="3" type="radio" id="star3_2">
+                                <label title="text" for="star3_2"></label>
+                                <input value="2" type="radio" id="star2_2">
+                                <label title="text" for="star2_2"></label>
+                                <input value="1" type="radio" id="star1_2">
+                                <label title="text" for="star1_2"></label>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                        <p class="section-text-price">$569.00 <span class="section-text-s">$156.00</span></p>
+                    </div>
+                </div>
+
+                <div class="section-bottom-card">
+                    <div class="section-discount">-50%</div>
+                    <div class="section-img">
+                        <img src="./assets/img/products_deals/deals-3.jpg" alt="galaxy s21 ultra" loading="lazy">
+                    </div>
+                    <div class="section-card-text">
+                        <p class="section-text-s">Toshiba</p>
+                        <p class="section-text-name">Galaxy S21 Ultra 5G 128GB Unlocked<br>International Version</p>
+                        <div class="rating-wrapper">
+                            <div class="rating">
+                                <input value="5" type="radio" id="star5_3">
+                                <label title="text" for="star5_3"></label>
+                                <input value="4" type="radio" id="star4_3">
+                                <label title="text" for="star4_3"></label>
+                                <input value="3" type="radio" id="star3_3">
+                                <label title="text" for="star3_3"></label>
+                                <input value="2" type="radio" id="star2_3">
+                                <label title="text" for="star2_3"></label>
+                                <input value="1" type="radio" id="star1_3">
+                                <label title="text" for="star1_3"></label>
+                            </div>
+                        </div>
+                        <p class="section-text-price">$569.00 <span class="section-text-s">$156.00</span></p>
+                    </div>
+                </div>
+
+                <div class="section-bottom-card">
+                    <div class="section-discount">-50%</div>
+                    <div class="section-img">
+                        <img src="./assets/img/products_deals/deals-4.jpg" alt="galaxy s21 ultra" loading="lazy">
+                    </div>
+                    <div class="section-card-text">
+                        <p class="section-text-s">Toshiba</p>
+                        <p class="section-text-name">Galaxy S21 Ultra 5G 128GB Unlocked<br>International Version</p>
+                        <div class="rating-wrapper">
+                            <div class="rating">
+                                <input value="5" type="radio" id="star5_4">
+                                <label title="text" for="star5_4"></label>
+                                <input value="4" type="radio" id="star4_4">
+                                <label title="text" for="star4_4"></label>
+                                <input value="3" type="radio" id="star3_4">
+                                <label title="text" for="star3_4"></label>
+                                <input value="2" type="radio" id="star2_4">
+                                <label title="text" for="star2_4"></label>
+                                <input value="1" type="radio" id="star1_4">
+                                <label title="text" for="star1_4"></label>
+                            </div>
+                        </div>
+                        <p class="section-text-price">$569.00 <span class="section-text-s">$156.00</span></p>
+                    </div>
+                </div>
+
+                <div class="section-bottom-card">
+                    <div class="section-discount">-50%</div>
+                    <div class="section-img">
+                        <img src="./assets/img/products_deals/deals-5.jpg" alt="galaxy s21 ultra" loading="lazy">
+                    </div>
+                    <div class="section-card-text">
+                        <p class="section-text-s">Toshiba</p>
+                        <p class="section-text-name">Galaxy S21 Ultra 5G 128GB Unlocked<br>International Version</p>
+                        <div class="rating-wrapper">
+                            <div class="rating">
+                                <input value="5" type="radio" id="star5_5">
+                                <label title="text" for="star5_5"></label>
+                                <input value="4" type="radio" id="star4_5">
+                                <label title="text" for="star4_5"></label>
+                                <input value="3" type="radio" id="star3_5">
+                                <label title="text" for="star3_5"></label>
+                                <input value="2" type="radio" id="star2_5">
+                                <label title="text" for="star2_5"></label>
+                                <input value="1" type="radio" id="star1_5">
+                                <label title="text" for="star1_5"></label>
+                            </div>
+                        </div>
+                        <p class="section-text-price">$569.00 <span class="section-text-s">$156.00</span></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sliderDealsCard = document.getElementById('section-slider-card');
+            const dealsCard = document.querySelectorAll('.section-bottom-card');
+            const containerDeals = document.querySelector('.slider-container-deals');
+            let cardDealsWidth = dealsCard[0].offsetWidth + 10;
+            let currentIndexDeals = 0;
+            let cardsToShowDeals = 5;
+            let autoSlideDealsInterval
+
+            function updateCardToShow() {
+                if (window.innerWidth <= 576) {
+                    cardsToShowDeals = 2;
+                } else if (window.innerWidth <= 1024) {
+                    cardsToShowDeals = 4;
+                } else {
+                    cardsToShowDeals = 5;
+                }
+            }
+
+            function updateSliderDeals() {
+                cardDealsWidth = dealsCard[0].offsetWidth + 10;
+                const maxIndex = Math.max(0, dealsCard.length - cardsToShowDeals);
+                currentIndexDeals = Math.min(currentIndexDeals, maxIndex);
+                sliderDealsCard.style.transform = `translateX(-${currentIndexDeals * cardDealsWidth}px)`;
+            }
+
+            function startAutoSliderDeals() {
+                clearInterval(autoSlideDealsInterval);
+                autoSlideDealsInterval = setInterval(() => {
+                    const maxIndex = Math.max(0, dealsCard.length - cardsToShowDeals);
+                    if (currentIndexDeals < maxIndex) {
+                        currentIndexDeals++;
+                    } else {
+                        currentIndexDeals = 0;
+                    }
+                    updateSliderDeals();
+                }, 5000);
+            }
+
+            function stopAutoSlideDeals() {
+                clearInterval(autoSlideDealsInterval);
+            }
+
+            updateCardToShow();
+            updateSliderDeals();
+            startAutoSliderDeals();
+
+            window.addEventListener('resize', () => {
+                updateCardToShow();
+                updateSliderDeals();
+            });
+
+            containerDeals.addEventListener('wheel', (event) => {
+                event.preventDefault();
+                stopAutoSlideDeals();
+                const maxIndex = Math.max(0, dealsCard.length - cardsToShowDeals);
+                if (event.deltaY > 0 && currentIndexDeals < maxIndex) {
+                    currentIndexDeals++;
+                } else if (event.deltaY < 0 && currentIndexDeals > 0) {
+                    currentIndexDeals--;
+                }
+                updateSliderDeals();
+                startAutoSliderDeals();
+            });
+
+            containerDeals.addEventListener('mouseenter', () => {
+                stopAutoSlideDeals();
+            });
+
+            containerDeals.addEventListener('mouseleave', () => {
+                startAutoSliderDeals();
+            });
+        });
+    </script>
+</body>
+
+</html>

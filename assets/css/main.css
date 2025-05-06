@@ -11,6 +11,8 @@
     src: url('../fonts/GeneralSans_Complete/Fonts/OTF/GeneralSans-Regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
+    /* Tăng hiệu suất tải font */
 }
 
 @font-face {
@@ -18,6 +20,7 @@
     src: url('../fonts/GeneralSans_Complete/Fonts/OTF/GeneralSans-Bold.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -25,6 +28,7 @@
     src: url('../fonts/GeneralSans_Complete/Fonts/OTF/GeneralSans-Italic.otf') format('opentype');
     font-weight: normal;
     font-style: italic;
+    font-display: swap;
 }
 
 @font-face {
@@ -32,46 +36,70 @@
     src: url('../fonts/GeneralSans_Complete/Fonts/OTF/GeneralSans-BoldItalic.otf') format('opentype');
     font-weight: bold;
     font-style: italic;
+    font-display: swap;
 }
 
+/* Root Variables */
 :root {
     --font-family: 'GeneralSans', sans-serif;
     --container-width: 1425px;
-    --dark-navy-blue-color: #253380;
-    --light-navy-blue-color: #00A2C2;
-    --boder-header-color: #364A9B;
-    --black-color: #111111;
-    --white-color: #ffffff;
-    --gray-color: #ccc;
-    --display-flex: flex;
-    --justify-content: center;
-    --justify-content-space: space-between;
-    --align-items: center;
-    --gap-25px: 25px;
-    --gap-10px: 10px;
-    --fs-14px: 14px; 
-    --header-section-font-size: 50px;
+    --dark-navy-blue: #253380;
+    --light-navy-blue: #00A2C2;
+    --border-header: #364A9B;
+    --black: #111111;
+    --white: #ffffff;
+    --gray: #999485;
+    --red-color: #DD3327;
+    --purple: #7B50F0;
+    --yellow: #FFB800;
+    --flex: flex;
+    --center: center;
+    --space-between: space-between;
+    --gap-25: 25px;
+    --gap-10: 10px;
+    --fs-14: 14px;
+    --header-font-size: 50px;
+    --bg-console: #24B0C5;
+    --bg-phone: #E8426A;
+    --bg-camera: #6944E6;
 }
 
+/* Global Styles */
 html,
 body {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: var(--font-family);
     font-size: 16px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
 }
 
 a {
     text-decoration: none !important;
-    color: var(--black-color) !important;
+    color: var(--black) !important;
 }
 
-ul, p {
+a:hover {
+    color: var(--light-navy-blue) !important;
+    transition: color 0.3s ease-in-out !important;
+}
+
+ul,
+p {
     list-style: none;
     margin: 0 !important;
+}
+
+button {
+    border: none;
+    background-color: inherit;
 }
 
 .divider {
     width: 100%;
     height: 1px;
-    background-color: var(--boder-header-color);
+    background: var(--border-header);
 }
-
