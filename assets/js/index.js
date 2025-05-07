@@ -174,79 +174,150 @@ document.addEventListener('DOMContentLoaded', () => {
     const products = document.querySelectorAll('.product');
     const totalProducts = products.length;
 
-    if (!sliderContainer) {
-        console.error('Element with id "sliderContainer" not found.');
-        return;
-    }
-
-    let isDragging = false;
-    let startPos = 0;
+    let isDraggingSlide = false;
+    let startPosition = 0;
     let currentTranslate = 0;
     let prevTranslate = 0;
-    let currentIndex = 0;
+    let animationID = 0;
+    let startX = 0;
+    let currentX = 0;
 
     function getItemsPerSlide() {
         if (window.innerWidth < 576) return 2;
-        if (window.innerWidth <= 768) return 3;
+        if (window.innerWidth <= 767) return 3;
         if (window.innerWidth <= 1024) return 4;
-        return 8; // 8 products for desktop
+        return 8;
     }
 
-    function updateSlider() {
+    function setSliderItemWidth() {
         const itemsPerSlide = getItemsPerSlide();
-        const maxIndex = Math.ceil(totalProducts / itemsPerSlide) - 1;
-        if (currentIndex > maxIndex) currentIndex = maxIndex;
-        if (currentIndex < 0) currentIndex = 0;
+        const itemWidth = 100 / itemsPerSlide;
 
-        currentTranslate = -(currentIndex * (100 / itemsPerSlide)) * itemsPerSlide;
-        prevTranslate = currentTranslate;
-        slider.style.transform = `translateX(${currentTranslate}%)`;
+        products.forEach(product => {
+            product.style.flex = `0 0 ${itemWidth}%`;
+        });
     }
 
     function touchStart(event) {
-        isDragging = true;
-        startPos = getPositionX(event);
+        startX = getPositionX(event);
+        isDraggingSlide = true;
+        startPosition = getPositionX(event);
+
+        cancelAnimationFrame(animationID);
+        slider.classList.add('grabbing');
         slider.style.transition = 'none';
     }
 
     function touchMove(event) {
-        if (isDragging) {
-            const currentPosition = getPositionX(event);
+        if (isDraggingSlide) {
+            currentX = getPositionX(event);
+            const diff = currentX - startX;
+
+            currentTranslate = prevTranslate + diff / sliderContainer.offsetWidth * 100;
+
             const itemsPerSlide = getItemsPerSlide();
-            currentTranslate = prevTranslate + ((currentPosition - startPos) / sliderContainer.offsetWidth) * 100;
-            slider.style.transform = `translateX(${currentTranslate}%)`;
+            const minTranslate = -((totalProducts - itemsPerSlide) / itemsPerSlide * 100);
+            const maxTranslate = 0;
+
+            if (currentTranslate < minTranslate) {
+                const overscroll = minTranslate - currentTranslate;
+                currentTranslate = minTranslate - (overscroll * 0.2);
+            } else if (currentTranslate > maxTranslate) {
+                const overscroll = currentTranslate - maxTranslate;
+                currentTranslate = maxTranslate + (overscroll * 0.2);
+            }
+
+            setSliderPosition();
         }
     }
 
     function touchEnd() {
-        isDragging = false;
-        slider.style.transition = 'transform 0.5s ease';
-        const itemsPerSlide = getItemsPerSlide();
-        const movedBy = currentTranslate - prevTranslate;
+        isDraggingSlide = false;
+        slider.classList.remove('grabbing');
+        slider.style.transition = 'transform 0.3s ease';
 
-        if (movedBy < -10 && currentIndex < Math.ceil(totalProducts / itemsPerSlide) - 1) {
-            currentIndex++;
-        } else if (movedBy > 10 && currentIndex > 0) {
-            currentIndex--;
+        const itemsPerSlide = getItemsPerSlide();
+        const moveBy = currentX - startX;
+
+        const maxTranslate = -((totalProducts - itemsPerSlide) / itemsPerSlide * 100);
+
+        if (currentTranslate < maxTranslate) {
+            currentTranslate = maxTranslate;
+        } else if (currentTranslate > 0) {
+            currentTranslate = 0;
+        } else {
+            const itemWidth = 100 / itemsPerSlide;
+            const snapPosition = Math.round(currentTranslate / itemWidth) * itemWidth;
+            currentTranslate = snapPosition;
         }
 
-        updateSlider();
+        prevTranslate = currentTranslate;
+        setSliderPosition();
+    }
+
+    function handleWheel(event) {
+        event.preventDefault();
+
+        slider.style.transition = 'transform 0.3s ease';
+
+        const delta = Math.sign(event.deltaX || event.deltaY);
+        const itemsPerSlide = getItemsPerSlide();
+        const scrollAmount = delta * (100 / itemsPerSlide);
+
+        currentTranslate = prevTranslate - scrollAmount;
+
+        const maxNegativeTranslate = -((totalProducts - itemsPerSlide) / itemsPerSlide * 100);
+
+        if (currentTranslate < maxNegativeTranslate) {
+            currentTranslate = maxNegativeTranslate;
+        } else if (currentTranslate > 0) {
+            currentTranslate = 0;
+        }
+
+        prevTranslate = currentTranslate;
+        setSliderPosition();
     }
 
     function getPositionX(event) {
         return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
     }
 
-    sliderContainer.addEventListener('mousedown', touchStart);
-    sliderContainer.addEventListener('mousemove', touchMove);
-    sliderContainer.addEventListener('mouseup', touchEnd);
-    sliderContainer.addEventListener('mouseleave', touchEnd);
-    sliderContainer.addEventListener('touchstart', touchStart);
-    sliderContainer.addEventListener('touchmove', touchMove);
-    sliderContainer.addEventListener('touchend', touchEnd);
+    function setSliderPosition() {
+        slider.style.transform = `translateX(${currentTranslate}%)`;
+    }
 
-    window.addEventListener('resize', updateSlider);
-    updateSlider();
+    sliderContainer.addEventListener('mousedown', touchStart);
+    sliderContainer.addEventListener('touchstart', touchStart);
+
+    window.addEventListener('mousemove', touchMove);
+    window.addEventListener('touchmove', touchMove);
+
+    window.addEventListener('mouseup', touchEnd);
+    window.addEventListener('touchend', touchEnd);
+    window.addEventListener('mouseleave', touchEnd);
+
+    sliderContainer.addEventListener('wheel', handleWheel, { passive: false });
+
+    window.addEventListener('resize', () => {
+        setSliderItemWidth();
+
+        slider.style.transition = 'none';
+
+        const itemsPerSlide = getItemsPerSlide();
+        const maxNegativeTranslate = -((totalProducts - itemsPerSlide) / itemsPerSlide * 100);
+
+        if (currentTranslate < maxNegativeTranslate) {
+            currentTranslate = maxNegativeTranslate;
+            prevTranslate = currentTranslate;
+            setSliderPosition();
+        }
+
+        setTimeout(() => {
+            slider.style.transition = 'transform 0.3s ease';
+        }, 50);
+    });
+
+    setSliderItemWidth();
 });
 
 // Countdown time
@@ -276,76 +347,376 @@ const x = setInterval(function () {
 }, 1000);
 
 // products deals
-document.addEventListener('DOMContentLoaded', () => {
-    const sliderDealsCard = document.getElementById('section-slider-card');
-    const dealsCard = document.querySelectorAll('.section-bottom-card');
-    const containerDeals = document.querySelector('.slider-container-deals');
-    let cardDealsWidth = dealsCard[0].offsetWidth + 10;
-    let currentIndexDeals = 0;
-    let cardsToShowDeals = 5;
-    let autoSlideDealsInterval
 
-    function updateCardToShow() {
-        if (window.innerWidth <= 576) {
-            cardsToShowDeals = 2;
-        } else if (window.innerWidth <= 1024) {
-            cardsToShowDeals = 4;
-        } else {
-            cardsToShowDeals = 5;
-        }
+const sliderDeals = document.getElementById('section-slider-card');
+const cardsDeals = document.querySelectorAll('.section-bottom-card');
+const containerDeals = document.querySelector('.slider-container-deals');
+
+let currentIndexDeals = 0;
+let cardsToShowDeals = 5;
+let autoSlideIntervalDeals;
+
+let isDragging = false;
+let startPosition = 0;
+let currentTranslate = 0;
+let prevTranslate = 0;
+
+function updateCardsToShow() {
+    if (window.innerWidth <= 576) {
+        cardsToShowDeals = 2;
+    } else if (window.innerWidth <= 768) {
+        cardsToShowDeals = 3;
+    } else if (window.innerWidth <= 1024) {
+        cardsToShowDeals = 4;
+    } else {
+        cardsToShowDeals = 5;
     }
 
-    function updateSliderDeals() {
-        cardDealsWidth = dealsCard[0].offsetWidth + 10;
-        const maxIndex = Math.max(0, dealsCard.length - cardsToShowDeals);
-        currentIndexDeals = Math.min(currentIndexDeals, maxIndex);
-        sliderDealsCard.style.transform = `translateX(-${currentIndexDeals * cardDealsWidth}px)`;
-    }
-
-    function startAutoSliderDeals() {
-        clearInterval(autoSlideDealsInterval);
-        autoSlideDealsInterval = setInterval(() => {
-            const maxIndex = Math.max(0, dealsCard.length - cardsToShowDeals);
-            if (currentIndexDeals < maxIndex) {
-                currentIndexDeals++;
-            } else {
-                currentIndexDeals = 0;
-            }
-            updateSliderDeals();
-        }, 5000);
-    }
-
-    function stopAutoSlideDeals() {
-        clearInterval(autoSlideDealsInterval);
-    }
-
-    updateCardToShow();
     updateSliderDeals();
-    startAutoSliderDeals();
+}
 
-    window.addEventListener('resize', () => {
-        updateCardToShow();
-        updateSliderDeals();
-    });
+function updateSliderDeals() {
+    const cardWidthPercent = 100 / cardsToShowDeals;
+    const translateValue = currentIndexDeals * cardWidthPercent;
 
-    containerDeals.addEventListener('wheel', (event) => {
-        event.preventDefault();
-        stopAutoSlideDeals();
-        const maxIndex = Math.max(0, dealsCard.length - cardsToShowDeals);
-        if (event.deltaY > 0 && currentIndexDeals < maxIndex) {
+    const maxIndex = cardsDeals.length - cardsToShowDeals;
+    if (currentIndexDeals < 0) currentIndexDeals = 0;
+    if (currentIndexDeals > maxIndex) currentIndexDeals = maxIndex;
+
+    sliderDeals.style.transform = `translateX(-${translateValue}%)`;
+    prevTranslate = -translateValue;
+}
+
+function startAutoSliderDeals() {
+    clearInterval(autoSlideIntervalDeals);
+    autoSlideIntervalDeals = setInterval(() => {
+        const maxIndex = cardsDeals.length - cardsToShowDeals;
+        if (currentIndexDeals < maxIndex) {
             currentIndexDeals++;
-        } else if (event.deltaY < 0 && currentIndexDeals > 0) {
-            currentIndexDeals--;
+        } else {
+            currentIndexDeals = 0;
         }
         updateSliderDeals();
+    }, 5000);
+}
+
+function stopAutoSlideDeals() {
+    clearInterval(autoSlideIntervalDeals);
+}
+
+updateCardsToShow();
+startAutoSliderDeals();
+
+window.addEventListener('resize', () => {
+    updateCardsToShow();
+});
+
+containerDeals.addEventListener('wheel', (event) => {
+    event.preventDefault();
+    stopAutoSlideDeals();
+
+    const maxIndex = cardsDeals.length - cardsToShowDeals;
+    if (event.deltaY > 0 && currentIndexDeals < maxIndex) {
+        currentIndexDeals++;
+    } else if (event.deltaY < 0 && currentIndexDeals > 0) {
+        currentIndexDeals--;
+    }
+
+    updateSliderDeals();
+
+    clearTimeout(window.wheelTimeout);
+    window.wheelTimeout = setTimeout(() => {
         startAutoSliderDeals();
+    }, 1000);
+});
+
+function touchStart(event) {
+    stopAutoSlideDeals();
+    isDragging = true;
+    startPosition = getPositionX(event);
+
+    document.addEventListener('mousemove', touchMove);
+    document.addEventListener('mouseup', touchEnd);
+    document.addEventListener('touchmove', touchMove);
+    document.addEventListener('touchend', touchEnd);
+}
+
+function touchMove(event) {
+    if (isDragging) {
+        const currentPosition = getPositionX(event);
+        const diff = currentPosition - startPosition;
+
+        const cardWidthPercent = 100 / cardsToShowDeals;
+        const containerWidth = containerDeals.offsetWidth;
+        const movePercentage = (diff / containerWidth) * 100;
+
+        currentTranslate = prevTranslate + movePercentage;
+
+        const maxTranslate = 0;
+        const minTranslate = -((cardsDeals.length - cardsToShowDeals) * cardWidthPercent);
+
+        if (currentTranslate > maxTranslate) {
+            currentTranslate = maxTranslate;
+        }
+
+        if (currentTranslate < minTranslate) {
+            currentTranslate = minTranslate;
+        }
+
+        sliderDeals.style.transform = `translateX(${currentTranslate}%)`;
+    }
+}
+
+function touchEnd() {
+    isDragging = false;
+
+    const cardWidthPercent = 100 / cardsToShowDeals;
+    const movedPercent = Math.abs(currentTranslate - prevTranslate);
+
+    if (movedPercent > (cardWidthPercent * 0.2)) {
+        if (currentTranslate > prevTranslate) {
+            currentIndexDeals--;
+        } else {
+            currentIndexDeals++;
+        }
+    }
+
+    const maxIndex = cardsDeals.length - cardsToShowDeals;
+    if (currentIndexDeals < 0) currentIndexDeals = 0;
+    if (currentIndexDeals > maxIndex) currentIndexDeals = maxIndex;
+
+    updateSliderDeals();
+
+    document.removeEventListener('mousemove', touchMove);
+    document.removeEventListener('mouseup', touchEnd);
+    document.removeEventListener('touchmove', touchMove);
+    document.removeEventListener('touchend', touchEnd);
+
+    setTimeout(startAutoSliderDeals, 1000);
+}
+
+function getPositionX(event) {
+    return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+}
+
+containerDeals.addEventListener('mousedown', touchStart);
+containerDeals.addEventListener('touchstart', touchStart);
+
+containerDeals.addEventListener('dragstart', (e) => {
+    e.preventDefault();
+});
+
+containerDeals.addEventListener('mouseenter', () => {
+    stopAutoSlideDeals();
+});
+
+containerDeals.addEventListener('mouseleave', () => {
+    if (!isDragging) {
+        startAutoSliderDeals();
+    }
+});
+
+// Carousel Products
+document.addEventListener('DOMContentLoaded', function () {
+    const carouselSell = document.querySelector('.section-sell-product-carousel');
+    let isDraggingSell = false;
+    let startPositionSell = 0;
+    let currentTranslateSell = 0;
+    let previousTranslateSell = 0;
+    let autoSlideIntervalSell;
+    let currentIndexSell = 0;
+    let animationIDSell;
+
+    // Function to handle touch/mouse events
+    function handleStart(e) {
+        startPositionSell = getPositionX(e);
+        isDraggingSell = true;
+        carouselSell.classList.add('grabbing');
+
+        // Stop auto slide when user interacts
+        stopAutoSlide();
+
+        // Stop any momentum scrolling
+        cancelAnimationFrame(animationIDSell);
+    }
+
+    function handleMove(e) {
+        if (isDraggingSell) {
+            const currentPosition = getPositionX(e);
+            const diff = currentPosition - startPositionSell;
+            currentTranslateSell = previousTranslateSell + diff;
+
+            // Apply transform
+            setTranslate(currentTranslateSell);
+        }
+    }
+
+    function handleEnd() {
+        isDraggingSell = false;
+        carouselSell.classList.remove('grabbing');
+
+        // Calculate the closest product position
+        const carouselWidthSell = carouselSell.offsetWidth;
+        const productWidthSell = carouselSell.querySelector('.section-sell-product-card').offsetWidth;
+        const productCountSell = carouselSell.querySelectorAll('.section-sell-product-card').length;
+        const minTranslateSell = -(productCountSell * productWidthSell - carouselWidthSell);
+
+        // Snap to the closest product
+        let targetTranslate = Math.round(currentTranslateSell / productWidthSell) * productWidthSell;
+
+        // Apply boundaries
+        targetTranslate = Math.max(minTranslateSell, Math.min(0, targetTranslate));
+
+        // Update current index
+        currentIndexSell = Math.abs(Math.round(targetTranslate / productWidthSell));
+
+        // Animate to target
+        const animate = () => {
+            const diff = targetTranslate - currentTranslateSell;
+            const easing = 0.2;
+
+            if (Math.abs(diff) < 0.5) {
+                currentTranslateSell = targetTranslate;
+                previousTranslateSell = currentTranslateSell;
+                setTranslate(currentTranslateSell);
+
+                // Restart auto slide after user interaction
+                startAutoSlide();
+                return;
+            }
+
+            currentTranslateSell += diff * easing;
+            previousTranslateSell = currentTranslateSell;
+            setTranslate(currentTranslateSell);
+
+            animationIDSell = requestAnimationFrame(animate);
+        };
+
+        cancelAnimationFrame(animationIDSell);
+        animationIDSell = requestAnimationFrame(animate);
+    }
+
+    function getPositionX(e) {
+        return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+    }
+
+    function setTranslate(xPos) {
+        carouselSell.style.transform = `translateX(${xPos}px)`;
+    }
+
+    // Auto slide functions
+    function startAutoSlide() {
+        // Clear any existing interval
+        stopAutoSlide();
+
+        // Start new interval
+        autoSlideIntervalSell = setInterval(() => {
+            const productWidth = carouselSell.querySelector('.section-sell-product-card').offsetWidth;
+            const productCount = carouselSell.querySelectorAll('.section-sell-product-card').length;
+            const carouselWidthSell = carouselSell.offsetWidth;
+            const visibleProducts = Math.floor(carouselWidthSell / productWidth);
+            const maxIndex = productCount - visibleProducts;
+
+            // Move to next slide, or back to first if at the end
+            currentIndexSell = (currentIndexSell >= maxIndex) ? 0 : currentIndexSell + 1;
+
+            // Calculate target position
+            const targetTranslate = -currentIndexSell * productWidth;
+
+            // Animate to the target position
+            animateToPosition(targetTranslate);
+        }, 3000);
+    }
+
+    function stopAutoSlide() {
+        if (autoSlideIntervalSell) {
+            clearInterval(autoSlideIntervalSell);
+        }
+    }
+
+    function animateToPosition(targetTranslate) {
+        // Store target for animation
+        const startTranslate = currentTranslateSell;
+        const startTime = performance.now();
+        const duration = 500; // 500ms animation
+
+        const animateSlide = (currentTime) => {
+            const elapsedTime = currentTime - startTime;
+
+            if (elapsedTime >= duration) {
+                // Animation complete
+                currentTranslateSell = targetTranslate;
+                previousTranslateSell = targetTranslate;
+                setTranslate(targetTranslate);
+                return;
+            }
+
+            // Easing function (ease-out)
+            const progress = 1 - Math.pow(1 - elapsedTime / duration, 3);
+            const translateX = startTranslate + (targetTranslate - startTranslate) * progress;
+
+            currentTranslateSell = translateX;
+            previousTranslateSell = translateX;
+            setTranslate(translateX);
+
+            requestAnimationFrame(animateSlide);
+        };
+
+        requestAnimationFrame(animateSlide);
+    }
+
+    // Touch Events
+    carouselSell.addEventListener('touchstart', handleStart, { passive: true });
+    carouselSell.addEventListener('touchmove', handleMove, { passive: true });
+    carouselSell.addEventListener('touchend', handleEnd);
+
+    // Mouse Events
+    carouselSell.addEventListener('mousedown', handleStart);
+    carouselSell.addEventListener('mousemove', handleMove);
+    carouselSell.addEventListener('mouseup', handleEnd);
+    carouselSell.addEventListener('mouseleave', handleEnd);
+
+    // Prevent context menu on long press
+    carouselSell.addEventListener('contextmenu', e => e.preventDefault());
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        // Reset position on resize
+        currentTranslateSell = 0;
+        previousTranslateSell = 0;
+        currentIndexSell = 0;
+        setTranslate(0);
+
+        // Check if we're on desktop or mobile/tablet
+        updateLayoutMode();
     });
 
-    containerDeals.addEventListener('mouseenter', () => {
-        stopAutoSlideDeals();
-    });
+    // Function to check if we're in desktop mode
+    function isDesktopLayout() {
+        return window.innerWidth >= 992;
+    }
 
-    containerDeals.addEventListener('mouseleave', () => {
-        startAutoSliderDeals();
+    // Function to update layout mode and behavior
+    function updateLayoutMode() {
+        if (isDesktopLayout()) {
+            // In desktop mode, disable auto slide
+            stopAutoSlide();
+            carouselSell.style.transform = 'none';
+        } else {
+            // In mobile/tablet mode, enable auto slide
+            startAutoSlide();
+        }
+    }
+
+    // Initialize layout mode
+    updateLayoutMode();
+
+    // Pause auto slide when tab/window is not visible
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopAutoSlide();
+        } else if (!isDesktopLayout()) {
+            startAutoSlide();
+        }
     });
 });

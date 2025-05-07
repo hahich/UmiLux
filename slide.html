@@ -4,283 +4,541 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Slider</title>
+    <title>Product Carousel</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            font-family: Arial, sans-serif;
             background-color: #f5f5f5;
             padding: 20px;
         }
 
-        .slider-container {
-            max-width: 100%;
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .section-sell-carousel-container {
+            max-width: 1200px;
             margin: 0 auto;
             overflow: hidden;
-            position: relative;
         }
 
-        .slider {
+        .section-sell-product-carousel {
             display: flex;
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease-out;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
         }
 
-        .product-card {
-            flex: 0 0 20%;
-            /* Default: 5 products visible on desktop */
-            padding: 10px;
-            text-align: center;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin: 0 5px;
+
+        .section-sell-product-card {
+            flex: 0 0 calc(100% / 2);
+            padding: 15px;
+            position: relative;
+            user-select: none;
         }
 
-        .product-card img {
+        .section-sell-product-inner {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-sell-product-image {
+            position: relative;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .section-sell-product-image img {
             max-width: 100%;
             height: auto;
-            border-radius: 8px;
+            max-height: 180px;
+            object-fit: contain;
         }
 
-        .discount {
+        .section-sell-product-badge {
             position: absolute;
             top: 10px;
-            left: 10px;
-            background: #00aaff;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.8em;
-        }
-
-        .product-info {
-            margin-top: 10px;
-        }
-
-        .product-info h3 {
-            font-size: 1em;
-            color: #333;
-        }
-
-        .product-info p {
-            font-size: 0.9em;
-            color: #666;
-        }
-
-        .rating {
-            color: #f5c518;
-            margin: 5px 0;
-        }
-
-        .price {
-            font-size: 1em;
-            color: #333;
-        }
-
-        .price del {
-            color: #999;
-            margin-left: 5px;
-        }
-
-        /* Hover/Click areas for navigation */
-        .hover-left,
-        .hover-right {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 50px;
-            z-index: 10;
-            cursor: pointer;
-        }
-
-        .hover-left {
             left: 0;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
         }
 
-        .hover-right {
-            right: 0;
+        .section-sell-badge-new {
+            background-color: #2aad27;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 1024px) {
-            .product-card {
-                flex: 0 0 33.33%;
-                /* 3 products visible on tablet */
+        .section-sell-badge-discount {
+            background-color: #00a2ff;
+        }
+
+        .section-sell-badge-preorder {
+            background-color: #ff9800;
+        }
+
+        .section-sell-product-brand {
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .section-sell-product-title {
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .section-sell-product-stars {
+            color: #ffc107;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .section-sell-product-price {
+            display: flex;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .section-sell-current-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #00a2ff;
+        }
+
+        .section-sell-original-price {
+            font-size: 14px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+
+        .section-sell-swipe-hint {
+            text-align: center;
+            color: #777;
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.7;
+            display: none;
+        }
+
+        .section-sell-grid-heading {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0 20px;
+            text-align: center;
+            display: none;
+        }
+
+        @media (max-width: 991px) {
+            .section-sell-swipe-hint {
+                display: block;
             }
         }
 
-        @media (max-width: 768px) {
-            .product-card {
-                flex: 0 0 50%;
-                /* 2 products visible on mobile */
+        @media (min-width: 992px) {
+            .section-sell-grid-heading {
+                display: block;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .section-sell-product-card {
+                flex: 0 0 calc(100% / 3);
+            }
+        }
+
+        @media (min-width: 992px) {
+            .section-sell-carousel-container {
+                overflow: visible;
+            }
+
+            .section-sell-product-carousel {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                gap: 0;
+                transform: none !important;
+                /* Disable transform on desktop */
+                cursor: default;
+            }
+
+            .section-sell-product-card {
+                width: 100%;
+                flex: none;
+            }
+
+            /* Hide products beyond the first 4 on desktop */
+            .section-sell-product-card:nth-child(n+5) {
+                display: none;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="slider-container">
-        <div class="slider" id="slider">
-            <div class="product-card">
-                <div class="discount">-50%</div>
-                <img src="./assets/img/products_deals/deals-1.jpg" alt="Product 1">
-                <div class="product-info">
-                    <h3>TOSHIBA S21 Ultra 5G 128GB Unlocked</h3>
-                    <p>International Version</p>
-                    <div class="rating">★★★★★</div>
-                    <div class="price">$569.00 <del>$1566.00</del></div>
+    <div class="wrapper">
+        <div class="section-bottom-sell">
+            <div class="section-sell-text">
+                <p>Best offer deal</p>
+                <h2 class="section-sell-title m-0">Top-Quality <br> Smart Home Device.</h2>
+                <button class="section-sell-btn">Shop Now</button>
+            </div>
+            <div class="section-top-sell-img">
+                <img src="./assets/img/topselling/smarthome.png" alt="">
+            </div>
+        </div>
+        <div class="section-sell-carousel-container">
+            <div class="section-sell-product-carousel">
+                <!-- Product 1 -->
+                <div class="section-sell-product-card">
+                    <div class="section-sell-product-inner">
+                        <div class="section-sell-product-image">
+                            <img src="/api/placeholder/200/250" alt="Galaxy S21 Ultra Pink">
+                        </div>
+                        <div class="section-sell-product-brand">TOSHIBA</div>
+                        <div class="section-sell-product-title">Galaxy S21 Ultra 5G 128GB Unlocked International Version
+                        </div>
+                        <div class="rating-wrapper">
+                            <div class="rating">
+                                <input value="5" type="radio" id="star5_1">
+                                <label title="text" for="star5_1"></label>
+                                <input value="4" type="radio" id="star4_1">
+                                <label title="text" for="star4_1"></label>
+                                <input value="3" type="radio" id="star3_1">
+                                <label title="text" for="star3_1"></label>
+                                <input value="2" type="radio" id="star2_1">
+                                <label title="text" for="star2_1"></label>
+                                <input value="1" type="radio" id="star1_1">
+                                <label title="text" for="star1_1"></label>
+                            </div>
+                        </div>
+                        <div class="section-sell-product-price">
+                            <div class="section-sell-current-price">$569.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="section-sell-product-card">
+                    <div class="section-sell-product-inner">
+                        <div class="section-sell-product-image">
+                            <img src="/api/placeholder/200/250" alt="Galaxy S21 Ultra Purple">
+                            <div class="section-sell-product-badge badge-discount">-50%</div>
+                        </div>
+                        <div class="section-sell-product-brand">TOSHIBA</div>
+                        <div class="section-sell-product-title">Galaxy S21 Ultra 5G 128GB Unlocked International Version
+                        </div>
+                        <div class="rating-wrapper">
+                            <div class="rating">
+                                <input value="5" type="radio" id="star5_2">
+                                <label title="text" for="star5_2"></label>
+                                <input value="4" type="radio" id="star4_2">
+                                <label title="text" for="star4_2"></label>
+                                <input value="3" type="radio" id="star3_2">
+                                <label title="text" for="star3_2"></label>
+                                <input value="2" type="radio" id="star2_2">
+                                <label title="text" for="star2_2"></label>
+                                <input value="1" type="radio" id="star1_2">
+                                <label title="text" for="star1_2"></label>
+                            </div>
+                        </div>
+                        <div class="section-sell-product-price">
+                            <div class="section-sell-current-price">$569.00</div>
+                            <div class="section-sell-original-price">$1156.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="section-sell-product-card">
+                    <div class="section-sell-product-inner">
+                        <div class="section-sell-product-image">
+                            <img src="/api/placeholder/200/250" alt="Galaxy S21 Ultra White">
+                            <div class="section-sell-product-badge badge-new">New</div>
+                        </div>
+                        <div class="section-sell-product-brand">TOSHIBA</div>
+                        <div class="section-sell-product-title">Galaxy S21 Ultra 5G 128GB Unlocked International Version
+                        </div>
+                        <div class="rating-wrapper">
+                            <div class="rating">
+                                <input value="5" type="radio" id="star5_3">
+                                <label title="text" for="star5_3"></label>
+                                <input value="4" type="radio" id="star4_3">
+                                <label title="text" for="star4_3"></label>
+                                <input value="3" type="radio" id="star3_3">
+                                <label title="text" for="star3_3"></label>
+                                <input value="2" type="radio" id="star2_3">
+                                <label title="text" for="star2_3"></label>
+                                <input value="1" type="radio" id="star1_3">
+                                <label title="text" for="star1_3"></label>
+                            </div>
+                        </div>
+                        <div class="section-sell-product-price">
+                            <div class="section-sell-current-price">$569.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="section-sell-product-card">
+                    <div class="section-sell-product-inner">
+                        <div class="section-sell-product-image">
+                            <img src="/api/placeholder/200/250" alt="Galaxy S21 Ultra Green">
+                            <div class="section-sell-product-badge badge-discount">-50%</div>
+                            <div class="section-sell-product-badge badge-preorder" style="left: auto; right: 0;">
+                                Pre-Order
+                            </div>
+                        </div>
+                        <div class="section-sell-product-brand">TOSHIBA</div>
+                        <div class="section-sell-product-title">Galaxy S21 Ultra 5G 128GB Unlocked International Version
+                        </div>
+                        <div class="rating-wrapper">
+                            <div class="rating">
+                                <input value="5" type="radio" id="star5_4">
+                                <label title="text" for="star5_4"></label>
+                                <input value="4" type="radio" id="star4_4">
+                                <label title="text" for="star4_4"></label>
+                                <input value="3" type="radio" id="star3_4">
+                                <label title="text" for="star3_4"></label>
+                                <input value="2" type="radio" id="star2_4">
+                                <label title="text" for="star2_4"></label>
+                                <input value="1" type="radio" id="star1_4">
+                                <label title="text" for="star1_4"></label>
+                            </div>
+                        </div>
+                        <div class="section-sell-product-price">
+                            <div class="section-sell-current-price">$569.00</div>
+                            <div class="section-sell-original-price">$1156.00</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="product-card">
-                <div class="discount">-50%</div>
-                <img src="./assets/img/products_deals/deals-2.jpg" alt="Product 2">
-                <div class="product-info">
-                    <h3>TOSHIBA S21 Ultra 5G 128GB Unlocked</h3>
-                    <p>International Version</p>
-                    <div class="rating">★★★★★</div>
-                    <div class="price">$569.00 <del>$1566.00</del></div>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="discount">-50%</div>
-                <img src="./assets/img/products_deals/deals-2.jpg" alt="Product 3">
-                <div class="product-info">
-                    <h3>TOSHIBA S21 Ultra 5G 128GB Unlocked</h3>
-                    <p>International Version</p>
-                    <div class="rating">★★★★★</div>
-                    <div class="price">$569.00 <del>$1566.00</del></div>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="discount">-50%</div>
-                <img src="./assets/img/products_deals/deals-2.jpg" alt="Product 4">
-                <div class="product-info">
-                    <h3>TOSHIBA S21 Ultra 5G 128GB Unlocked</h3>
-                    <p>International Version</p>
-                    <div class="rating">★★★★★</div>
-                    <div class="price">$569.00 <del>$1566.00</del></div>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="discount">-50%</div>
-                <img src="./assets/img/products_deals/deals-2.jpg" alt="Product 5">
-                <div class="product-info">
-                    <h3>TOSHIBA S21 Ultra 5G 128GB Unlocked</h3>
-                    <p>International Version</p>
-                    <div class="rating">★★★★★</div>
-                    <div class="price">$569.00 <del>$1566.00</del></div>
-                </div>
-            </div>
+            <div class="section-sell-swipe-hint">Swipe to view more products</div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const slider = document.getElementById('slider');
-            const cards = document.querySelectorAll('.product-card');
-            const container = document.querySelector('.slider-container');
-            let cardWidth = cards[0].offsetWidth + 10; // Including margin
-            let currentIndex = 0;
-            let cardsToShow = 5; // Default for desktop
-            let autoSlideInterval;
+        document.addEventListener('DOMContentLoaded', function () {
+            const carouselSell = document.querySelector('.section-sell-product-carousel');
+            let isDraggingSell = false;
+            let startPositionSell = 0;
+            let currentTranslateSell = 0;
+            let previousTranslateSell = 0;
+            let autoSlideIntervalSell;
+            let currentIndexSell = 0;
+            let animationIDSell;
 
-            // Update cards to show based on screen size
-            function updateCardsToShow() {
-                if (window.innerWidth <= 768) {
-                    cardsToShow = 2; // Mobile
-                } else if (window.innerWidth <= 1024) {
-                    cardsToShow = 3; // Tablet
-                } else {
-                    cardsToShow = 5; // Desktop
+            // Function to handle touch/mouse events
+            function handleStart(e) {
+                startPositionSell = getPositionX(e);
+                isDraggingSell = true;
+                carouselSell.classList.add('grabbing');
+
+                // Stop auto slide when user interacts
+                stopAutoSlide();
+
+                // Stop any momentum scrolling
+                cancelAnimationFrame(animationIDSell);
+            }
+
+            function handleMove(e) {
+                if (isDraggingSell) {
+                    const currentPosition = getPositionX(e);
+                    const diff = currentPosition - startPositionSell;
+                    currentTranslateSell = previousTranslateSell + diff;
+
+                    // Apply transform
+                    setTranslate(currentTranslateSell);
                 }
             }
 
-            // Update card width and slider position
-            function updateSlider() {
-                cardWidth = cards[0].offsetWidth + 10;
-                const maxIndex = Math.max(0, cards.length - cardsToShow);
-                currentIndex = Math.min(currentIndex, maxIndex);
-                slider.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-            }
+            function handleEnd() {
+                isDraggingSell = false;
+                carouselSell.classList.remove('grabbing');
 
-            // Auto-slide function
-            function startAutoSlide() {
-                clearInterval(autoSlideInterval); // Clear any existing interval
-                autoSlideInterval = setInterval(() => {
-                    const maxIndex = Math.max(0, cards.length - cardsToShow);
-                    if (currentIndex < maxIndex) {
-                        currentIndex++;
-                    } else {
-                        currentIndex = 0; // Loop back to start
+                // Calculate the closest product position
+                const carouselWidthSell = carouselSell.offsetWidth;
+                const productWidthSell = carouselSell.querySelector('.section-sell-product-card').offsetWidth;
+                const productCountSell = carouselSell.querySelectorAll('.section-sell-product-card').length;
+                const minTranslateSell = -(productCountSell * productWidthSell - carouselWidthSell);
+
+                // Snap to the closest product
+                let targetTranslate = Math.round(currentTranslateSell / productWidthSell) * productWidthSell;
+
+                // Apply boundaries
+                targetTranslate = Math.max(minTranslateSell, Math.min(0, targetTranslate));
+
+                // Update current index
+                currentIndexSell = Math.abs(Math.round(targetTranslate / productWidthSell));
+
+                // Animate to target
+                const animate = () => {
+                    const diff = targetTranslate - currentTranslateSell;
+                    const easing = 0.2;
+
+                    if (Math.abs(diff) < 0.5) {
+                        currentTranslateSell = targetTranslate;
+                        previousTranslateSell = currentTranslateSell;
+                        setTranslate(currentTranslateSell);
+
+                        // Restart auto slide after user interaction
+                        startAutoSlide();
+                        return;
                     }
-                    updateSlider();
-                }, 3000); // 3 seconds
+
+                    currentTranslateSell += diff * easing;
+                    previousTranslateSell = currentTranslateSell;
+                    setTranslate(currentTranslateSell);
+
+                    animationIDSell = requestAnimationFrame(animate);
+                };
+
+                cancelAnimationFrame(animationIDSell);
+                animationIDSell = requestAnimationFrame(animate);
             }
 
-            // Stop auto-slide
+            function getPositionX(e) {
+                return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+            }
+
+            function setTranslate(xPos) {
+                carouselSell.style.transform = `translateX(${xPos}px)`;
+            }
+
+            // Auto slide functions
+            function startAutoSlide() {
+                // Clear any existing interval
+                stopAutoSlide();
+
+                // Start new interval
+                autoSlideIntervalSell = setInterval(() => {
+                    const productWidth = carouselSell.querySelector('.section-sell-product-card').offsetWidth;
+                    const productCount = carouselSell.querySelectorAll('.section-sell-product-card').length;
+                    const carouselWidthSell = carouselSell.offsetWidth;
+                    const visibleProducts = Math.floor(carouselWidthSell / productWidth);
+                    const maxIndex = productCount - visibleProducts;
+
+                    // Move to next slide, or back to first if at the end
+                    currentIndexSell = (currentIndexSell >= maxIndex) ? 0 : currentIndexSell + 1;
+
+                    // Calculate target position
+                    const targetTranslate = -currentIndexSell * productWidth;
+
+                    // Animate to the target position
+                    animateToPosition(targetTranslate);
+                }, 3000);
+            }
+
             function stopAutoSlide() {
-                clearInterval(autoSlideInterval);
+                if (autoSlideIntervalSell) {
+                    clearInterval(autoSlideIntervalSell);
+                }
             }
 
-            // Initial setup
-            updateCardsToShow();
-            updateSlider();
-            startAutoSlide();
+            function animateToPosition(targetTranslate) {
+                // Store target for animation
+                const startTranslate = currentTranslateSell;
+                const startTime = performance.now();
+                const duration = 500; // 500ms animation
 
-            // Update on window resize
+                const animateSlide = (currentTime) => {
+                    const elapsedTime = currentTime - startTime;
+
+                    if (elapsedTime >= duration) {
+                        // Animation complete
+                        currentTranslateSell = targetTranslate;
+                        previousTranslateSell = targetTranslate;
+                        setTranslate(targetTranslate);
+                        return;
+                    }
+
+                    // Easing function (ease-out)
+                    const progress = 1 - Math.pow(1 - elapsedTime / duration, 3);
+                    const translateX = startTranslate + (targetTranslate - startTranslate) * progress;
+
+                    currentTranslateSell = translateX;
+                    previousTranslateSell = translateX;
+                    setTranslate(translateX);
+
+                    requestAnimationFrame(animateSlide);
+                };
+
+                requestAnimationFrame(animateSlide);
+            }
+
+            // Touch Events
+            carouselSell.addEventListener('touchstart', handleStart, { passive: true });
+            carouselSell.addEventListener('touchmove', handleMove, { passive: true });
+            carouselSell.addEventListener('touchend', handleEnd);
+
+            // Mouse Events
+            carouselSell.addEventListener('mousedown', handleStart);
+            carouselSell.addEventListener('mousemove', handleMove);
+            carouselSell.addEventListener('mouseup', handleEnd);
+            carouselSell.addEventListener('mouseleave', handleEnd);
+
+            // Prevent context menu on long press
+            carouselSell.addEventListener('contextmenu', e => e.preventDefault());
+
+            // Handle window resize
             window.addEventListener('resize', () => {
-                updateCardsToShow();
-                updateSlider();
+                // Reset position on resize
+                currentTranslateSell = 0;
+                previousTranslateSell = 0;
+                currentIndexSell = 0;
+                setTranslate(0);
+
+                // Check if we're on desktop or mobile/tablet
+                updateLayoutMode();
             });
 
-            // Click to slide left
-            hoverLeft.addEventListener('click', () => {
-                stopAutoSlide();
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    updateSlider();
+            // Function to check if we're in desktop mode
+            function isDesktopLayout() {
+                return window.innerWidth >= 992;
+            }
+
+            // Function to update layout mode and behavior
+            function updateLayoutMode() {
+                if (isDesktopLayout()) {
+                    // In desktop mode, disable auto slide
+                    stopAutoSlide();
+                    carouselSell.style.transform = 'none';
+                } else {
+                    // In mobile/tablet mode, enable auto slide
+                    startAutoSlide();
                 }
-                startAutoSlide();
-            });
+            }
 
-            // Click to slide right
-            hoverRight.addEventListener('click', () => {
-                stopAutoSlide();
-                const maxIndex = Math.max(0, cards.length - cardsToShow);
-                if (currentIndex < maxIndex) {
-                    currentIndex++;
-                    updateSlider();
+            // Initialize layout mode
+            updateLayoutMode();
+
+            // Pause auto slide when tab/window is not visible
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    stopAutoSlide();
+                } else if (!isDesktopLayout()) {
+                    startAutoSlide();
                 }
-                startAutoSlide();
-            });
-
-            // Mouse wheel to navigate
-            container.addEventListener('wheel', (event) => {
-                event.preventDefault();
-                stopAutoSlide();
-                const maxIndex = Math.max(0, cards.length - cardsToShow);
-                if (event.deltaY > 0 && currentIndex < maxIndex) {
-                    currentIndex++;
-                } else if (event.deltaY < 0 && currentIndex > 0) {
-                    currentIndex--;
-                }
-                updateSlider();
-                startAutoSlide();
-            });
-
-            // Stop auto-slide on hover
-            container.addEventListener('mouseenter', () => {
-                stopAutoSlide();
-            });
-
-            // Restart auto-slide on mouse leave
-            container.addEventListener('mouseleave', () => {
-                startAutoSlide();
             });
         });
     </script>
