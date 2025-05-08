@@ -7,7 +7,7 @@
     position: fixed;
     top: 0;
     left: -100%;
-    width: 250px;
+    width: 50%;
     height: 100%;
     background: var(--white);
     z-index: 1000;
@@ -96,7 +96,7 @@
     position: fixed;
     top: 0;
     left: -100%;
-    width: 250px;
+    width: 50%;
     height: 100%;
     background: var(--white);
     z-index: 1001;
@@ -152,8 +152,18 @@
         flex-wrap: nowrap;
     }
 
+    .section-categories-shop {
+        width: 100%;
+        height: 328px;
+    }
+
     .section-bottom-card {
         flex: 0 0 25%;
+    }
+
+    .icon-position {
+        width: 35px;
+        height: 35px;
     }
 
     .section-sell-swipe-hint {
@@ -247,6 +257,11 @@
         /* 3 products */
     }
 
+    .icon-position {
+        width: 35px;
+        height: 35px;
+    }
+
     .section-sell-product-card {
         flex: 0 0 calc(100% / 2);
     }
@@ -259,6 +274,12 @@
     .section-box::after {
         display: none;
     }
+
+    .section-sp {
+        width: 100%;
+        padding: 10px 20px;
+    }
+
 }
 
 @media (max-width: 576px) {
@@ -297,6 +318,11 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
+    }
+
+    .icon-position {
+        width: 25px;
+        height: 25px;
     }
 
     .section-sell-product-card {

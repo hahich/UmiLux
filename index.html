@@ -14,6 +14,11 @@
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <!-- FONTS -->
     <link rel="stylesheet" href="./assets/fonts/GeneralSans_Complete/Fonts/WEB/css/general-sans.css">
+    <!-- JQUERY -->
+    <script src="./assets/js/jquery.min.js"></script>
+    <!-- OWL Carousel -->
+    <link rel="stylesheet" href="./assets/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="./assets/owl-carousel/owl.theme.default.min.css">
 </head>
 
 <body>
@@ -376,7 +381,7 @@
                         </div>
                     </div>
 
-                    <div class="header-middle-whishlist d-none d-xl-flex">
+                    <div class="header-middle-whishlist header-middle-icon d-none d-xl-flex">
                         <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M25.7442 2.10275C24.2909 0.752316 22.3676 0 20.3687 0C18.3697 0 16.4465 0.752316 14.9931 2.10275L14 3.0345L13.0069 2.10275C11.5572 0.743159 9.62821 -0.0103607 7.62554 0.000636744C5.62664 -0.00860296 3.7019 0.744876 2.25576 2.10275C1.54386 2.75756 0.976298 3.54931 0.588263 4.42889C0.200228 5.30847 0 6.25712 0 7.216C0 8.17488 0.200228 9.12353 0.588263 10.0031C0.976298 10.8827 1.54386 11.6744 2.25576 12.3293L13.2147 22.6921C13.3222 22.7846 13.4428 22.8612 13.5727 22.9194C13.8471 23.0269 14.1529 23.0269 14.4273 22.9194C14.5572 22.8612 14.6778 22.7846 14.7853 22.6921L25.7442 12.3293C26.4561 11.6744 27.0237 10.8827 27.4117 10.0031C27.7998 9.12353 28 8.17488 28 7.216C28 6.25712 27.7998 5.30847 27.4117 4.42889C27.0237 3.54931 26.4561 2.75756 25.7442 2.10275ZM25.7442 7.19327C25.7475 7.86547 25.6121 8.53132 25.3461 9.15048C25.0801 9.76963 24.6891 10.3292 24.1968 10.7953L14 20.4536L3.81473 10.7953C3.31485 10.3331 2.91647 9.77502 2.64415 9.15553C2.37183 8.53604 2.23134 7.86823 2.23134 7.19327C2.23134 6.51832 2.37183 5.85051 2.64415 5.23102C2.91647 4.61153 3.31485 4.05348 3.81473 3.59127C4.84037 2.62701 6.20703 2.09319 7.62554 2.10275C9.05112 2.09206 10.4254 2.62562 11.4595 3.59127L13.2147 5.2616C13.3222 5.3541 13.4428 5.43066 13.5727 5.48886C13.8471 5.59638 14.1529 5.59638 14.4273 5.48886C14.5572 5.43066 14.6778 5.3541 14.7853 5.2616L16.5521 3.59127C17.5777 2.62701 18.9444 2.09319 20.3629 2.10275C21.7885 2.09206 23.1628 2.62562 24.1968 3.59127C24.6933 4.0554 25.0886 4.6141 25.3586 5.23335C25.6286 5.8526 25.7676 6.51944 25.7673 7.19327H25.7442Z"
@@ -387,7 +392,7 @@
                     </div>
 
                     <div class="header-middle-cart-icon">
-                        <div class="header-middle-row-icon">
+                        <div class="header-middle-row-icon header-middle-icon">
                             <svg width="27" height="23" viewBox="0 0 27 23" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -621,8 +626,8 @@
         </section>
 
         <section class="slider-container" id="sliderContainer">
-            <div class="slider" id="slider">
-                <div class="product">
+            <div class="slider owl-carousel carousel-sale" id="slider">
+                <div class="product items">
                     <a href="#">
                         <div class="circle-category">
                             <img src="./assets/img/slider/dailyDeals.png" alt="">
@@ -631,7 +636,7 @@
                     </a>
                 </div>
 
-                <div class="product">
+                <div class="product items">
                     <a href="#">
                         <div class="circle-category circle-sale-50">
                             <div class="circle-text">
@@ -667,7 +672,7 @@
                     </a>
                 </div>
 
-                <div class="product">
+                <div class="product items">
                     <a href="#">
                         <div class="circle-category">
                             <img src="./assets/img/slider/MacPC.png" alt="">
@@ -676,7 +681,7 @@
                     </a>
                 </div>
 
-                <div class="product">
+                <div class="product items">
                     <a href="#">
                         <div class="circle-category circle-phone">
                             <img src="./assets/img/slider/phone.png" alt="">
@@ -684,7 +689,8 @@
                         <p>Phone/Mobile</p>
                     </a>
                 </div>
-                <div class="product">
+
+                <div class="product items">
                     <a href="#">
                         <div class="circle-category">
                             <img src="./assets/img/slider/tablet.png" alt="">
@@ -692,7 +698,8 @@
                         <p>Tablet/Ipad Pro</p>
                     </a>
                 </div>
-                <div class="product">
+
+                <div class="product items">
                     <a href="#">
                         <div class="circle-category">
                             <img src="./assets/img/slider/camera.png" alt="">
@@ -700,7 +707,8 @@
                         <p>Camera/Photo</p>
                     </a>
                 </div>
-                <div class="product">
+
+                <div class="product items">
                     <a href="#">
                         <div class="circle-category">
                             <img src="./assets/img/slider/Home.png" alt="">
@@ -708,7 +716,8 @@
                         <p>Home/Electronios</p>
                     </a>
                 </div>
-                <div class="product">
+
+                <div class="product items">
                     <div class="">
                         <div class="circle-category circle-clearance">
                             <div class="circle-text-last">
@@ -788,8 +797,8 @@
             <div class="divider" style="background-color: #E5E8EC; margin: 15px 0 30px 0;"></div>
 
             <div class="slider-container-deals">
-                <div class="section-bottom-products" id="section-slider-card">
-                    <div class="section-bottom-card">
+                <div class="section-bottom-products owl-carousel carousel-deals" id="section-slider-card">
+                    <div class="section-bottom-card items">
                         <div class="section-discount">-50%</div>
                         <div class="section-img">
                             <img src="./assets/img/products_deals/deals-1.jpg" alt="galaxy s21 ultra" loading="lazy">
@@ -862,7 +871,7 @@
                         </div>
                     </div>
 
-                    <div class="section-bottom-card">
+                    <div class="section-bottom-card items">
                         <div class="section-discount">-50%</div>
                         <div class="section-img">
                             <img src="./assets/img/products_deals/deals-2.jpg" alt="galaxy s21 ultra" loading="lazy">
@@ -934,7 +943,7 @@
                         </div>
                     </div>
 
-                    <div class="section-bottom-card">
+                    <div class="section-bottom-card items">
                         <div class="section-discount">-50%</div>
                         <div class="section-img">
                             <img src="./assets/img/products_deals/deals-3.jpg" alt="galaxy s21 ultra" loading="lazy">
@@ -1006,7 +1015,7 @@
                         </div>
                     </div>
 
-                    <div class="section-bottom-card">
+                    <div class="section-bottom-card items">
                         <div class="section-discount">-50%</div>
                         <div class="section-img">
                             <img src="./assets/img/products_deals/deals-4.jpg" alt="galaxy s21 ultra" loading="lazy">
@@ -1078,7 +1087,7 @@
                         </div>
                     </div>
 
-                    <div class="section-bottom-card">
+                    <div class="section-bottom-card items">
                         <div class="section-discount">-50%</div>
                         <div class="section-img">
                             <img src="./assets/img/products_deals/deals-5.jpg" alt="galaxy s21 ultra" loading="lazy">
@@ -1172,7 +1181,7 @@
                     </div>
                 </div>
 
-                <div style="margin-bottom: 30px; width: 97%; margin: 0 auto 30px; background-color: var(--gray);"
+                <div style="margin-bottom: 30px; width: 97%; margin: 0 auto 30px; background-color: var(--bg-divider);"
                     class="divider"></div>
 
                 <div class="section-bottom-wrapper">
@@ -1367,12 +1376,12 @@
                     </a>
                 </div>
             </div>
-            <div style="margin-bottom: 30px; width: 97%; margin: 0 auto 30px; background-color: var(--gray);"
+            <div style="margin-bottom: 30px; width: 97%; margin: 0 auto 30px; background-color: var(--bg-divider);"
                 class="divider"></div>
 
             <div class="products-container-recommend">
-                <div class="products-wrapper-recommend" id="products-recommend">
-                    <div class="product-card-recommend ">
+                <div class="products-wrapper-recommend owl-carousel carousel-recommend" id="products-recommend">
+                    <div class="product-card-recommend items">
                         <span class="section-discount">-50%</span>
                         <img src="./assets/img/recommend/9_1.jpg" alt="iPhone 13 Pro" class="product-image-recommend">
                         <div class="section-icon">
@@ -1442,7 +1451,7 @@
                         </div>
                     </div>
 
-                    <div class="product-card-recommend ">
+                    <div class="product-card-recommend items">
                         <span class="section-discount">-50%</span>
                         <img src="./assets/img/recommend/9_2.jpg" alt="iPhone 13 Pro" class="product-image-recommend">
                         <div class="section-icon">
@@ -1512,7 +1521,7 @@
                         </div>
                     </div>
 
-                    <div class="product-card-recommend ">
+                    <div class="product-card-recommend items">
                         <span class="section-discount">-50%</span>
                         <div class="section-sell-product-badge section-sell-badge-preorder section-discount"
                             style="left: 10px; top: 28px;">
@@ -1586,7 +1595,7 @@
                         </div>
                     </div>
 
-                    <div class="product-card-recommend ">
+                    <div class="product-card-recommend items">
                         <span class="section-discount">-50%</span>
                         <img src="./assets/img/recommend/9_4.jpg" alt="iPhone 13 Pro" class="product-image-recommend">
                         <div class="section-icon">
@@ -1656,7 +1665,7 @@
                         </div>
                     </div>
 
-                    <div class="product-card-recommend ">
+                    <div class="product-card-recommend items">
                         <span class="section-discount">-50%</span>
                         <img src="./assets/img/recommend/9_5.jpg" alt="iPhone 13 Pro" class="product-image-recommend">
                         <div class="section-icon">
@@ -1746,7 +1755,7 @@
                     </a>
                 </div>
             </div>
-            <div style="margin-bottom: 30px; width: 97%; margin: 0 auto 30px; background-color: var(--gray);"
+            <div style="margin-bottom: 30px; width: 97%; margin: 0 auto 30px; background-color: var(--bg-divider);"
                 class="divider"></div>
 
             <div class="section-promotions-blog d-flex flex-column flex-lg-row">
@@ -1756,8 +1765,11 @@
                     </div>
 
                     <div class="deals-card-text">
-                        <p>Cyber Monday - Save $599 On Speaker</p>
-                        <span class="deals-card-info">Save 50% on order more than $99. Delivery in 1 days. Apply for the
+                        <a href="#">
+                            <p>Cyber Monday - Save $599 On Speaker</p>
+                        </a>
+                        <span class="deals-card-info">Save 50% on order more than $99. Delivery in 1 days. Apply for
+                            the
                             first 1k Customers.</span>
                     </div>
                 </div>
@@ -1769,8 +1781,11 @@
                     </div>
 
                     <div class="deals-card-text">
-                        <p>Sale Off Unlimited - Buy 1 Get 2 </p>
-                        <span class="deals-card-info">Save 80% on order more than $599. Delivery in 1 days. Apply for
+                        <a href="#">
+                            <p>Sale Off Unlimited - Buy 1 Get 2 </p>
+                        </a>
+                        <span class="deals-card-info">Save 80% on order more than $599. Delivery in 1 days. Apply
+                            for
                             the first 1k Customers.</span>
                     </div>
                 </div>
@@ -1781,7 +1796,9 @@
                     </div>
 
                     <div class="deals-card-text">
-                        <p>Hurry Up - Smartphone Only $299</p>
+                        <a href="#">
+                            <p>Hurry Up - Smartphone Only $299</p>
+                        </a>
                         <span class="deals-card-info">All smartphone products at the same price $299. Delivery in 1
                             days. Apply for the first 1k Customers.</span>
                     </div>
@@ -1790,7 +1807,7 @@
             </div>
         </section>
 
-        <div style="background-color: var(--gray);" class="divider"></div>
+        <div style="background-color: var(--bg-divider);" class="divider"></div>
 
         <section id="section-shipping" class="flex-column flex-lg-row">
             <div class="section-box">
@@ -1876,9 +1893,89 @@
                 </div>
             </div>
         </section>
+
+        <section id="section-support" class="flex-column">
+            <div class="section-sp-title">
+                <p class="text-center">Help center</p>
+                <h3>Online Support 24/7</h3>
+            </div>
+
+            <div class="section-sp-wrapper flex-column flex-md-row flex">
+                <div class="section-sp flex">
+                    <div class="section-sp-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M25.0038 20.963C25.0038 21.359 24.9156 21.766 24.7283 22.162C24.5411 22.558 24.2987 22.932 23.9792 23.284C23.4394 23.878 22.8445 24.307 22.1725 24.582C21.5115 24.857 20.7954 25 20.0243 25C18.9006 25 17.6998 24.736 16.4329 24.197C15.166 23.658 13.8991 22.932 12.6432 22.019C11.3763 21.095 10.1755 20.072 9.02979 18.939C7.89509 17.795 6.87055 16.596 5.95618 15.342C5.05283 14.088 4.32574 12.834 3.79694 11.591C3.26815 10.337 3.00375 9.138 3.00375 7.994C3.00375 7.246 3.13595 6.531 3.40035 5.871C3.66475 5.2 4.08337 4.584 4.66725 4.034C5.37231 3.341 6.14346 3 6.95869 3C7.26715 3 7.57561 3.066 7.85103 3.198C8.13746 3.33 8.39084 3.528 8.58913 3.814L11.145 7.411C11.3433 7.686 11.4865 7.939 11.5856 8.181C11.6848 8.412 11.7399 8.643 11.7399 8.852C11.7399 9.116 11.6627 9.38 11.5085 9.633C11.3653 9.886 11.156 10.15 10.8916 10.414L10.0543 11.283C9.93315 11.404 9.87807 11.547 9.87807 11.723C9.87807 11.811 9.88908 11.888 9.91112 11.976C9.94417 12.064 9.97722 12.13 9.99925 12.196C10.1975 12.559 10.5391 13.032 11.0238 13.604C11.5195 14.176 12.0483 14.759 12.6212 15.342C13.2161 15.925 13.7889 16.464 14.3728 16.959C14.9457 17.443 15.4194 17.773 15.7939 17.971C15.849 17.993 15.9151 18.026 15.9922 18.059C16.0804 18.092 16.1685 18.103 16.2677 18.103C16.4549 18.103 16.5981 18.037 16.7193 17.916L17.5566 17.091C17.832 16.816 18.0964 16.607 18.3498 16.475C18.6032 16.321 18.8565 16.244 19.132 16.244C19.3413 16.244 19.5616 16.288 19.804 16.387C20.0463 16.486 20.2997 16.629 20.5751 16.816L24.2216 19.401C24.508 19.599 24.7063 19.83 24.8275 20.105C24.9377 20.38 25.0038 20.655 25.0038 20.963Z"
+                                stroke="#111111" stroke-width="2" stroke-miterlimit="10" />
+                            <path
+                                d="M21.0038 11C21.0038 10.3143 20.4666 9.26286 19.6666 8.40571C18.9352 7.61714 17.9638 7 17.0038 7"
+                                stroke="#00A2C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M25.0038 11C25.0038 6.57714 21.4266 3 17.0038 3" stroke="#00A2C2" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+
+                    <div class="section-call">
+                        <p>Call Us</p>
+                        <span>Call now +222-1800-2628</span>
+                    </div>
+                </div>
+
+
+                <div class="section-sp flex">
+                    <div class="section-sp-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M25.6666 11.6666V15.1666C25.6666 19.8332 23.3333 22.1666 18.6666 22.1666H18.0833C17.7216 22.1666 17.3716 22.3416 17.15 22.6332L15.4 24.9666C14.63 25.9932 13.37 25.9932 12.6 24.9666L10.85 22.6332C10.6633 22.3766 10.2316 22.1666 9.91665 22.1666H9.33331C4.66665 22.1666 2.33331 20.9999 2.33331 15.1666V9.33325C2.33331 4.66658 4.66665 2.33325 9.33331 2.33325H16.3333"
+                                stroke="#111111" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M22.75 8.16659C24.3608 8.16659 25.6666 6.86075 25.6666 5.24992C25.6666 3.63909 24.3608 2.33325 22.75 2.33325C21.1391 2.33325 19.8333 3.63909 19.8333 5.24992C19.8333 6.86075 21.1391 8.16659 22.75 8.16659Z"
+                                stroke="#00A2C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M18.6626 12.8333H18.673" stroke="#111111" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M13.9947 12.8333H14.0052" stroke="#111111" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9.32693 12.8333H9.3374" stroke="#111111" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="section-call">
+                        <p>Chat with Us</p>
+                        <span>Chat now with an expert</span>
+                    </div>
+                </div>
+
+                <div class="section-sp flex">
+                    <div class="section-sp-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M26.0032 12.2353V18.1176C26.0032 22.2353 23.6032 24 20.0032 24H8.00317C4.40317 24 2.00317 22.2353 2.00317 18.1176V9.88235C2.00317 5.76471 4.40317 4 8.00317 4H16.4032"
+                                stroke="#111111" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M7.99854 10L11.8819 13.2103C13.1598 14.2632 15.2566 14.2632 16.5345 13.2103L17.9985 12.0032"
+                                stroke="#111111" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M23.0015 9C24.6583 9 26.0015 7.65685 26.0015 6C26.0015 4.34315 24.6583 3 23.0015 3C21.3446 3 20.0015 4.34315 20.0015 6C20.0015 7.65685 21.3446 9 23.0015 9Z"
+                                stroke="#00A2C2" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="section-call">
+                        <p>Email Us</p>
+                        <span>Blueskytechcompany@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-center section-text-bottom">Trusted by 5.9 Million American**. We always try to bring the best experience to customers when shopping at Umino.</p>
+        </section>
     </main>
 
     <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/owl-carousel/owl.carousel.min.js"></script>
     <script src="./assets/js/index.js"></script>
 </body>
 

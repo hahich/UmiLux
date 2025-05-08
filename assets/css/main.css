@@ -48,29 +48,38 @@
 
 /* Root Variables */
 :root {
-    --font-family: 'GeneralSans', sans-serif;
-    --container-width: 1425px;
+    /* Colors */
+    --white: #FFFFFF;
+    --black: #000000;
+    --gray: #808080;
+    --gray-5555: #555555;
     --dark-navy-blue: #253380;
     --light-navy-blue: #00A2C2;
-    --border-header: #364A9B;
-    --black: #111111;
-    --white: #ffffff;
-    --gray: #999485;
-    --bg-selling: #F1F3F7;
-    --red-color: #DD3327;
-    --purple: #7B50F0;
-    --yellow: #FFB800;
-    --green: #008A00;
-    --flex: flex;
-    --center: center;
-    --space-between: space-between;
-    --gap-25: 25px;
-    --gap-10: 10px;
-    --fs-14: 14px;
-    --header-font-size: 50px;
+    --yellow: #FFD700;
+    --purple: #800080;
+    --red-color: #FF0000;
+    --green: #008000;
+
+    /* Background Colors */
     --bg-console: #24B0C5;
     --bg-phone: #E8426A;
     --bg-camera: #6944E6;
+    --bg-selling: #F1F3F7;
+    --bg-divider: #E5E8EC;
+
+    /* Layout */
+    --container-width: 1425px;
+    --flex: flex;
+    --center: center;
+    --space-between: space-between;
+
+    /* Spacing */
+    --gap-10: 10px;
+    --gap-25: 25px;
+
+    /* Typography */
+    --fs-14: 14px;
+    --header-font-size: 3.5rem;
 }
 
 /* Global Styles */
@@ -107,8 +116,18 @@ button {
     background-color: inherit;
 }
 
+img {
+    max-width: 100%;
+}
+
+.flex {
+    display: var(--flex);
+    justify-content: var(--center);
+    align-items: var(--center);
+}
+
 .divider {
     width: 100%;
     height: 1px;
-    background: var(--border-header);
+    background: #364A9B;
 }

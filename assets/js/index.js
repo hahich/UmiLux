@@ -1,62 +1,75 @@
-// Dropdown functionality for language and currency selection
-function toggleDropdown(dropdownId) {
-    const dropdown = document.getElementById(dropdownId);
-    const allDropdowns = document.querySelectorAll('.dropdown');
-
-    // Close all other dropdowns
-    allDropdowns.forEach(dd => {
-        if (dd.id !== dropdownId) {
-            dd.classList.remove('active');
-        }
-    });
-
-    // Toggle the clicked dropdown
-    dropdown.classList.toggle('active');
-}
-
-// dropdown categories
-const categoryToggle = document.getElementById('categoryToggle');
-const submenu = document.getElementById('submenu');
-const overlay = document.getElementById('overlay');
-
-// Toggle submenu and overlay on click
-categoryToggle.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent click from bubbling to document
-    submenu.classList.toggle('active');
-    overlay.classList.toggle('active');
+// DOM loaded actions
+document.addEventListener('DOMContentLoaded', () => {
+    initDropdowns();
+    initCategoryMenu();
+    initBannerSlider();
 });
 
-// Hide submenu and overlay with fade-out when clicking outside
-document.addEventListener('click', (e) => {
-    if (!categoryToggle.contains(e.target)) {
-        submenu.classList.remove('active');
-        overlay.classList.remove('active');
-    }
-});
-
-// Also close when clicking directly on the overlay
-overlay.addEventListener('click', () => {
-    submenu.classList.remove('active');
-    overlay.classList.remove('active');
-});
-
-// Close dropdowns when clicking outside
-document.addEventListener('click', function (event) {
+// ====== Dropdown functionality ======
+function initDropdowns() {
     const dropdowns = document.querySelectorAll('.dropdown');
     const options = document.querySelectorAll('.language-option, .currency-option');
 
-    if (!Array.from(options).some(option => option.contains(event.target))) {
-        dropdowns.forEach(dropdown => {
-            dropdown.classList.remove('active');
+    // Toggle dropdown display
+    window.toggleDropdown = function (dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+
+        // Close all other dropdowns
+        dropdowns.forEach(dd => {
+            if (dd.id !== dropdownId) {
+                dd.classList.remove('active');
+            }
         });
-    }
-});
+
+        // Toggle the clicked dropdown
+        dropdown.classList.toggle('active');
+    };
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function (event) {
+        if (!Array.from(options).some(option => option.contains(event.target))) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+}
+
+// ====== Category Menu ======
+function initCategoryMenu() {
+    const categoryToggle = document.getElementById('categoryToggle');
+    const submenu = document.getElementById('submenu');
+    const overlay = document.getElementById('overlay');
+
+    if (!categoryToggle || !submenu || !overlay) return;
+
+    // Toggle submenu and overlay on click
+    categoryToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        submenu.classList.toggle('active');
+        overlay.classList.toggle('active');
+    });
+
+    // Hide submenu and overlay when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!categoryToggle.contains(e.target)) {
+            submenu.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+    });
+
+    // Also close when clicking directly on the overlay
+    overlay.addEventListener('click', () => {
+        submenu.classList.remove('active');
+        overlay.classList.remove('active');
+    });
+}
 
 // Slider
-document.addEventListener('DOMContentLoaded', () => {
+function initBannerSlider() {
     const prevButton = document.querySelector('.prev');
     const nextButton = document.querySelector('.next');
-    const carousel = document.querySelector('.banner');
+    const carousel = document.querySelector('#banner');
     const inner = document.querySelector('.banner-inner');
     const items = document.querySelectorAll('.banner-item');
     const dots = document.querySelectorAll('.dot');
@@ -118,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     carousel.addEventListener('mouseleave', startAutoSlide);
 
     startAutoSlide();
-});
+};
 
 // Menu mobile
 function toggleMenu() {
@@ -126,9 +139,7 @@ function toggleMenu() {
     const backdrop = document.getElementById('backdrop');
     menuOverlay.classList.toggle('active');
     backdrop.classList.toggle('active');
-    // Reset màu khi đóng/mở menu chính
     menuOverlay.classList.remove('gray');
-    // Đóng tất cả submenu
     document.querySelectorAll('.mobile-sub-menu').forEach(subMenu => {
         subMenu.classList.remove('active');
     });
@@ -139,17 +150,14 @@ function toggleSubMenu(menuId) {
     const menuOverlay = document.getElementById('menuOverlay');
     const isActive = subMenu.classList.contains('active');
 
-    // Đóng tất cả submenu trước
     document.querySelectorAll('.mobile-sub-menu').forEach(subMenu => {
         subMenu.classList.remove('active');
     });
 
-    // Nếu submenu chưa active, mở nó và đổi màu menu chính
     if (!isActive) {
         subMenu.classList.add('active');
         menuOverlay.classList.add('gray');
     } else {
-        // Nếu submenu đang active, đóng nó và bỏ màu xám
         menuOverlay.classList.remove('gray');
     }
 }
@@ -168,157 +176,62 @@ function closeAll() {
 }
 
 // slider sale
-document.addEventListener('DOMContentLoaded', () => {
-    const sliderContainer = document.getElementById('sliderContainer');
-    const slider = document.getElementById('slider');
-    const products = document.querySelectorAll('.product');
-    const totalProducts = products.length;
+$(document).ready(function () {
+    const isMobile = window.innerWidth < 1024;
 
-    let isDraggingSlide = false;
-    let startPosition = 0;
-    let currentTranslate = 0;
-    let prevTranslate = 0;
-    let animationID = 0;
-    let startX = 0;
-    let currentX = 0;
-
-    function getItemsPerSlide() {
-        if (window.innerWidth < 576) return 2;
-        if (window.innerWidth <= 767) return 3;
-        if (window.innerWidth <= 1024) return 4;
-        return 8;
-    }
-
-    function setSliderItemWidth() {
-        const itemsPerSlide = getItemsPerSlide();
-        const itemWidth = 100 / itemsPerSlide;
-
-        products.forEach(product => {
-            product.style.flex = `0 0 ${itemWidth}%`;
-        });
-    }
-
-    function touchStart(event) {
-        startX = getPositionX(event);
-        isDraggingSlide = true;
-        startPosition = getPositionX(event);
-
-        cancelAnimationFrame(animationID);
-        slider.classList.add('grabbing');
-        slider.style.transition = 'none';
-    }
-
-    function touchMove(event) {
-        if (isDraggingSlide) {
-            currentX = getPositionX(event);
-            const diff = currentX - startX;
-
-            currentTranslate = prevTranslate + diff / sliderContainer.offsetWidth * 100;
-
-            const itemsPerSlide = getItemsPerSlide();
-            const minTranslate = -((totalProducts - itemsPerSlide) / itemsPerSlide * 100);
-            const maxTranslate = 0;
-
-            if (currentTranslate < minTranslate) {
-                const overscroll = minTranslate - currentTranslate;
-                currentTranslate = minTranslate - (overscroll * 0.2);
-            } else if (currentTranslate > maxTranslate) {
-                const overscroll = currentTranslate - maxTranslate;
-                currentTranslate = maxTranslate + (overscroll * 0.2);
-            }
-
-            setSliderPosition();
+    $('.carousel-sale').owlCarousel({
+        loop: isMobile,
+        nav: false,
+        mouseDrag: true,
+        touchDrag: true,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+        responsive: {
+            0: { items: 1 },
+            576: { items: 2 },
+            756: { items: 3 },
+            1024: { items: 4 },
+            1200: { items: 8 },
         }
-    }
+    })
 
-    function touchEnd() {
-        isDraggingSlide = false;
-        slider.classList.remove('grabbing');
-        slider.style.transition = 'transform 0.3s ease';
-
-        const itemsPerSlide = getItemsPerSlide();
-        const moveBy = currentX - startX;
-
-        const maxTranslate = -((totalProducts - itemsPerSlide) / itemsPerSlide * 100);
-
-        if (currentTranslate < maxTranslate) {
-            currentTranslate = maxTranslate;
-        } else if (currentTranslate > 0) {
-            currentTranslate = 0;
-        } else {
-            const itemWidth = 100 / itemsPerSlide;
-            const snapPosition = Math.round(currentTranslate / itemWidth) * itemWidth;
-            currentTranslate = snapPosition;
+    // products deals
+    $('.carousel-deals').owlCarousel({
+        loop: isMobile,
+        nav: false,
+        mouseDrag: false,
+        touchDrag: true,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+        responsive: {
+            0: { items: 1 },
+            576: { items: 2 },
+            768: { items: 3 },
+            1024: { items: 4 },
+            1200: { items: 5 },
         }
+    })
 
-        prevTranslate = currentTranslate;
-        setSliderPosition();
-    }
-
-    function handleWheel(event) {
-        event.preventDefault();
-
-        slider.style.transition = 'transform 0.3s ease';
-
-        const delta = Math.sign(event.deltaX || event.deltaY);
-        const itemsPerSlide = getItemsPerSlide();
-        const scrollAmount = delta * (100 / itemsPerSlide);
-
-        currentTranslate = prevTranslate - scrollAmount;
-
-        const maxNegativeTranslate = -((totalProducts - itemsPerSlide) / itemsPerSlide * 100);
-
-        if (currentTranslate < maxNegativeTranslate) {
-            currentTranslate = maxNegativeTranslate;
-        } else if (currentTranslate > 0) {
-            currentTranslate = 0;
+    // products recommend
+    $('.carousel-recommend').owlCarousel({
+        loop: isMobile,
+        nav: false,
+        mouseDrag: false,
+        touchDrag: true,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+        responsive: {
+            0: { items: 1 },
+            576: { items: 2 },
+            768: { items: 3 },
+            1024: { items: 4 },
+            1200: { items: 5 },
         }
-
-        prevTranslate = currentTranslate;
-        setSliderPosition();
-    }
-
-    function getPositionX(event) {
-        return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-    }
-
-    function setSliderPosition() {
-        slider.style.transform = `translateX(${currentTranslate}%)`;
-    }
-
-    sliderContainer.addEventListener('mousedown', touchStart);
-    sliderContainer.addEventListener('touchstart', touchStart);
-
-    window.addEventListener('mousemove', touchMove);
-    window.addEventListener('touchmove', touchMove);
-
-    window.addEventListener('mouseup', touchEnd);
-    window.addEventListener('touchend', touchEnd);
-    window.addEventListener('mouseleave', touchEnd);
-
-    sliderContainer.addEventListener('wheel', handleWheel, { passive: false });
-
-    window.addEventListener('resize', () => {
-        setSliderItemWidth();
-
-        slider.style.transition = 'none';
-
-        const itemsPerSlide = getItemsPerSlide();
-        const maxNegativeTranslate = -((totalProducts - itemsPerSlide) / itemsPerSlide * 100);
-
-        if (currentTranslate < maxNegativeTranslate) {
-            currentTranslate = maxNegativeTranslate;
-            prevTranslate = currentTranslate;
-            setSliderPosition();
-        }
-
-        setTimeout(() => {
-            slider.style.transition = 'transform 0.3s ease';
-        }, 50);
-    });
-
-    setSliderItemWidth();
-});
+    })
+})
 
 // Countdown time
 let countDowns = localStorage.getItem('countDownEndTime');
@@ -345,176 +258,6 @@ const x = setInterval(function () {
     document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
     document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
 }, 1000);
-
-
-// products deals
-const sliderDeals = document.getElementById('section-slider-card');
-const cardsDeals = document.querySelectorAll('.section-bottom-card');
-const containerDeals = document.querySelector('.slider-container-deals');
-
-let currentIndexDeals = 0;
-let cardsToShowDeals = 5;
-let autoSlideIntervalDeals;
-
-let isDragging = false;
-let startPosition = 0;
-let currentTranslate = 0;
-let prevTranslate = 0;
-
-function updateCardsToShow() {
-    if (window.innerWidth <= 576) {
-        cardsToShowDeals = 2;
-    } else if (window.innerWidth <= 768) {
-        cardsToShowDeals = 3;
-    } else if (window.innerWidth <= 1024) {
-        cardsToShowDeals = 4;
-    } else {
-        cardsToShowDeals = 5;
-    }
-
-    updateSliderDeals();
-}
-
-function updateSliderDeals() {
-    const cardWidthPercent = 100 / cardsToShowDeals;
-    const translateValue = currentIndexDeals * cardWidthPercent;
-
-    const maxIndex = cardsDeals.length - cardsToShowDeals;
-    if (currentIndexDeals < 0) currentIndexDeals = 0;
-    if (currentIndexDeals > maxIndex) currentIndexDeals = maxIndex;
-
-    sliderDeals.style.transform = `translateX(-${translateValue}%)`;
-    prevTranslate = -translateValue;
-}
-
-function startAutoSliderDeals() {
-    clearInterval(autoSlideIntervalDeals);
-    autoSlideIntervalDeals = setInterval(() => {
-        const maxIndex = cardsDeals.length - cardsToShowDeals;
-        if (currentIndexDeals < maxIndex) {
-            currentIndexDeals++;
-        } else {
-            currentIndexDeals = 0;
-        }
-        updateSliderDeals();
-    }, 5000);
-}
-
-function stopAutoSlideDeals() {
-    clearInterval(autoSlideIntervalDeals);
-}
-
-updateCardsToShow();
-startAutoSliderDeals();
-
-window.addEventListener('resize', () => {
-    updateCardsToShow();
-});
-
-containerDeals.addEventListener('wheel', (event) => {
-    event.preventDefault();
-    stopAutoSlideDeals();
-
-    const maxIndex = cardsDeals.length - cardsToShowDeals;
-    if (event.deltaY > 0 && currentIndexDeals < maxIndex) {
-        currentIndexDeals++;
-    } else if (event.deltaY < 0 && currentIndexDeals > 0) {
-        currentIndexDeals--;
-    }
-
-    updateSliderDeals();
-
-    clearTimeout(window.wheelTimeout);
-    window.wheelTimeout = setTimeout(() => {
-        startAutoSliderDeals();
-    }, 1000);
-});
-
-function touchStart(event) {
-    stopAutoSlideDeals();
-    isDragging = true;
-    startPosition = getPositionX(event);
-
-    document.addEventListener('mousemove', touchMove);
-    document.addEventListener('mouseup', touchEnd);
-    document.addEventListener('touchmove', touchMove);
-    document.addEventListener('touchend', touchEnd);
-}
-
-function touchMove(event) {
-    if (isDragging) {
-        const currentPosition = getPositionX(event);
-        const diff = currentPosition - startPosition;
-
-        const cardWidthPercent = 100 / cardsToShowDeals;
-        const containerWidth = containerDeals.offsetWidth;
-        const movePercentage = (diff / containerWidth) * 100;
-
-        currentTranslate = prevTranslate + movePercentage;
-
-        const maxTranslate = 0;
-        const minTranslate = -((cardsDeals.length - cardsToShowDeals) * cardWidthPercent);
-
-        if (currentTranslate > maxTranslate) {
-            currentTranslate = maxTranslate;
-        }
-
-        if (currentTranslate < minTranslate) {
-            currentTranslate = minTranslate;
-        }
-
-        sliderDeals.style.transform = `translateX(${currentTranslate}%)`;
-    }
-}
-
-function touchEnd() {
-    isDragging = false;
-
-    const cardWidthPercent = 100 / cardsToShowDeals;
-    const movedPercent = Math.abs(currentTranslate - prevTranslate);
-
-    if (movedPercent > (cardWidthPercent * 0.2)) {
-        if (currentTranslate > prevTranslate) {
-            currentIndexDeals--;
-        } else {
-            currentIndexDeals++;
-        }
-    }
-
-    const maxIndex = cardsDeals.length - cardsToShowDeals;
-    if (currentIndexDeals < 0) currentIndexDeals = 0;
-    if (currentIndexDeals > maxIndex) currentIndexDeals = maxIndex;
-
-    updateSliderDeals();
-
-    document.removeEventListener('mousemove', touchMove);
-    document.removeEventListener('mouseup', touchEnd);
-    document.removeEventListener('touchmove', touchMove);
-    document.removeEventListener('touchend', touchEnd);
-
-    setTimeout(startAutoSliderDeals, 1000);
-}
-
-function getPositionX(event) {
-    return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-}
-
-containerDeals.addEventListener('mousedown', touchStart);
-containerDeals.addEventListener('touchstart', touchStart);
-
-containerDeals.addEventListener('dragstart', (e) => {
-    e.preventDefault();
-});
-
-containerDeals.addEventListener('mouseenter', () => {
-    stopAutoSlideDeals();
-});
-
-containerDeals.addEventListener('mouseleave', () => {
-    if (!isDragging) {
-        startAutoSliderDeals();
-    }
-});
 
 // Carousel Products
 document.addEventListener('DOMContentLoaded', function () {
@@ -721,90 +464,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// products recommend
-document.addEventListener('DOMContentLoaded', function () {
-    const productsContainerRecommend = document.getElementById('products-recommend');
-    let isDraggingRecommend = false;
-    let startPositionRecommend;
-    let scrollLeftRecommend;
 
-    // Desktop doesn't need dragging, only enable on tablet and mobile
-    function checkViewport() {
-        if (window.innerWidth <= 992) {
-            enableDragging();
-        } else {
-            disableDragging();
-        }
-    }
-
-    function enableDragging() {
-        // Mouse events
-        productsContainerRecommend.addEventListener('mousedown', startDrag);
-        productsContainerRecommend.addEventListener('mousemove', drag);
-        productsContainerRecommend.addEventListener('mouseup', endDrag);
-        productsContainerRecommend.addEventListener('mouseleave', endDrag);
-
-        // Touch events
-        productsContainerRecommend.addEventListener('touchstart', startDragTouch);
-        productsContainerRecommend.addEventListener('touchmove', dragTouch);
-        productsContainerRecommend.addEventListener('touchend', endDrag);
-    }
-
-    function disableDragging() {
-        // Remove all event listeners
-        productsContainerRecommend.removeEventListener('mousedown', startDrag);
-        productsContainerRecommend.removeEventListener('mousemove', drag);
-        productsContainerRecommend.removeEventListener('mouseup', endDrag);
-        productsContainerRecommend.removeEventListener('mouseleave', endDrag);
-
-        productsContainerRecommend.removeEventListener('touchstart', startDragTouch);
-        productsContainerRecommend.removeEventListener('touchmove', dragTouch);
-        productsContainerRecommend.removeEventListener('touchend', endDrag);
-    }
-
-    function startDrag(e) {
-        isDraggingRecommend = true;
-        startPositionRecommend = e.pageX - productsContainerRecommend.offsetLeft;
-        scrollLeftRecommend = productsContainerRecommend.scrollLeft;
-        productsContainerRecommend.classList.add('dragging');
-
-        // Prevent default behavior
-        e.preventDefault();
-    }
-
-    function startDragTouch(e) {
-        isDraggingRecommend = true;
-        startPositionRecommend = e.touches[0].pageX - productsContainerRecommend.offsetLeft;
-        scrollLeftRecommend = productsContainerRecommend.scrollLeft;
-        productsContainerRecommend.classList.add('dragging');
-    }
-
-    function drag(e) {
-        if (!isDraggingRecommend) return;
-        const x = e.pageX - productsContainerRecommend.offsetLeft;
-        const walk = (x - startPositionRecommend) * 1.5; // Scroll speed multiplier
-        productsContainerRecommend.scrollLeft = scrollLeftRecommend - walk;
-
-        // Prevent default behavior
-        e.preventDefault();
-    }
-
-    function dragTouch(e) {
-        if (!isDraggingRecommend) return;
-        const x = e.touches[0].pageX - productsContainerRecommend.offsetLeft;
-        const walk = (x - startPositionRecommend) * 1.5; // Scroll speed multiplier
-        productsContainerRecommend.scrollLeft = scrollLeftRecommend - walk;
-
-        // Prevent default behavior that would cause page to scroll
-        e.preventDefault();
-    }
-
-    function endDrag() {
-        isDraggingRecommend = false;
-        productsContainerRecommend.classList.remove('dragging');
-    }
-
-    // Check viewport on load and resize
-    window.addEventListener('load', checkViewport);
-    window.addEventListener('resize', checkViewport);
-});
