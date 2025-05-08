@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Carousel</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Responsive Product Carousel</title>
     <style>
         * {
             margin: 0;
@@ -15,531 +14,298 @@
         }
 
         body {
-            background-color: #f5f5f5;
             padding: 20px;
         }
 
-        .wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .section-sell-carousel-container {
+        .products-container-recommend {
             max-width: 1200px;
             margin: 0 auto;
-            overflow: hidden;
-        }
-
-        .section-sell-product-carousel {
-            display: flex;
-            transition: transform 0.3s ease-out;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-        }
-
-
-        .section-sell-product-card {
-            flex: 0 0 calc(100% / 2);
-            padding: 15px;
             position: relative;
+        }
+
+        .products-wrapper-recommend {
+            display: flex;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            gap: 10px;
+            cursor: grab;
             user-select: none;
         }
 
-        .section-sell-product-inner {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        .products-wrapper-recommend.dragging {
+            cursor: grabbing;
+            scroll-behavior: auto;
+        }
+
+        .product-card-recommend {
+            flex: 0 0 calc(20% - 8px);
+            min-width: calc(20% - 8px);
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
             padding: 15px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .section-sell-product-image {
             position: relative;
-            padding-bottom: 15px;
-            display: flex;
-            justify-content: center;
+            transition: transform 0.3s ease;
         }
 
-        .section-sell-product-image img {
-            max-width: 100%;
-            height: auto;
-            max-height: 180px;
-            object-fit: contain;
+        .product-card-recommend:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .section-sell-product-badge {
+        .discount-badge-recommend {
             position: absolute;
             top: 10px;
-            left: 0;
+            left: 10px;
+            background-color: #00a2cc;
+            color: white;
             padding: 5px 10px;
-            border-radius: 3px;
+            border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
+        }
+
+        .pre-order-badge-recommend {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ffa500;
             color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
         }
 
-        .section-sell-badge-new {
-            background-color: #2aad27;
+        .product-image-recommend {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 10px;
         }
 
-        .section-sell-badge-discount {
-            background-color: #00a2ff;
-        }
-
-        .section-sell-badge-preorder {
-            background-color: #ff9800;
-        }
-
-        .section-sell-product-brand {
-            color: #777;
+        .brand-recommend {
+            color: #888;
             font-size: 12px;
             margin-bottom: 5px;
         }
 
-        .section-sell-product-title {
+        .product-title-recommend {
             font-size: 14px;
-            margin-bottom: 8px;
             font-weight: bold;
-            line-height: 1.2;
+            margin-bottom: 8px;
+            height: 40px;
+            overflow: hidden;
         }
 
-        .section-sell-product-stars {
+        .rating-recommend {
             color: #ffc107;
-            font-size: 18px;
             margin-bottom: 8px;
         }
 
-        .section-sell-product-price {
+        .price-container-recommend {
             display: flex;
             align-items: center;
-            margin-top: auto;
+            gap: 8px;
         }
 
-        .section-sell-current-price {
+        .current-price-recommend {
+            font-weight: bold;
+            color: #00a2cc;
             font-size: 18px;
-            font-weight: bold;
-            color: #00a2ff;
         }
 
-        .section-sell-original-price {
-            font-size: 14px;
-            color: #999;
+        .original-price-recommend {
             text-decoration: line-through;
-            margin-left: 8px;
-        }
-
-        .section-sell-swipe-hint {
-            text-align: center;
-            color: #777;
-            margin-top: 20px;
+            color: #888;
             font-size: 14px;
-            opacity: 0.7;
-            display: none;
         }
 
-        .section-sell-grid-heading {
-            font-size: 20px;
-            font-weight: bold;
-            margin: 10px 0 20px;
-            text-align: center;
-            display: none;
-        }
-
-        @media (max-width: 991px) {
-            .section-sell-swipe-hint {
-                display: block;
-            }
-        }
-
-        @media (min-width: 992px) {
-            .section-sell-grid-heading {
-                display: block;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .section-sell-product-card {
-                flex: 0 0 calc(100% / 3);
-            }
-        }
-
-        @media (min-width: 992px) {
-            .section-sell-carousel-container {
-                overflow: visible;
+        /* Tablet */
+        @media (max-width: 992px) {
+            .product-card-recommend {
+                flex: 0 0 calc(50% - 5px);
+                min-width: calc(50% - 5px);
             }
 
-            .section-sell-product-carousel {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: repeat(2, 1fr);
-                gap: 0;
-                transform: none !important;
-                /* Disable transform on desktop */
-                cursor: default;
+            .products-wrapper-recommend {
+                overflow-x: auto;
             }
 
-            .section-sell-product-card {
-                width: 100%;
-                flex: none;
-            }
-
-            /* Hide products beyond the first 4 on desktop */
-            .section-sell-product-card:nth-child(n+5) {
+            /* Hide scrollbar but keep functionality */
+            .products-wrapper-recommend::-webkit-scrollbar {
                 display: none;
+            }
+
+            .products-wrapper-recommend {
+                -ms-overflow-style: none;
+                /* IE and Edge */
+                scrollbar-width: none;
+                /* Firefox */
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 576px) {
+            .product-card-recommend {
+                flex: 0 0 100%;
+                min-width: 100%;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="section-bottom-sell">
-            <div class="section-sell-text">
-                <p>Best offer deal</p>
-                <h2 class="section-sell-title m-0">Top-Quality <br> Smart Home Device.</h2>
-                <button class="section-sell-btn">Shop Now</button>
-            </div>
-            <div class="section-top-sell-img">
-                <img src="./assets/img/topselling/smarthome.png" alt="">
-            </div>
-        </div>
-        <div class="section-sell-carousel-container">
-            <div class="section-sell-product-carousel">
-                <!-- Product 1 -->
-                <div class="section-sell-product-card">
-                    <div class="section-sell-product-inner">
-                        <div class="section-sell-product-image">
-                            <img src="/api/placeholder/200/250" alt="Galaxy S21 Ultra Pink">
-                        </div>
-                        <div class="section-sell-product-brand">TOSHIBA</div>
-                        <div class="section-sell-product-title">Galaxy S21 Ultra 5G 128GB Unlocked International Version
-                        </div>
-                        <div class="rating-wrapper">
-                            <div class="rating">
-                                <input value="5" type="radio" id="star5_1">
-                                <label title="text" for="star5_1"></label>
-                                <input value="4" type="radio" id="star4_1">
-                                <label title="text" for="star4_1"></label>
-                                <input value="3" type="radio" id="star3_1">
-                                <label title="text" for="star3_1"></label>
-                                <input value="2" type="radio" id="star2_1">
-                                <label title="text" for="star2_1"></label>
-                                <input value="1" type="radio" id="star1_1">
-                                <label title="text" for="star1_1"></label>
-                            </div>
-                        </div>
-                        <div class="section-sell-product-price">
-                            <div class="section-sell-current-price">$569.00</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="section-sell-product-card">
-                    <div class="section-sell-product-inner">
-                        <div class="section-sell-product-image">
-                            <img src="/api/placeholder/200/250" alt="Galaxy S21 Ultra Purple">
-                            <div class="section-sell-product-badge badge-discount">-50%</div>
-                        </div>
-                        <div class="section-sell-product-brand">TOSHIBA</div>
-                        <div class="section-sell-product-title">Galaxy S21 Ultra 5G 128GB Unlocked International Version
-                        </div>
-                        <div class="rating-wrapper">
-                            <div class="rating">
-                                <input value="5" type="radio" id="star5_2">
-                                <label title="text" for="star5_2"></label>
-                                <input value="4" type="radio" id="star4_2">
-                                <label title="text" for="star4_2"></label>
-                                <input value="3" type="radio" id="star3_2">
-                                <label title="text" for="star3_2"></label>
-                                <input value="2" type="radio" id="star2_2">
-                                <label title="text" for="star2_2"></label>
-                                <input value="1" type="radio" id="star1_2">
-                                <label title="text" for="star1_2"></label>
-                            </div>
-                        </div>
-                        <div class="section-sell-product-price">
-                            <div class="section-sell-current-price">$569.00</div>
-                            <div class="section-sell-original-price">$1156.00</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="section-sell-product-card">
-                    <div class="section-sell-product-inner">
-                        <div class="section-sell-product-image">
-                            <img src="/api/placeholder/200/250" alt="Galaxy S21 Ultra White">
-                            <div class="section-sell-product-badge badge-new">New</div>
-                        </div>
-                        <div class="section-sell-product-brand">TOSHIBA</div>
-                        <div class="section-sell-product-title">Galaxy S21 Ultra 5G 128GB Unlocked International Version
-                        </div>
-                        <div class="rating-wrapper">
-                            <div class="rating">
-                                <input value="5" type="radio" id="star5_3">
-                                <label title="text" for="star5_3"></label>
-                                <input value="4" type="radio" id="star4_3">
-                                <label title="text" for="star4_3"></label>
-                                <input value="3" type="radio" id="star3_3">
-                                <label title="text" for="star3_3"></label>
-                                <input value="2" type="radio" id="star2_3">
-                                <label title="text" for="star2_3"></label>
-                                <input value="1" type="radio" id="star1_3">
-                                <label title="text" for="star1_3"></label>
-                            </div>
-                        </div>
-                        <div class="section-sell-product-price">
-                            <div class="section-sell-current-price">$569.00</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="section-sell-product-card">
-                    <div class="section-sell-product-inner">
-                        <div class="section-sell-product-image">
-                            <img src="/api/placeholder/200/250" alt="Galaxy S21 Ultra Green">
-                            <div class="section-sell-product-badge badge-discount">-50%</div>
-                            <div class="section-sell-product-badge badge-preorder" style="left: auto; right: 0;">
-                                Pre-Order
-                            </div>
-                        </div>
-                        <div class="section-sell-product-brand">TOSHIBA</div>
-                        <div class="section-sell-product-title">Galaxy S21 Ultra 5G 128GB Unlocked International Version
-                        </div>
-                        <div class="rating-wrapper">
-                            <div class="rating">
-                                <input value="5" type="radio" id="star5_4">
-                                <label title="text" for="star5_4"></label>
-                                <input value="4" type="radio" id="star4_4">
-                                <label title="text" for="star4_4"></label>
-                                <input value="3" type="radio" id="star3_4">
-                                <label title="text" for="star3_4"></label>
-                                <input value="2" type="radio" id="star2_4">
-                                <label title="text" for="star2_4"></label>
-                                <input value="1" type="radio" id="star1_4">
-                                <label title="text" for="star1_4"></label>
-                            </div>
-                        </div>
-                        <div class="section-sell-product-price">
-                            <div class="section-sell-current-price">$569.00</div>
-                            <div class="section-sell-original-price">$1156.00</div>
-                        </div>
-                    </div>
+    <div class="products-container-recommend">
+        <div class="products-wrapper-recommend" id="products-recommend">
+            <div class="product-card-recommend">
+                <span class="discount-badge-recommend">-50%</span>
+                <img src="/api/placeholder/200/200" alt="iPhone 13 Pro" class="product-image-recommend">
+                <div class="brand-recommend">TOSHIBA</div>
+                <div class="product-title-recommend">Galaxy S21 Ultra 5G 128GB Unlocked International Version</div>
+                <div class="rating-recommend">★★★★★</div>
+                <div class="price-container-recommend">
+                    <span class="current-price-recommend">$569.00</span>
+                    <span class="original-price-recommend">$156.00</span>
                 </div>
             </div>
-            <div class="section-sell-swipe-hint">Swipe to view more products</div>
+
+            <div class="product-card-recommend">
+                <span class="discount-badge-recommend">-50%</span>
+                <img src="/api/placeholder/200/200" alt="Apple Watch" class="product-image-recommend">
+                <div class="brand-recommend">TOSHIBA</div>
+                <div class="product-title-recommend">Galaxy S21 Ultra 5G 128GB Unlocked International Version</div>
+                <div class="rating-recommend">★★★★★</div>
+                <div class="price-container-recommend">
+                    <span class="current-price-recommend">$569.00</span>
+                    <span class="original-price-recommend">$156.00</span>
+                </div>
+            </div>
+
+            <div class="product-card-recommend">
+                <span class="pre-order-badge-recommend">Pre-Order</span>
+                <span class="discount-badge-recommend">-50%</span>
+                <img src="/api/placeholder/200/200" alt="iPad Air" class="product-image-recommend">
+                <div class="brand-recommend">TOSHIBA</div>
+                <div class="product-title-recommend">Galaxy S21 Ultra 5G 128GB Unlocked International Version</div>
+                <div class="rating-recommend">★★★★★</div>
+                <div class="price-container-recommend">
+                    <span class="current-price-recommend">$569.00</span>
+                    <span class="original-price-recommend">$156.00</span>
+                </div>
+            </div>
+
+            <div class="product-card-recommend">
+                <span class="discount-badge-recommend">-50%</span>
+                <img src="/api/placeholder/200/200" alt="Apple Watch Sport" class="product-image-recommend">
+                <div class="brand-recommend">TOSHIBA</div>
+                <div class="product-title-recommend">Galaxy S21 Ultra 5G 128GB Unlocked International Version</div>
+                <div class="rating-recommend">★★★★★</div>
+                <div class="price-container-recommend">
+                    <span class="current-price-recommend">$569.00</span>
+                    <span class="original-price-recommend">$156.00</span>
+                </div>
+            </div>
+
+            <div class="product-card-recommend">
+                <span class="discount-badge-recommend">-50%</span>
+                <img src="/api/placeholder/200/200" alt="Samsung Galaxy S22" class="product-image-recommend">
+                <div class="brand-recommend">TOSHIBA</div>
+                <div class="product-title-recommend">Galaxy S21 Ultra 5G 128GB Unlocked International Version</div>
+                <div class="rating-recommend">★★★★★</div>
+                <div class="price-container-recommend">
+                    <span class="current-price-recommend">$569.00</span>
+                    <span class="original-price-recommend">$156.00</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const carouselSell = document.querySelector('.section-sell-product-carousel');
-            let isDraggingSell = false;
-            let startPositionSell = 0;
-            let currentTranslateSell = 0;
-            let previousTranslateSell = 0;
-            let autoSlideIntervalSell;
-            let currentIndexSell = 0;
-            let animationIDSell;
+            const productsContainer = document.getElementById('products-recommend');
+            let isDragging = false;
+            let startPosition;
+            let scrollLeft;
 
-            // Function to handle touch/mouse events
-            function handleStart(e) {
-                startPositionSell = getPositionX(e);
-                isDraggingSell = true;
-                carouselSell.classList.add('grabbing');
-
-                // Stop auto slide when user interacts
-                stopAutoSlide();
-
-                // Stop any momentum scrolling
-                cancelAnimationFrame(animationIDSell);
-            }
-
-            function handleMove(e) {
-                if (isDraggingSell) {
-                    const currentPosition = getPositionX(e);
-                    const diff = currentPosition - startPositionSell;
-                    currentTranslateSell = previousTranslateSell + diff;
-
-                    // Apply transform
-                    setTranslate(currentTranslateSell);
-                }
-            }
-
-            function handleEnd() {
-                isDraggingSell = false;
-                carouselSell.classList.remove('grabbing');
-
-                // Calculate the closest product position
-                const carouselWidthSell = carouselSell.offsetWidth;
-                const productWidthSell = carouselSell.querySelector('.section-sell-product-card').offsetWidth;
-                const productCountSell = carouselSell.querySelectorAll('.section-sell-product-card').length;
-                const minTranslateSell = -(productCountSell * productWidthSell - carouselWidthSell);
-
-                // Snap to the closest product
-                let targetTranslate = Math.round(currentTranslateSell / productWidthSell) * productWidthSell;
-
-                // Apply boundaries
-                targetTranslate = Math.max(minTranslateSell, Math.min(0, targetTranslate));
-
-                // Update current index
-                currentIndexSell = Math.abs(Math.round(targetTranslate / productWidthSell));
-
-                // Animate to target
-                const animate = () => {
-                    const diff = targetTranslate - currentTranslateSell;
-                    const easing = 0.2;
-
-                    if (Math.abs(diff) < 0.5) {
-                        currentTranslateSell = targetTranslate;
-                        previousTranslateSell = currentTranslateSell;
-                        setTranslate(currentTranslateSell);
-
-                        // Restart auto slide after user interaction
-                        startAutoSlide();
-                        return;
-                    }
-
-                    currentTranslateSell += diff * easing;
-                    previousTranslateSell = currentTranslateSell;
-                    setTranslate(currentTranslateSell);
-
-                    animationIDSell = requestAnimationFrame(animate);
-                };
-
-                cancelAnimationFrame(animationIDSell);
-                animationIDSell = requestAnimationFrame(animate);
-            }
-
-            function getPositionX(e) {
-                return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-            }
-
-            function setTranslate(xPos) {
-                carouselSell.style.transform = `translateX(${xPos}px)`;
-            }
-
-            // Auto slide functions
-            function startAutoSlide() {
-                // Clear any existing interval
-                stopAutoSlide();
-
-                // Start new interval
-                autoSlideIntervalSell = setInterval(() => {
-                    const productWidth = carouselSell.querySelector('.section-sell-product-card').offsetWidth;
-                    const productCount = carouselSell.querySelectorAll('.section-sell-product-card').length;
-                    const carouselWidthSell = carouselSell.offsetWidth;
-                    const visibleProducts = Math.floor(carouselWidthSell / productWidth);
-                    const maxIndex = productCount - visibleProducts;
-
-                    // Move to next slide, or back to first if at the end
-                    currentIndexSell = (currentIndexSell >= maxIndex) ? 0 : currentIndexSell + 1;
-
-                    // Calculate target position
-                    const targetTranslate = -currentIndexSell * productWidth;
-
-                    // Animate to the target position
-                    animateToPosition(targetTranslate);
-                }, 3000);
-            }
-
-            function stopAutoSlide() {
-                if (autoSlideIntervalSell) {
-                    clearInterval(autoSlideIntervalSell);
-                }
-            }
-
-            function animateToPosition(targetTranslate) {
-                // Store target for animation
-                const startTranslate = currentTranslateSell;
-                const startTime = performance.now();
-                const duration = 500; // 500ms animation
-
-                const animateSlide = (currentTime) => {
-                    const elapsedTime = currentTime - startTime;
-
-                    if (elapsedTime >= duration) {
-                        // Animation complete
-                        currentTranslateSell = targetTranslate;
-                        previousTranslateSell = targetTranslate;
-                        setTranslate(targetTranslate);
-                        return;
-                    }
-
-                    // Easing function (ease-out)
-                    const progress = 1 - Math.pow(1 - elapsedTime / duration, 3);
-                    const translateX = startTranslate + (targetTranslate - startTranslate) * progress;
-
-                    currentTranslateSell = translateX;
-                    previousTranslateSell = translateX;
-                    setTranslate(translateX);
-
-                    requestAnimationFrame(animateSlide);
-                };
-
-                requestAnimationFrame(animateSlide);
-            }
-
-            // Touch Events
-            carouselSell.addEventListener('touchstart', handleStart, { passive: true });
-            carouselSell.addEventListener('touchmove', handleMove, { passive: true });
-            carouselSell.addEventListener('touchend', handleEnd);
-
-            // Mouse Events
-            carouselSell.addEventListener('mousedown', handleStart);
-            carouselSell.addEventListener('mousemove', handleMove);
-            carouselSell.addEventListener('mouseup', handleEnd);
-            carouselSell.addEventListener('mouseleave', handleEnd);
-
-            // Prevent context menu on long press
-            carouselSell.addEventListener('contextmenu', e => e.preventDefault());
-
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                // Reset position on resize
-                currentTranslateSell = 0;
-                previousTranslateSell = 0;
-                currentIndexSell = 0;
-                setTranslate(0);
-
-                // Check if we're on desktop or mobile/tablet
-                updateLayoutMode();
-            });
-
-            // Function to check if we're in desktop mode
-            function isDesktopLayout() {
-                return window.innerWidth >= 992;
-            }
-
-            // Function to update layout mode and behavior
-            function updateLayoutMode() {
-                if (isDesktopLayout()) {
-                    // In desktop mode, disable auto slide
-                    stopAutoSlide();
-                    carouselSell.style.transform = 'none';
+            // Desktop doesn't need dragging, only enable on tablet and mobile
+            function checkViewport() {
+                if (window.innerWidth <= 992) {
+                    enableDragging();
                 } else {
-                    // In mobile/tablet mode, enable auto slide
-                    startAutoSlide();
+                    disableDragging();
                 }
             }
 
-            // Initialize layout mode
-            updateLayoutMode();
+            function enableDragging() {
+                // Mouse events
+                productsContainer.addEventListener('mousedown', startDrag);
+                productsContainer.addEventListener('mousemove', drag);
+                productsContainer.addEventListener('mouseup', endDrag);
+                productsContainer.addEventListener('mouseleave', endDrag);
 
-            // Pause auto slide when tab/window is not visible
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    stopAutoSlide();
-                } else if (!isDesktopLayout()) {
-                    startAutoSlide();
-                }
-            });
+                // Touch events
+                productsContainer.addEventListener('touchstart', startDragTouch);
+                productsContainer.addEventListener('touchmove', dragTouch);
+                productsContainer.addEventListener('touchend', endDrag);
+            }
+
+            function disableDragging() {
+                // Remove all event listeners
+                productsContainer.removeEventListener('mousedown', startDrag);
+                productsContainer.removeEventListener('mousemove', drag);
+                productsContainer.removeEventListener('mouseup', endDrag);
+                productsContainer.removeEventListener('mouseleave', endDrag);
+
+                productsContainer.removeEventListener('touchstart', startDragTouch);
+                productsContainer.removeEventListener('touchmove', dragTouch);
+                productsContainer.removeEventListener('touchend', endDrag);
+            }
+
+            function startDrag(e) {
+                isDragging = true;
+                startPosition = e.pageX - productsContainer.offsetLeft;
+                scrollLeft = productsContainer.scrollLeft;
+                productsContainer.classList.add('dragging');
+
+                // Prevent default behavior
+                e.preventDefault();
+            }
+
+            function startDragTouch(e) {
+                isDragging = true;
+                startPosition = e.touches[0].pageX - productsContainer.offsetLeft;
+                scrollLeft = productsContainer.scrollLeft;
+                productsContainer.classList.add('dragging');
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                const x = e.pageX - productsContainer.offsetLeft;
+                const walk = (x - startPosition) * 1.5; // Scroll speed multiplier
+                productsContainer.scrollLeft = scrollLeft - walk;
+
+                // Prevent default behavior
+                e.preventDefault();
+            }
+
+            function dragTouch(e) {
+                if (!isDragging) return;
+                const x = e.touches[0].pageX - productsContainer.offsetLeft;
+                const walk = (x - startPosition) * 1.5; // Scroll speed multiplier
+                productsContainer.scrollLeft = scrollLeft - walk;
+
+                // Prevent default behavior that would cause page to scroll
+                e.preventDefault();
+            }
+
+            function endDrag() {
+                isDragging = false;
+                productsContainer.classList.remove('dragging');
+            }
+
+            // Check viewport on load and resize
+            window.addEventListener('load', checkViewport);
+            window.addEventListener('resize', checkViewport);
         });
     </script>
 </body>

@@ -346,8 +346,8 @@ const x = setInterval(function () {
     document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
 }, 1000);
 
-// products deals
 
+// products deals
 const sliderDeals = document.getElementById('section-slider-card');
 const cardsDeals = document.querySelectorAll('.section-bottom-card');
 const containerDeals = document.querySelector('.slider-container-deals');
@@ -719,4 +719,92 @@ document.addEventListener('DOMContentLoaded', function () {
             startAutoSlide();
         }
     });
+});
+
+// products recommend
+document.addEventListener('DOMContentLoaded', function () {
+    const productsContainerRecommend = document.getElementById('products-recommend');
+    let isDraggingRecommend = false;
+    let startPositionRecommend;
+    let scrollLeftRecommend;
+
+    // Desktop doesn't need dragging, only enable on tablet and mobile
+    function checkViewport() {
+        if (window.innerWidth <= 992) {
+            enableDragging();
+        } else {
+            disableDragging();
+        }
+    }
+
+    function enableDragging() {
+        // Mouse events
+        productsContainerRecommend.addEventListener('mousedown', startDrag);
+        productsContainerRecommend.addEventListener('mousemove', drag);
+        productsContainerRecommend.addEventListener('mouseup', endDrag);
+        productsContainerRecommend.addEventListener('mouseleave', endDrag);
+
+        // Touch events
+        productsContainerRecommend.addEventListener('touchstart', startDragTouch);
+        productsContainerRecommend.addEventListener('touchmove', dragTouch);
+        productsContainerRecommend.addEventListener('touchend', endDrag);
+    }
+
+    function disableDragging() {
+        // Remove all event listeners
+        productsContainerRecommend.removeEventListener('mousedown', startDrag);
+        productsContainerRecommend.removeEventListener('mousemove', drag);
+        productsContainerRecommend.removeEventListener('mouseup', endDrag);
+        productsContainerRecommend.removeEventListener('mouseleave', endDrag);
+
+        productsContainerRecommend.removeEventListener('touchstart', startDragTouch);
+        productsContainerRecommend.removeEventListener('touchmove', dragTouch);
+        productsContainerRecommend.removeEventListener('touchend', endDrag);
+    }
+
+    function startDrag(e) {
+        isDraggingRecommend = true;
+        startPositionRecommend = e.pageX - productsContainerRecommend.offsetLeft;
+        scrollLeftRecommend = productsContainerRecommend.scrollLeft;
+        productsContainerRecommend.classList.add('dragging');
+
+        // Prevent default behavior
+        e.preventDefault();
+    }
+
+    function startDragTouch(e) {
+        isDraggingRecommend = true;
+        startPositionRecommend = e.touches[0].pageX - productsContainerRecommend.offsetLeft;
+        scrollLeftRecommend = productsContainerRecommend.scrollLeft;
+        productsContainerRecommend.classList.add('dragging');
+    }
+
+    function drag(e) {
+        if (!isDraggingRecommend) return;
+        const x = e.pageX - productsContainerRecommend.offsetLeft;
+        const walk = (x - startPositionRecommend) * 1.5; // Scroll speed multiplier
+        productsContainerRecommend.scrollLeft = scrollLeftRecommend - walk;
+
+        // Prevent default behavior
+        e.preventDefault();
+    }
+
+    function dragTouch(e) {
+        if (!isDraggingRecommend) return;
+        const x = e.touches[0].pageX - productsContainerRecommend.offsetLeft;
+        const walk = (x - startPositionRecommend) * 1.5; // Scroll speed multiplier
+        productsContainerRecommend.scrollLeft = scrollLeftRecommend - walk;
+
+        // Prevent default behavior that would cause page to scroll
+        e.preventDefault();
+    }
+
+    function endDrag() {
+        isDraggingRecommend = false;
+        productsContainerRecommend.classList.remove('dragging');
+    }
+
+    // Check viewport on load and resize
+    window.addEventListener('load', checkViewport);
+    window.addEventListener('resize', checkViewport);
 });

@@ -154,11 +154,28 @@
 
     .section-bottom-card {
         flex: 0 0 25%;
-        /* 4 products */
     }
 
     .section-sell-swipe-hint {
         display: block;
+    }
+
+    .product-card-recommend {
+        flex: 0 0 calc(25% - 5px);
+        min-width: calc(25% - 5px);
+    }
+
+    .products-wrapper-recommend {
+        overflow-x: auto;
+    }
+
+    .products-wrapper-recommend::-webkit-scrollbar {
+        display: none;
+    }
+
+    .products-wrapper-recommend {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 }
 
@@ -229,6 +246,11 @@
     .section-sell-product-card {
         flex: 0 0 calc(100% / 2);
     }
+
+    .product-card-recommend {
+        flex: 0 0 calc(50% - 5px);
+        min-width: calc(50% - 5px);
+    }
 }
 
 @media (max-width: 576px) {
@@ -259,5 +281,10 @@
 
     .section-sell-product-card {
         flex: 0 0 calc(100% / 1);
+    }
+
+    .product-card-recommend {
+        flex: 0 0 100%;
+        min-width: 100%;
     }
 }
