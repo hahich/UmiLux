@@ -177,6 +177,10 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
+
+    .section-box::after {
+        display: none;
+    }
 }
 
 /* selling carousel */
@@ -251,6 +255,10 @@
         flex: 0 0 calc(50% - 5px);
         min-width: calc(50% - 5px);
     }
+
+    .section-box::after {
+        display: none;
+    }
 }
 
 @media (max-width: 576px) {
@@ -266,6 +274,18 @@
     .section-right {
         flex-direction: column;
         align-items: baseline;
+    }
+
+    .banner-text h1 {
+        font-size: 16px;
+    }
+
+    .banner-text p {
+        font-size: 12px;
+    }
+
+    .banner-text .shop-now {
+        padding: 10px 20px;
     }
 
     .section-bottom-card {
@@ -286,5 +306,17 @@
     .product-card-recommend {
         flex: 0 0 100%;
         min-width: 100%;
+    }
+
+    .deals-card-title h1 {
+        font-size: 20px;
+    }
+
+    .deals-card-title h1 span {
+        font-size: 40px;
+    }
+
+    .deals-card-title>p {
+        transform: translateX(-12%);
     }
 }

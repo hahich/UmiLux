@@ -39,6 +39,13 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "Geostar Fill";
+    src: url(../fonts/Geostar_Fill/GeostarFill-Regular.ttf);
+    font-weight: 400;
+    font-style: normal;
+}
+
 /* Root Variables */
 :root {
     --font-family: 'GeneralSans', sans-serif;

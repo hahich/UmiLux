@@ -723,7 +723,8 @@
 
 /* Top Deals Of The Days */
 #section-deals-day,
-#section-recommend {
+#section-recommend,
+#section-promotions {
     text-transform: capitalize;
     width: var(--container-width);
     max-width: 100%;
@@ -1173,4 +1174,102 @@
     height: 180px;
     object-fit: contain;
     margin-bottom: 10px;
+}
+
+/* Promotions */
+.section-promotions-blog {
+    padding: 0 24px;
+    gap: 30px;
+}
+
+.deals-card img,
+.deals-card-title {
+    width: 100%;
+    max-width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: 0% 28%;
+    border-radius: 5px;
+}
+
+.deals-card-title {
+    height: 250px;
+    background-color: var(--black);
+    text-transform: uppercase;
+    font-family: "Geostar Fill", serif;
+    display: var(--flex);
+    justify-content: var(--center);
+    align-items: var(--center);
+    flex-direction: column;
+}
+
+.deals-card-title h1 {
+    color: var(--white);
+    font-size: 40px;
+}
+
+.deals-card-title h1 span {
+    font-size: 60px;
+    color: #ACDC54;
+}
+
+.deals-card-title>p {
+    font-size: 12px;
+    color: var(--white);
+    font-family: 'GeneralSans', sans-serif;
+    transform: translateX(-45%);
+}
+
+.deals-card-text p {
+    font-weight: 600;
+    margin: 20px 0 10px 0 !important;
+}
+
+.deals-card-text span {
+    font-size: var(--fs-14);
+    line-height: 1.4;
+    text-transform: none;
+}
+
+/* Shipping */
+#section-shipping,
+.section-box {
+    display: var(--flex);
+    justify-content: var(--center);
+    align-items: var(--center);
+    gap: 30px;
+}
+
+.section-box {
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 71px;
+    position: relative;
+}
+
+.section-box::after {
+    content: '';
+    width: 1px;
+    height: 60px;
+    background-color: #E5E8EC;
+    position: absolute;
+    right: 0;
+}
+
+.section-box:last-child::after {
+    display: none;
+}
+
+.section-box-text {
+    text-align: center;
+    font-weight: 500;
+}
+
+.section-box-text p {
+    font-size: 15px;
+}
+
+.section-box-text span {
+    font-size: 14px;
+    font-weight: 400;
 }
