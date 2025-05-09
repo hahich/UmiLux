@@ -66,9 +66,11 @@
     --bg-camera: #6944E6;
     --bg-selling: #F1F3F7;
     --bg-divider: #E5E8EC;
+    --bg-insta: #cc39a4;
+    --bg-facebook: #367cf4;
 
     /* Layout */
-    --container-width: 1425px;
+    --container-width: 1405px;
     --flex: flex;
     --center: center;
     --space-between: space-between;
@@ -87,6 +89,7 @@ html,
 body {
     font-family: var(--font-family);
     font-size: 16px;
+    overflow-x: hidden;
 }
 
 main {
@@ -118,6 +121,22 @@ button {
 
 img {
     max-width: 100%;
+}
+
+img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+img:not(:hover) {
+    transform: scale(1.0);
+    transition: transform 0.3s ease-in-out;
+}
+
+select {
+    font-size: var(--fs-14) !important;
+    border: none;
+    background-color: inherit;
 }
 
 .flex {

@@ -191,6 +191,30 @@
     .section-box::after {
         display: none;
     }
+
+    .section-sp {
+        width: 100%;
+        padding: 10px 20px;
+    }
+
+    .footer-about,
+    .footer-newsletter {
+        flex: 0;
+        max-width: 100%;
+    }
+
+    .footer-newsletter {
+        border-bottom: 1px solid var(--gray-5555)
+    }
+
+    .footer-mobile {
+        padding: 10px 0;
+        border-top: 1px solid var(--gray-5555);
+    }
+
+    #footer-middle {
+        padding: 0 24px;
+    }
 }
 
 /* selling carousel */
@@ -280,6 +304,34 @@
         padding: 10px 20px;
     }
 
+    .footer-email-input input {
+        padding: 15px 20px;
+        margin-bottom: 10px;
+    }
+
+    .footer-payment {
+        gap: 0;
+    }
+
+    .footer-about,
+    .footer-newsletter {
+        flex: 0;
+        max-width: 100%;
+    }
+
+    .footer-newsletter {
+        border-bottom: 1px solid var(--gray-5555)
+    }
+
+    .footer-mobile {
+        padding: 10px 0;
+        border-top: 1px solid var(--gray-5555);
+    }
+
+    #footer-middle {
+        padding: 0 24px;
+    }
+
 }
 
 @media (max-width: 576px) {
@@ -344,5 +396,24 @@
 
     .deals-card-title>p {
         transform: translateX(-12%);
+    }
+
+    .footer-about,
+    .footer-newsletter {
+        flex: 0;
+        max-width: 100%;
+    }
+
+    .footer-newsletter {
+        border-bottom: 1px solid var(--gray-5555)
+    }
+
+    .footer-mobile {
+        padding: 10px 0;
+        border-top: 1px solid var(--gray-5555);
+    }
+
+    #footer-middle {
+        padding: 0 24px;
     }
 }
