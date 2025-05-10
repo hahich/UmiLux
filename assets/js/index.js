@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initSellCarousel();
     initScrollHeader();
     initCategoryMenu();
+    fadeIn();
 });
+
 
 // scroll header
 function initScrollHeader() {
@@ -129,6 +131,7 @@ function closeAll() {
     menuOverlay.classList.remove('gray');
 }
 
+// banner
 function initBannerSlider() {
     const prev = document.querySelector('.prev');
     const next = document.querySelector('.next');
@@ -136,7 +139,7 @@ function initBannerSlider() {
     const inner = document.querySelector('.banner-inner');
     const items = document.querySelectorAll('.banner-item');
     const dots = document.querySelectorAll('.dot');
-    let index = 0, interval;
+    let index = 1, interval;
 
     const update = () => {
         inner.style.transform = `translateX(-${index * 100}%)`;
@@ -159,7 +162,7 @@ function initBannerSlider() {
 
     next?.addEventListener('click', () => {
         stop();
-        prevSlide();
+        nextSlide();
         setTimeout(start, 100); // chờ 100ms rồi mới restart auto-slide
     });
 
@@ -326,4 +329,30 @@ function initSellCarousel() {
     document.addEventListener('visibilitychange', () => document.hidden ? stop() : (window.innerWidth < 992 && start()));
 
     updateLayout();
+}
+
+
+function fadeIn() {
+   const sections = document.querySelectorAll(".section-fadein");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const visibleItems = entry.target.parentElement.querySelectorAll('.section-fadein')
+       
+        visibleItems.forEach((el, idx) => {
+          setTimeout(() => {
+            console.log(el);
+             el.classList.add("visible");
+          }, idx * 200)
+        })
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
 }

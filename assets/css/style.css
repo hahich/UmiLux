@@ -1458,3 +1458,16 @@
 .footer-toggle[aria-expanded="true"] .open {
     display: none;
 }
+
+
+/* Fade in */
+.section-fadein{
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.5s ease-out;
+}
+
+.section-fadein.visible{
+    opacity: 1;
+    transform: none;
+}

@@ -14,7 +14,7 @@
     <!-- BOOSTRAP -->
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <!-- FONTS -->
-    <link rel="stylesheet" href="./assets/fonts/GeneralSans_Complete/Fonts/WEB/css/general-sans.css">
+    <link rel="preload" href="./assets/fonts/GeneralSans_Complete/Fonts/WEB/css/general-sans.css">
     <!-- JQUERY -->
     <script src="./assets/js/jquery.min.js"></script>
     <!-- OWL Carousel -->
@@ -149,7 +149,7 @@
                     </div>
 
                     <!-- Menu con (Categories) -->
-                    <div class="mobile-sub-menu" id="subMenu">
+                    <div class="mobile-sub-menu" id="subMenu-categories">
                         <div class="mobile-sub-menu-header">
                             <span class="mobile-back-btn" onclick="toggleSubMenu('categories')">
                                 <svg width="6" height="11" viewBox="0 0 6 11" fill="none"
@@ -748,7 +748,7 @@
         </div>
 
         <section id="section-categories" class="flex-column align-items-center d-flex flex-lg-row">
-            <div class="section-categories-console section-categories-shop">
+            <div class="section-categories-console section-categories-shop section-fadein">
                 <div class="section-categories-text">
                     <p>Gamepad <br> Save Up To $69</p>
                     <button class="section-categories-buy">Shop Gamnepad</button>
@@ -759,7 +759,7 @@
                 </div>
             </div>
 
-            <div class="section-categories-phone section-categories-shop">
+            <div class="section-categories-phone section-categories-shop section-fadein">
                 <div class="section-categories-text">
                     <p>Buy 1 Get 1 <br> Save Up To $559</p>
                     <button class="section-categories-buy">Shop Deals</button>
@@ -770,7 +770,7 @@
                 </div>
             </div>
 
-            <div class="section-categories-camera section-categories-shop">
+            <div class="section-categories-camera section-categories-shop section-fadein">
                 <div class="section-categories-text">
                     <p>Cameras<br> Save Up To $159</p>
                     <button class="section-categories-buy">Shop Camera</button>
@@ -782,8 +782,8 @@
             </div>
         </section>
 
-        <section id="section-deals-day">
-            <div class="section-header flex-column flex-lg-row align-items-start align-items-lg-center">
+        <section id="section-deals-day" class="section-fadein">
+            <div class="section-header flex-column flex-lg-row align-items-start align-items-lg-center section-fadein">
                 <div class="section-left">
                     <p class="section-title">Top Deals Of The Day</p>
                 </div>
@@ -1167,7 +1167,7 @@
             </div>
         </section>
 
-        <section id="section-selling" class="flex-center">
+        <section id="section-selling" class="flex-center section-fadein">
             <div class="section-selling-wrapper">
                 <div class="section-header section-selling-header flex-column flex-md-row">
                     <div class="section-left">
@@ -1364,7 +1364,7 @@
             </div>
         </section>
 
-        <section id="section-recommend">
+        <section id="section-recommend" class="section-fadein">
             <div class="section-header flex-column flex-md-row mx-4">
                 <div class="section-left">
                     <p class="section-title">Recommend For You</p>
@@ -1743,7 +1743,7 @@
             </div>
         </section>
 
-        <section id="section-promotions">
+        <section id="section-promotions" class="section-fadein">
             <div class="section-header flex-column flex-md-row mx-4">
                 <div class="section-left">
                     <p class="section-title">Deals & Promotions</p>
@@ -1900,7 +1900,7 @@
         </div>
     </main>
 
-    <footer id="footer" class="flex-center">
+    <footer id="footer" class="flex-center section-fadein">
         <section id="section-support" class="flex-column">
             <div class="section-sp-title">
                 <span class="text-center">Help center</span>
