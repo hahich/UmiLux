@@ -127,7 +127,7 @@
 }
 
 /* selling carousel */
-@media (min-width: 1025px) and (max-width: 1200px) {
+@media (min-width: 992px) {
     .section-sell-grid-heading {
         display: block;
     }
@@ -352,6 +352,11 @@
 }
 
 @media (max-width: 576px) {
+    .mobile-menu-header span,
+    .mobile-menu-title span {
+        font-size: 14px;
+    }
+
     .product {
         flex: 0 0 50%;
     }

@@ -928,6 +928,11 @@
 }
 
 /* Top Deals Of The Days */
+#section-deals-day,
+#section-categories {
+    padding: 0 24px;
+}
+
 .slider-container-deals {
     width: 100%;
     overflow: hidden;
@@ -961,7 +966,7 @@
 }
 
 .section-selling-header {
-    margin: 60px 24px 0px 24px;
+    margin: 60px 24px 0px;
 }
 
 .section-right a {
@@ -1040,7 +1045,7 @@
     transform: scale(0.9);
 }
 
-/* Carousel product */
+/* Top Selling product */
 .section-bottom-wrapper {
     margin-bottom: 60px;
 }
