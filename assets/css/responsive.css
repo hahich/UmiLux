@@ -126,6 +126,13 @@
     color: #666;
 }
 
+@media (max-width: 1200px) {
+    .section-sp {
+        width: 100%;
+        padding: 10px 20px;
+    }
+}
+
 /* selling carousel */
 @media (min-width: 992px) {
     .section-sell-grid-heading {
@@ -152,11 +159,6 @@
 
     .section-sell-product-card:nth-child(n+5) {
         display: none;
-    }
-
-    .section-sp {
-        width: 100%;
-        padding: 10px 20px;
     }
 
     #footer-middle {

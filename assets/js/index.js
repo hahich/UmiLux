@@ -6,7 +6,26 @@ document.addEventListener('DOMContentLoaded', () => {
     initSaleCarousels();
     initCountdown();
     initSellCarousel();
+    // initScrollHeader();
 });
+
+// scroll header
+// function initScrollHeader() {
+//     let scrollToTop = 0;
+//     const header = document.querySelector('header');
+
+//     window.addEventListener('scroll', function () {
+//         let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+//         if (currentScroll > scrollToTop) {
+//             header.classList.add('hide');
+//         } else {
+//             header.classList.remove('hide');
+//         }
+
+//         scrollToTop = currentScroll <= 0 ? 0 : currentScroll
+//     })
+// }
 
 function initDropdowns() {
     const dropdowns = document.querySelectorAll('.dropdown');
@@ -40,7 +59,7 @@ function initDropdowns() {
 // ====== Category Menu ======
 function initCategoryMenu() {
     const categoryToggle = document.getElementById('categoryToggle');
-    const submenu = document.getElementById('submenu');
+    const submenu = document.getElementById('submenu-categories');
     const overlay = document.getElementById('overlay');
 
     if (!categoryToggle || !submenu || !overlay) return;
@@ -180,7 +199,6 @@ function initSaleCarousels() {
         createCarousel('.carousel-recommend', { 0: { items: 1 }, 576: { items: 2 }, 768: { items: 3 }, 1024: { items: 4 }, 1200: { items: 5 } });
     });
 }
-
 
 function initCountdown() {
     let endTime = localStorage.getItem('countDownEndTime');

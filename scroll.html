@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Header</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 3000px;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            transition: top 0.3s ease;
+            /* Để chuyển động mượt mà */
+        }
+
+        .content {
+            padding-top: 60px;
+            /* Để nội dung không bị che bởi header */
+        }
+
+        p {
+            margin: 20px;
+        }
+
+        .hide {
+            top: -100px;
+            /* Ẩn header khi cuộn xuống */
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="header">
+        <h1>My Sticky Header</h1>
+    </header>
+
+    <div class="content">
+        <p>Scroll down and up to see the effect!</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fringilla enim a lectus efficitur, sit amet
+            cursus mauris auctor. Pellentesque et mauris quis odio feugiat viverra et sed ligula.</p>
+        <!-- Thêm nội dung dài ở đây để cuộn trang -->
+        <p>More content...</p>
+        <p>More content...</p>
+        <p>More content...</p>
+        <p>More content...</p>
+    </div>
+
+    <script>
+        let lastScrollTop = 0; // Vị trí cuộn trước đó
+        const header = document.getElementById('header');
+
+        // Lắng nghe sự kiện cuộn
+        window.addEventListener('scroll', function () {
+            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Nếu cuộn xuống, ẩn header
+            if (currentScroll > lastScrollTop) {
+                header.classList.add('hide');
+            } else {
+                // Nếu cuộn lên, hiển thị header
+                header.classList.remove('hide');
+            }
+
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Đảm bảo không bị âm
+        });
+    </script>
+</body>
+
+</html>
