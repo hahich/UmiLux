@@ -80,8 +80,17 @@
     --gap-25: 25px;
 
     /* Typography */
-    --fs-14: 14px;
     --header-font-size: 3.5rem;
+    --fs-12: 12px;
+    --fs-13: 13px;
+    --fs-14: 14px;
+    --fs-16: 16px;
+    --fs-18: 18px;
+    --fs-28: 28px;
+
+    /* font weight */
+    --fw-600: 600;
+    --fw-500: 500;
 }
 
 /* Global Styles */
@@ -144,7 +153,13 @@ select {
     background: #364A9B;
 }
 
+.flex-center {
+    display: var(--flex);
+    justify-content: var(--center);
+    align-items: var(--center);
+}
 
-/* .hide {
+
+.hide {
     top: -200px !important;
-} */
+}

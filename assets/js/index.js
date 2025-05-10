@@ -6,26 +6,26 @@ document.addEventListener('DOMContentLoaded', () => {
     initSaleCarousels();
     initCountdown();
     initSellCarousel();
-    // initScrollHeader();
+    initScrollHeader();
 });
 
 // scroll header
-// function initScrollHeader() {
-//     let scrollToTop = 0;
-//     const header = document.querySelector('header');
+function initScrollHeader() {
+    let scrollToTop = 0;
+    const header = document.querySelector('header');
 
-//     window.addEventListener('scroll', function () {
-//         let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    window.addEventListener('scroll', function () {
+        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
-//         if (currentScroll > scrollToTop) {
-//             header.classList.add('hide');
-//         } else {
-//             header.classList.remove('hide');
-//         }
+        if (currentScroll > scrollToTop) {
+            header.classList.add('hide');
+        } else {
+            header.classList.remove('hide');
+        }
 
-//         scrollToTop = currentScroll <= 0 ? 0 : currentScroll
-//     })
-// }
+        scrollToTop = currentScroll <= 0 ? 0 : currentScroll
+    })
+}
 
 function initDropdowns() {
     const dropdowns = document.querySelectorAll('.dropdown');

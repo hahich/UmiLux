@@ -250,6 +250,7 @@
     .footer-mobile {
         padding: 10px 0;
         border-top: 1px solid var(--gray-5555);
+        width: 100%;
     }
 
     #footer-middle {
@@ -341,6 +342,7 @@
     .footer-mobile {
         padding: 10px 0;
         border-top: 1px solid var(--gray-5555);
+        width: 100%;
     }
 
     #footer-middle {
@@ -443,6 +445,7 @@
     .footer-mobile {
         padding: 10px 0;
         border-top: 1px solid var(--gray-5555);
+        width: 100%;
     }
 
     #footer-middle {
