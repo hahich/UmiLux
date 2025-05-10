@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCountdown();
     initSellCarousel();
     initScrollHeader();
+    initCategoryMenu();
 });
 
 // scroll header

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <div class="header-bottom-categories-wrapper flex-center" id="categoryToggle">
+        <div class="header-bottom-categories flex-center" aria-expanded="false" role="button" data-bs-toggle="submenu"
+            data-bs-target="#submenu">
+            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M2.5 12H17.5C17.7344 12 17.9297 11.9219 18.0859 11.7656C18.2552 11.5964 18.3398 11.3945 18.3398 11.1602C18.3398 10.9388 18.2552 10.75 18.0859 10.5938C17.9297 10.4245 17.7344 10.3398 17.5 10.3398H2.5C2.26562 10.3398 2.0638 10.4245 1.89453 10.5938C1.73828 10.75 1.66016 10.9388 1.66016 11.1602C1.66016 11.3945 1.73828 11.5964 1.89453 11.7656C2.0638 11.9219 2.26562 12 2.5 12ZM2.5 7H17.5C17.7344 7 17.9297 6.92188 18.0859 6.76562C18.2552 6.59635 18.3398 6.39453 18.3398 6.16016C18.3398 5.9388 18.2552 5.75 18.0859 5.59375C17.9297 5.42448 17.7344 5.33984 17.5 5.33984H2.5C2.26562 5.33984 2.0638 5.42448 1.89453 5.59375C1.73828 5.75 1.66016 5.9388 1.66016 6.16016C1.66016 6.39453 1.73828 6.59635 1.89453 6.76562C2.0638 6.92188 2.26562 7 2.5 7ZM2.5 17H17.5C17.7344 17 17.9297 16.9219 18.0859 16.7656C18.2552 16.5964 18.3398 16.3945 18.3398 16.1602C18.3398 15.9388 18.2552 15.75 18.0859 15.5938C17.9297 15.4245 17.7344 15.3398 17.5 15.3398H2.5C2.26562 15.3398 2.0638 15.4245 1.89453 15.5938C1.73828 15.75 1.66016 15.9388 1.66016 16.1602C1.66016 16.3945 1.73828 16.5964 1.89453 16.7656C2.0638 16.9219 2.26562 17 2.5 17Z"
+                    fill="#111111" />
+            </svg>
+            <p>All Departments</p>
+        </div>
+        <div class="dropdown-icon-categories dropdown-icon">
+            <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M3.08984 6.32227C2.97135 6.21289 2.91211 6.08073 2.91211 5.92578C2.91211 5.76172 2.97135 5.62044 3.08984 5.50195C3.19922 5.39258 3.33594 5.33789 3.5 5.33789C3.66406 5.33789 3.80078 5.39258 3.91016 5.50195L7 8.5918L10.0898 5.50195C10.1992 5.39258 10.3359 5.33789 10.5 5.33789C10.6641 5.33789 10.8008 5.39258 10.9102 5.50195C11.0286 5.62044 11.0879 5.76172 11.0879 5.92578C11.0879 6.08073 11.0286 6.21289 10.9102 6.32227L7.41016 9.82227C7.30078 9.94076 7.16406 10 7 10C6.83594 10 6.69922 9.94076 6.58984 9.82227L3.08984 6.32227Z"
+                    fill="#555555" />
+            </svg>
+        </div>
+        <div class="header-bottom-submenu-categories collapse" id="submenu-categories">
+            <ul>
+                <li>Electronics</li>
+                <li>Fashion</li>
+                <li>Home & Garden</li>
+                <li>Sports</li>
+                <li>Books</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="header-bottom-overlay-categories" id="overlay"></div>
+
+    <script>
+        function initCategoryMenu() {
+            const categoryToggle = document.getElementById('categoryToggle');
+            const submenu = document.getElementById('submenu-categories');
+            const overlay = document.getElementById('overlay');
+
+            if (!categoryToggle || !submenu || !overlay) return;
+
+            // Toggle submenu and overlay on click
+            categoryToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                submenu.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+
+            // Hide submenu and overlay when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!categoryToggle.contains(e.target)) {
+                    submenu.classList.remove('active');
+                    overlay.classList.remove('active');
+                }
+            });
+
+            // Also close when clicking directly on the overlay
+            overlay.addEventListener('click', () => {
+                submenu.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCategoryMenu();
+        })
+    </script>
+</body>
+
+</html>
