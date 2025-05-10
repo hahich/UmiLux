@@ -2,7 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     initDropdowns();
-    initCategoryMenu();
     initBannerSlider();
     initSaleCarousels();
     initCountdown();
@@ -13,40 +12,101 @@ function initDropdowns() {
     const dropdowns = document.querySelectorAll('.dropdown');
     const options = document.querySelectorAll('.language-option, .currency-option');
 
-    window.toggleDropdown = (dropdownId) => {
-        dropdowns.forEach(dd => dd.classList.toggle('active', dd.id === dropdownId && !dd.classList.contains('active')));
+    // Toggle dropdown display
+    window.toggleDropdown = function (dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+
+        // Close all other dropdowns
+        dropdowns.forEach(dd => {
+            if (dd.id !== dropdownId) {
+                dd.classList.remove('active');
+            }
+        });
+
+        // Toggle the clicked dropdown
+        dropdown.classList.toggle('active');
     };
 
-    document.addEventListener('click', (e) => {
-        if (![...options].some(option => option.contains(e.target))) {
-            dropdowns.forEach(dd => dd.classList.remove('active'));
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function (event) {
+        if (!Array.from(options).some(option => option.contains(event.target))) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
         }
     });
 }
 
+// ====== Category Menu ======
 function initCategoryMenu() {
-    const toggle = document.getElementById('categoryToggle');
+    const categoryToggle = document.getElementById('categoryToggle');
     const submenu = document.getElementById('submenu');
     const overlay = document.getElementById('overlay');
 
-    if (!toggle || !submenu || !overlay) return;
+    if (!categoryToggle || !submenu || !overlay) return;
 
-    toggle.addEventListener('click', (e) => {
+    // Toggle submenu and overlay on click
+    categoryToggle.addEventListener('click', (e) => {
         e.stopPropagation();
         submenu.classList.toggle('active');
         overlay.classList.toggle('active');
     });
 
-    const closeMenu = () => {
-        submenu.classList.remove('active');
-        overlay.classList.remove('active');
-    };
-
+    // Hide submenu and overlay when clicking outside
     document.addEventListener('click', (e) => {
-        if (!toggle.contains(e.target)) closeMenu();
+        if (!categoryToggle.contains(e.target)) {
+            submenu.classList.remove('active');
+            overlay.classList.remove('active');
+        }
     });
 
-    overlay.addEventListener('click', closeMenu);
+    // Also close when clicking directly on the overlay
+    overlay.addEventListener('click', () => {
+        submenu.classList.remove('active');
+        overlay.classList.remove('active');
+    });
+}
+
+// Menu mobile
+function toggleMenu() {
+    const menuOverlay = document.getElementById('menuOverlay');
+    const backdrop = document.getElementById('backdrop');
+    menuOverlay.classList.toggle('active');
+    backdrop.classList.toggle('active');
+    menuOverlay.classList.remove('gray');
+    document.querySelectorAll('.mobile-sub-menu').forEach(subMenu => {
+        subMenu.classList.remove('active');
+    });
+}
+
+function toggleSubMenu(menuId) {
+    const subMenu = document.getElementById(`subMenu-${menuId}`);
+    const menuOverlay = document.getElementById('menuOverlay');
+    const isActive = subMenu.classList.contains('active');
+
+    document.querySelectorAll('.mobile-sub-menu').forEach(subMenu => {
+        subMenu.classList.remove('active');
+    });
+
+    if (!isActive) {
+        subMenu.classList.add('active');
+        menuOverlay.classList.add('gray');
+    } else {
+        menuOverlay.classList.remove('gray');
+    }
+}
+
+function closeAll() {
+    const menuOverlay = document.getElementById('menuOverlay');
+    const backdrop = document.getElementById('backdrop');
+    menuOverlay.classList.remove('active');
+    backdrop.classList.remove('active');
+    // Đóng tất cả submenu
+    document.querySelectorAll('.mobile-sub-menu').forEach(subMenu => {
+        subMenu.classList.remove('active');
+    });
+    // Reset màu
+    menuOverlay.classList.remove('gray');
 }
 
 function initBannerSlider() {

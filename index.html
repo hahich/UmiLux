@@ -61,6 +61,7 @@
 
             <div class="divider"></div>
 
+            <!-- menu mobile -->
             <div class="header-middle">
                 <div class="header-middle-nav-mobile d-block d-xl-none">
                     <!-- Nút mở menu -->
@@ -437,7 +438,7 @@
             <div class="header-bottom d-none d-xl-flex">
                 <div class="header-bottom-nav-left">
                     <div class="header-bottom-categories-wrapper" id="categoryToggle">
-                        <div class="header-bottom-categories">
+                        <div class="header-bottom-categories" aria-expanded="false" role="button" data-bs-toggle="submenu" data-bs-target="#submenu">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -454,7 +455,7 @@
                                     fill="#555555" />
                             </svg>
                         </div>
-                        <div class="header-bottom-submenu-categories" id="submenu">
+                        <div class="header-bottom-submenu-categories collapse" id="submenu">
                             <ul>
                                 <li>Electronics</li>
                                 <li>Fashion</li>

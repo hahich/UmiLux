@@ -126,6 +126,44 @@
     color: #666;
 }
 
+/* selling carousel */
+@media (min-width: 1025px) and (max-width: 1200px) {
+    .section-sell-grid-heading {
+        display: block;
+    }
+
+    .section-sell-carousel-container {
+        overflow: visible;
+    }
+
+    .section-sell-product-carousel {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 0;
+        transform: none !important;
+        cursor: default;
+    }
+
+    .section-sell-product-card {
+        width: 100%;
+        flex: none;
+    }
+
+    .section-sell-product-card:nth-child(n+5) {
+        display: none;
+    }
+
+    .section-sp {
+        width: 100%;
+        padding: 10px 20px;
+    }
+
+    #footer-middle {
+        padding: 0 24px;
+    }
+}
+
 /* Responsive */
 @media (min-width: 768px) and (max-width: 1024px) {
     .banner-item img {
@@ -215,34 +253,9 @@
     #footer-middle {
         padding: 0 24px;
     }
-}
 
-/* selling carousel */
-@media (min-width: 992px) {
-    .section-sell-grid-heading {
-        display: block;
-    }
-
-    .section-sell-carousel-container {
-        overflow: visible;
-    }
-
-    .section-sell-product-carousel {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        gap: 0;
-        transform: none !important;
-        cursor: default;
-    }
-
-    .section-sell-product-card {
-        width: 100%;
-        flex: none;
-    }
-
-    .section-sell-product-card:nth-child(n+5) {
-        display: none;
+    .footer-title {
+        margin: 0 !important;
     }
 }
 
@@ -332,6 +345,10 @@
         padding: 0 24px;
     }
 
+    .footer-title {
+        margin: 0 !important;
+    }
+
 }
 
 @media (max-width: 576px) {
@@ -349,6 +366,10 @@
         align-items: baseline;
     }
 
+    .banner-buttons {
+        display: none;
+    }
+
     .banner-text h1 {
         font-size: 16px;
     }
@@ -359,6 +380,10 @@
 
     .banner-text .shop-now {
         padding: 10px 20px;
+    }
+
+    .section-categories-text p {
+        font-size: 16px;
     }
 
     .section-bottom-card {
@@ -415,5 +440,9 @@
 
     #footer-middle {
         padding: 0 24px;
+    }
+
+    .footer-title {
+        margin: 0 !important;
     }
 }
