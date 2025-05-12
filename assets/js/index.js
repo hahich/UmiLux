@@ -136,18 +136,22 @@ function initBannerSlider() {
     const prev = document.querySelector('.prev');
     const next = document.querySelector('.next');
     const carousel = document.querySelector('#banner');
-    const inner = document.querySelector('.banner-inner');
     const items = document.querySelectorAll('.banner-item');
     const dots = document.querySelectorAll('.dot');
-    let index = 1, interval;
+    let index = 0, interval;
 
     const update = () => {
-        inner.style.transform = `translateX(-${index * 100}%)`;
-        [...items].forEach((el, i) => el.classList.toggle('active', i === index));
-        [...dots].forEach((el, i) => el.classList.toggle('active', i === index));
+        items.forEach((el, i) => {
+            el.classList.toggle('active', i === index);
+            el.style.zIndex = i === index ? 1 : 0;
+        });
+        dots.forEach((el, i) => el.classList.toggle('active', i === index));
     };
 
-    const goTo = i => { index = (i + items.length) % items.length; update(); };
+    const goTo = i => {
+        index = (i + items.length) % items.length;
+        update();
+    };
     const nextSlide = () => goTo(index + 1);
     const prevSlide = () => goTo(index - 1);
 
@@ -157,21 +161,27 @@ function initBannerSlider() {
     prev?.addEventListener('click', () => {
         stop();
         prevSlide();
-        setTimeout(start, 100); // chờ 100ms rồi mới restart auto-slide
+        setTimeout(start, 100);
     });
 
     next?.addEventListener('click', () => {
         stop();
         nextSlide();
-        setTimeout(start, 100); // chờ 100ms rồi mới restart auto-slide
+        setTimeout(start, 100);
     });
 
-    dots.forEach((dot, i) => dot.addEventListener('click', () => { stop(); goTo(i); start(); }));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => {
+        stop();
+        goTo(i);
+        start();
+    }));
     carousel?.addEventListener('mouseenter', stop);
     carousel?.addEventListener('mouseleave', start);
 
+    update(); // Khởi tạo trạng thái ban đầu
     start();
 }
+
 
 function initSaleCarousels() {
     const isMobile = window.innerWidth < 1024;
@@ -333,26 +343,26 @@ function initSellCarousel() {
 
 
 function fadeIn() {
-   const sections = document.querySelectorAll(".section-fadein");
+    const sections = document.querySelectorAll(".section-fadein");
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const visibleItems = entry.target.parentElement.querySelectorAll('.section-fadein')
-       
-        visibleItems.forEach((el, idx) => {
-          setTimeout(() => {
-            console.log(el);
-             el.classList.add("visible");
-          }, idx * 200)
-        })
-      }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const visibleItems = entry.target.parentElement.querySelectorAll('.section-fadein')
+
+                visibleItems.forEach((el, idx) => {
+                    setTimeout(() => {
+                        console.log(el);
+                        el.classList.add("visible");
+                    }, idx * 150)
+                })
+            }
+        });
+    }, {
+        threshold: 0.1
     });
-  }, {
-    threshold: 0.1
-  });
 
-  sections.forEach(section => {
-    observer.observe(section);
-  });
+    sections.forEach(section => {
+        observer.observe(section);
+    });
 }

@@ -6,72 +6,162 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <style>
+        .banner-inner {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .banner-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            pointer-events: none;
+        }
+
+        .banner-item.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 1;
+        }
+
+        .banner-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .banner-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="header-bottom-categories-wrapper flex-center" id="categoryToggle">
-        <div class="header-bottom-categories flex-center" aria-expanded="false" role="button" data-bs-toggle="submenu"
-            data-bs-target="#submenu">
-            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M2.5 12H17.5C17.7344 12 17.9297 11.9219 18.0859 11.7656C18.2552 11.5964 18.3398 11.3945 18.3398 11.1602C18.3398 10.9388 18.2552 10.75 18.0859 10.5938C17.9297 10.4245 17.7344 10.3398 17.5 10.3398H2.5C2.26562 10.3398 2.0638 10.4245 1.89453 10.5938C1.73828 10.75 1.66016 10.9388 1.66016 11.1602C1.66016 11.3945 1.73828 11.5964 1.89453 11.7656C2.0638 11.9219 2.26562 12 2.5 12ZM2.5 7H17.5C17.7344 7 17.9297 6.92188 18.0859 6.76562C18.2552 6.59635 18.3398 6.39453 18.3398 6.16016C18.3398 5.9388 18.2552 5.75 18.0859 5.59375C17.9297 5.42448 17.7344 5.33984 17.5 5.33984H2.5C2.26562 5.33984 2.0638 5.42448 1.89453 5.59375C1.73828 5.75 1.66016 5.9388 1.66016 6.16016C1.66016 6.39453 1.73828 6.59635 1.89453 6.76562C2.0638 6.92188 2.26562 7 2.5 7ZM2.5 17H17.5C17.7344 17 17.9297 16.9219 18.0859 16.7656C18.2552 16.5964 18.3398 16.3945 18.3398 16.1602C18.3398 15.9388 18.2552 15.75 18.0859 15.5938C17.9297 15.4245 17.7344 15.3398 17.5 15.3398H2.5C2.26562 15.3398 2.0638 15.4245 1.89453 15.5938C1.73828 15.75 1.66016 15.9388 1.66016 16.1602C1.66016 16.3945 1.73828 16.5964 1.89453 16.7656C2.0638 16.9219 2.26562 17 2.5 17Z"
-                    fill="#111111" />
-            </svg>
-            <p>All Departments</p>
+    <section id="banner">
+        <div class="banner-inner">
+            <div class="banner-item active">
+                <picture>
+                    <source srcset="./assets/img/banner.webp">
+                    <img src="./assets/img/banner.png" alt="Keyboard" width="1920" height="500">
+                </picture>
+                <div class="banner-text">
+                    <h1>Forest Style <br> Mechanical Keyboard</h1>
+                    <p>Discount 50% On Products & Free Shipping.</p>
+                    <button class="shop-now">Shop Now</button>
+                </div>
+            </div>
+            <div class="banner-item">
+                <picture>
+                    <source srcset="./assets/img/banner_2.webp">
+                    <img src="./assets/img/banner_2.webp" alt="Keyboard" width="1920" height="500">
+                </picture>
+                <div class="banner-text">
+                    <h1>Forest Style <br> Mechanical Keyboard</h1>
+                    <p>Discount 50% On Products & Free Shipping.</p>
+                    <button class="shop-now">Shop Now</button>
+                </div>
+            </div>
+            <div class="banner-item">
+                <picture>
+                    <source srcset="./assets/img/banner+3.webp">
+                    <img src="./assets/img/banner+3.webp" alt="Keyboard" width="1920" height="500">
+                </picture>
+                <div class="banner-text">
+                    <h1>Forest Style <br> Mechanical Keyboard</h1>
+                    <p>Discount 50% On Products & Free Shipping.</p>
+                    <button class="shop-now">Shop Now</button>
+                </div>
+            </div>
         </div>
-        <div class="dropdown-icon-categories dropdown-icon">
-            <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M3.08984 6.32227C2.97135 6.21289 2.91211 6.08073 2.91211 5.92578C2.91211 5.76172 2.97135 5.62044 3.08984 5.50195C3.19922 5.39258 3.33594 5.33789 3.5 5.33789C3.66406 5.33789 3.80078 5.39258 3.91016 5.50195L7 8.5918L10.0898 5.50195C10.1992 5.39258 10.3359 5.33789 10.5 5.33789C10.6641 5.33789 10.8008 5.39258 10.9102 5.50195C11.0286 5.62044 11.0879 5.76172 11.0879 5.92578C11.0879 6.08073 11.0286 6.21289 10.9102 6.32227L7.41016 9.82227C7.30078 9.94076 7.16406 10 7 10C6.83594 10 6.69922 9.94076 6.58984 9.82227L3.08984 6.32227Z"
-                    fill="#555555" />
-            </svg>
+        <div class="banner-buttons">
+            <button class="banner-btn prev" aria-label="Previous Slide">
+                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M5.77754 9.66681C5.92988 9.81915 6.00605 10.0008 6.00605 10.2117C6.00605 10.4109 5.92988 10.5809 5.77754 10.7215C5.63691 10.8738 5.46113 10.95 5.25019 10.95C5.03926 10.95 4.86348 10.8738 4.72285 10.7215L0.222851 6.2215C0.070507 6.08087 -0.00566483 5.91095 -0.00566483 5.71173C-0.00566483 5.50079 0.070507 5.31915 0.222851 5.16681L4.72285 0.666809C4.86348 0.526184 5.03926 0.455872 5.25019 0.455872C5.46113 0.455872 5.63691 0.526184 5.77754 0.666809C5.92988 0.819153 6.00605 1.00079 6.00605 1.21173C6.00605 1.41095 5.92988 1.58087 5.77754 1.7215L1.80488 5.69415L5.77754 9.66681Z"
+                        fill="#111111" />
+                </svg>
+            </button>
+            <button class="banner-btn next" aria-label="Next Slide">
+                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M1.27754 10.7215C1.13691 10.8738 0.961132 10.95 0.750195 10.95C0.539257 10.95 0.363476 10.8738 0.222851 10.7215C0.070507 10.5809 -0.00566483 10.4109 -0.00566483 10.2117C-0.00566483 10.0008 0.070507 9.81915 0.222851 9.66681L4.19551 5.69415L0.222851 1.7215C0.070507 1.58087 -0.00566483 1.41095 -0.00566483 1.21173C-0.00566483 1.00079 0.070507 0.819153 0.222851 0.666809C0.363476 0.526184 0.539257 0.455872 0.750195 0.455872C0.961132 0.455872 1.13691 0.526184 1.27754 0.666809L5.77754 5.16681C5.92988 5.31915 6.00605 5.50079 6.00605 5.71173C6.00605 5.91095 5.92988 6.08087 5.77754 6.2215L1.27754 10.7215Z"
+                        fill="#111111" />
+                </svg>
+            </button>
         </div>
-        <div class="header-bottom-submenu-categories collapse" id="submenu-categories">
-            <ul>
-                <li>Electronics</li>
-                <li>Fashion</li>
-                <li>Home & Garden</li>
-                <li>Sports</li>
-                <li>Books</li>
-            </ul>
+        <div class="banner-dots flex-center">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
         </div>
-    </div>
-
-    <div class="header-bottom-overlay-categories" id="overlay"></div>
+    </section>
 
     <script>
-        function initCategoryMenu() {
-            const categoryToggle = document.getElementById('categoryToggle');
-            const submenu = document.getElementById('submenu-categories');
-            const overlay = document.getElementById('overlay');
+        function initBannerSlider() {
+            const prev = document.querySelector('.prev');
+            const next = document.querySelector('.next');
+            const carousel = document.querySelector('#banner');
+            const items = document.querySelectorAll('.banner-item');
+            const dots = document.querySelectorAll('.dot');
+            let index = 0, interval;
 
-            if (!categoryToggle || !submenu || !overlay) return;
+            const update = () => {
+                items.forEach((el, i) => {
+                    el.classList.toggle('active', i === index);
+                    el.style.zIndex = i === index ? 1 : 0;
+                });
+                dots.forEach((el, i) => el.classList.toggle('active', i === index));
+            };
 
-            // Toggle submenu and overlay on click
-            categoryToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                submenu.classList.toggle('active');
-                overlay.classList.toggle('active');
+            const goTo = i => {
+                index = (i + items.length) % items.length;
+                update();
+            };
+            const nextSlide = () => goTo(index + 1);
+            const prevSlide = () => goTo(index - 1);
+
+            const start = () => interval = setInterval(nextSlide, 5000);
+            const stop = () => clearInterval(interval);
+
+            prev?.addEventListener('click', () => {
+                stop();
+                prevSlide();
+                setTimeout(start, 100);
             });
 
-            // Hide submenu and overlay when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!categoryToggle.contains(e.target)) {
-                    submenu.classList.remove('active');
-                    overlay.classList.remove('active');
-                }
+            next?.addEventListener('click', () => {
+                stop();
+                nextSlide();
+                setTimeout(start, 100);
             });
 
-            // Also close when clicking directly on the overlay
-            overlay.addEventListener('click', () => {
-                submenu.classList.remove('active');
-                overlay.classList.remove('active');
-            });
+            dots.forEach((dot, i) => dot.addEventListener('click', () => {
+                stop();
+                goTo(i);
+                start();
+            }));
+            carousel?.addEventListener('mouseenter', stop);
+            carousel?.addEventListener('mouseleave', start);
+
+            update(); // Khởi tạo trạng thái ban đầu
+            start();
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            initCategoryMenu();
-        })
+            initBannerSlider();
+        });
     </script>
 </body>
 
