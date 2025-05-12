@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="UmiLux - Your one-stop shop for all your needs.">
     <title>UmiLux</title>
-    <link rel="preload" as="image" href="./assets/img/banner.webp" type="image/webp">
+    <!-- preload -->
+    <link rel="preload" href="./assets/img/banner.webp" type="image/webp" as="image">
     <!-- CSS -->
     <link rel="stylesheet" href="./assets/css/main.css">
     <link rel="stylesheet" href="./assets/css/style.css">
@@ -14,7 +15,7 @@
     <!-- BOOSTRAP -->
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <!-- FONTS -->
-    <link rel="preload" href="./assets/fonts/GeneralSans_Complete/Fonts/WEB/css/general-sans.css">
+    <link rel="stylesheet" href="./assets/fonts/GeneralSans_Complete/Fonts/WEB/css/general-sans.css" type="font/woff2" as="font" crossorigin="anonymous">
     <!-- JQUERY -->
     <script src="./assets/js/jquery.min.js"></script>
     <!-- OWL Carousel -->
@@ -586,8 +587,8 @@
                 </div>
                 <div class="banner-item">
                     <picture>
-                        <source srcset="./assets/img/banner_2.webp">
-                        <img src="./assets/img/banner_2.webp" alt="Keyboard" width="1920" height="500">
+                        <source srcset="./assets/img/banner.webp">
+                        <img src="./assets/img/banner.webp" alt="Keyboard" width="1920" height="500">
                     </picture>
                     <div class="banner-text">
                         <h1>Forest Style <br> Mechanical Keyboard</h1>
@@ -635,7 +636,7 @@
                 <div class="product items">
                     <a href="#" aria-label="slider-categories">
                         <div class="circle-category">
-                            <img src="./assets/img/slider/dailyDeals.png" alt="">
+                            <img src="./assets/img/slider/dailyDeals.png" alt="" loading="lazy">
                         </div>
                         <p>Daily Deals</p>
                     </a>
@@ -680,7 +681,7 @@
                 <div class="product items">
                     <a href="#" aria-label="slider-categories">
                         <div class="circle-category">
-                            <img src="./assets/img/slider/MacPC.png" alt="">
+                            <img src="./assets/img/slider/MacPC.png" alt="" loading="lazy">
                         </div>
                         <p>Macbook/PCs</p>
                     </a>
@@ -689,7 +690,7 @@
                 <div class="product items">
                     <a href="#" aria-label="slider-categories">
                         <div class="circle-category circle-phone">
-                            <img src="./assets/img/slider/phone.png" alt="">
+                            <img src="./assets/img/slider/phone.png" alt="" loading="lazy">
                         </div>
                         <p>Phone/Mobile</p>
                     </a>
@@ -698,7 +699,7 @@
                 <div class="product items">
                     <a href="#" aria-label="slider-categories">
                         <div class="circle-category">
-                            <img src="./assets/img/slider/tablet.png" alt="">
+                            <img src="./assets/img/slider/tablet.png" alt="" loading="lazy">
                         </div>
                         <p>Tablet/Ipad Pro</p>
                     </a>
@@ -707,7 +708,7 @@
                 <div class="product items">
                     <a href="#" aria-label="slider-categories">
                         <div class="circle-category">
-                            <img src="./assets/img/slider/camera.png" alt="">
+                            <img src="./assets/img/slider/camera.png" alt="" loading="lazy">
                         </div>
                         <p>Camera/Photo</p>
                     </a>
@@ -716,7 +717,7 @@
                 <div class="product items">
                     <a href="#" aria-label="slider-categories">
                         <div class="circle-category">
-                            <img src="./assets/img/slider/Home.png" alt="">
+                            <img src="./assets/img/slider/Home.png" alt="" loading="lazy">
                         </div>
                         <p>Home/Electronios</p>
                     </a>
@@ -1198,7 +1199,7 @@
                                 <button class="section-sell-btn">Shop Now</button>
                             </div>
                             <div class="section-top-sell-img">
-                                <img src="./assets/img/topselling/smarthome.png" alt="">
+                                <img src="./assets/img/topselling/smarthome.png" alt="" loading="lazy">
                             </div>
                         </div>
                         <div class="section-sell-carousel-container section-fadein">
@@ -1208,7 +1209,7 @@
                                     <div class="section-sell-product-inner">
                                         <div class="section-sell-product-image flex-center">
                                             <img src="./assets/img/topselling/sellphone1.jpg"
-                                                alt="Galaxy S21 Ultra Pink">
+                                                alt="Galaxy S21 Ultra Pink" loading="lazy">
                                         </div>
                                         <div class="section-sell-wrap-text">
                                             <div class="section-sell-product-brand">TOSHIBA</div>
@@ -1244,7 +1245,7 @@
                                     <div class="section-sell-product-inner">
                                         <div class="section-sell-product-image flex-center">
                                             <img src="./assets/img/topselling/sellphone2.jpg"
-                                                alt="Galaxy S21 Ultra Purple">
+                                                alt="Galaxy S21 Ultra Purple" loading="lazy">
                                             <div class="section-sell-product-badge section-discount">-50%</div>
                                         </div>
                                         <div class="section-sell-wrap-text">
@@ -1277,12 +1278,12 @@
                                     </div>
                                 </div>
 
-                                <!-- Product 3 -->
+                                <!-- Product 3 -->  
                                 <div class="section-sell-product-card">
                                     <div class="section-sell-product-inner">
                                         <div class="section-sell-product-image flex-center">
                                             <img src="./assets/img/topselling/sellphone3.jpg"
-                                                alt="Galaxy S21 Ultra White">
+                                                alt="Galaxy S21 Ultra White" loading="lazy">
                                             <div
                                                 class="section-sell-product-badge section-discount section-sell-badge-new">
                                                 New</div>
@@ -1321,7 +1322,7 @@
                                     <div class="section-sell-product-inner">
                                         <div class="section-sell-product-image flex-center">
                                             <img src="./assets/img/topselling/sellphone4.jpg"
-                                                alt="Galaxy S21 Ultra Green">
+                                                alt="Galaxy S21 Ultra Green" loading="lazy">
                                             <div class="section-sell-product-badge section-discount">-50%</div>
                                             <div class="section-sell-product-badge section-sell-badge-preorder section-discount"
                                                 style="left: 3px;">
@@ -1388,7 +1389,7 @@
                 <div class="products-wrapper-recommend owl-carousel carousel-recommend" id="products-recommend">
                     <div class="product-card-recommend flex-center items">
                         <span class="section-discount">-50%</span>
-                        <img src="./assets/img/recommend/9_1.jpg" alt="iPhone 13 Pro" class="product-image-recommend">
+                        <img src="./assets/img/recommend/9_1.jpg" alt="iPhone 13 Pro" loading="lazy" class="product-image-recommend">
                         <div class="section-icon">
                             <div class="icon-position flex-center heart">
                                 <svg width="14" height="14" viewBox="0 0 15 13" fill="none"
@@ -1458,7 +1459,7 @@
 
                     <div class="product-card-recommend flex-center items">
                         <span class="section-discount">-50%</span>
-                        <img src="./assets/img/recommend/9_2.jpg" alt="iPhone 13 Pro" class="product-image-recommend">
+                        <img src="./assets/img/recommend/9_2.jpg" alt="iPhone 13 Pro" loading="lazy" class="product-image-recommend">
                         <div class="section-icon">
                             <div class="icon-position flex-center heart">
                                 <svg width="14" height="14" viewBox="0 0 15 13" fill="none"
@@ -1532,7 +1533,7 @@
                             style="left: 10px; top: 28px;">
                             Pre-Order
                         </div>
-                        <img src="./assets/img/recommend/9_3.jpg" alt="iPhone 13 Pro" class="product-image-recommend">
+                        <img src="./assets/img/recommend/9_3.jpg" alt="iPhone 13 Pro" loading="lazy" class="product-image-recommend">
                         <div class="section-icon">
                             <div class="icon-position flex-center heart">
                                 <svg width="14" height="14" viewBox="0 0 15 13" fill="none"
@@ -1602,7 +1603,7 @@
 
                     <div class="product-card-recommend flex-center items">
                         <span class="section-discount">-50%</span>
-                        <img src="./assets/img/recommend/9_4.jpg" alt="iPhone 13 Pro" class="product-image-recommend">
+                        <img src="./assets/img/recommend/9_4.jpg" alt="iPhone 13 Pro" loading="lazy" class="product-image-recommend">
                         <div class="section-icon">
                             <div class="icon-position flex-center heart">
                                 <svg width="14" height="14" viewBox="0 0 15 13" fill="none"
@@ -1672,7 +1673,7 @@
 
                     <div class="product-card-recommend flex-center items">
                         <span class="section-discount">-50%</span>
-                        <img src="./assets/img/recommend/9_5.jpg" alt="iPhone 13 Pro" class="product-image-recommend">
+                        <img src="./assets/img/recommend/9_5.jpg" alt="iPhone 13 Pro" loading="lazy" class="product-image-recommend">
                         <div class="section-icon">
                             <div class="icon-position flex-center heart">
                                 <svg width="14" height="14" viewBox="0 0 15 13" fill="none"
@@ -1766,7 +1767,7 @@
             <div class="section-promotions-blog d-flex flex-column flex-lg-row section-fadein">
                 <div class="deals-card section-fadein">
                     <div class="deals-card-img">
-                        <img src="./assets/img/promotions/deal_1.png" alt="">
+                        <img src="./assets/img/promotions/deal_1.png" alt="blog" loading="lazy">
                     </div>
 
                     <div class="deals-card-text">
@@ -1797,7 +1798,7 @@
 
                 <div class="deals-card section-fadein">
                     <div class="deals-card-img">
-                        <img src="./assets/img/promotions/deal_3.png" alt="">
+                        <img src="./assets/img/promotions/deal_3.png" alt="blog" loading="lazy">
                     </div>
 
                     <div class="deals-card-text">

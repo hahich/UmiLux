@@ -352,7 +352,6 @@ function fadeIn() {
 
                 visibleItems.forEach((el, idx) => {
                     setTimeout(() => {
-                        console.log(el);
                         el.classList.add("visible");
                     }, idx * 200)
                 })
