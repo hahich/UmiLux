@@ -69,7 +69,7 @@
 }
 
 .mobile-menu-list li:hover {
-    background: #f5f5f5;
+    background: var(--white);
 }
 
 .mobile-menu-overlay.gray .mobile-menu-list li {
@@ -77,7 +77,7 @@
 }
 
 .mobile-menu-overlay.gray .mobile-menu-list li:hover {
-    background: #b0b0b0;
+    background: var(--gray-5555);
 }
 
 .mobile-backdrop {
@@ -108,7 +108,7 @@
 }
 
 .mobile-sub-menu-header {
-    background: #ff4500;
+    background: var(--red-color);
     color: var(--white);
     padding: 10px 20px;
     display: var(--flex);
@@ -123,7 +123,7 @@
 
 .mobile-arrow {
     font-size: 12px;
-    color: #666;
+    color: var(--gray);
 }
 
 @media (max-width: 1200px) {
@@ -172,6 +172,14 @@
         height: 450px;
         object-fit: none;
         object-position: 55% 7%;
+    }
+
+    .banner-item::before {
+        height: 450px;
+    }
+
+    .banner-dots {
+        bottom: 15%;
     }
 
     .banner-text h1 {
@@ -269,6 +277,14 @@
         object-position: 55% 7%;
     }
 
+    .banner-item::before {
+        height: 400px;
+    }
+
+    .banner-dots {
+        bottom: 25%;
+    }
+
     .banner-text h1 {
         font-size: clamp(20px, 5vw, 30px);
     }
@@ -353,9 +369,14 @@
         margin: 0 !important;
     }
 
+    .footer-email-input button {
+        width: 100%;
+    }
+
 }
 
 @media (max-width: 576px) {
+
     .mobile-menu-header span,
     .mobile-menu-title span {
         font-size: 14px;
@@ -454,5 +475,9 @@
 
     .footer-title {
         margin: 0 !important;
+    }
+
+    .footer-email-input button {
+        width: 100%;
     }
 }

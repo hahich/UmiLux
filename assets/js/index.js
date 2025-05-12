@@ -354,7 +354,7 @@ function fadeIn() {
                     setTimeout(() => {
                         console.log(el);
                         el.classList.add("visible");
-                    }, idx * 150)
+                    }, idx * 200)
                 })
             }
         });
