@@ -8,6 +8,8 @@
     <title>UmiLux</title>
     <!-- preload -->
     <link rel="preload" href="./assets/img/banner.webp" type="image/webp" as="image">
+    <link rel="preload" href="./assets/fonts/GeneralSans_Complete/Fonts/WEB/fonts/GeneralSans-Regular.woff2" as="font"
+        type="font/woff2" crossorigin="anonymous">
     <!-- CSS -->
     <link rel="stylesheet" href="./assets/css/main.css">
     <link rel="stylesheet" href="./assets/css/style.css">
@@ -15,8 +17,7 @@
     <!-- BOOSTRAP -->
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <!-- FONTS -->
-    <link rel="stylesheet" href="./assets/fonts/GeneralSans_Complete/Fonts/WEB/css/general-sans.css" type="font/woff2"
-        as="font" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/fonts/GeneralSans_Complete/Fonts/WEB/css/general-sans.css">
     <!-- JQUERY -->
     <script src="./assets/js/jquery.min.js"></script>
     <!-- OWL Carousel -->
@@ -25,7 +26,7 @@
 </head>
 
 <body>
-    <header id="header-main" class="section-fadein">
+    <header id="header-main">
         <div id="header-container" class="flex-center">
             <div class="header-top d-none d-xl-flex">
                 <div class="left-header flex-center">
@@ -718,9 +719,7 @@
                 <div class="product items">
                     <a href="#" aria-label="slider-categories">
                         <div class="circle-category">
-                            <img srcset="./assets/img/slider/Home.webp 300w, ./assets/img/slider/Home.webp 600w, ./assets/img/slider/Home.webp 1200w"
-                                sizes="(max-width: 600px) 300px, (max-width:1200px) 600px, 1200px"
-                                src="./assets/img/slider/Home.webp" alt="" loading="lazy">
+                            <img src="./assets/img/slider/Home.webp" alt="" loading="lazy">
                         </div>
                         <p>Home/Electronios</p>
                     </a>
@@ -2132,7 +2131,7 @@
             style="width: calc((var(--container-width) - 24px)); margin: 60px auto 0; background-color: #DEE2E8; max-width: 100%;">
         </div>
 
-        <section id="section-footer-bottom" class="flex-column flex-lg-row section-fadein">
+        <section id="section-footer-bottom" class="flex-column flex-lg-row">
             <div class="footer-bottom d-none d-lg-flex">
                 <div class="">
                     <select name="language" id="language" aria-label="choosen">
