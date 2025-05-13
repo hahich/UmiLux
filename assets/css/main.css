@@ -12,7 +12,6 @@
     font-weight: normal;
     font-style: normal;
     font-display: swap;
-    /* Tăng hiệu suất tải font */
 }
 
 @font-face {
@@ -70,7 +69,7 @@
     --bg-facebook: #367cf4;
 
     /* Layout */
-    --container-width: 1405px;
+    --container-width: 1440px;
     --flex: flex;
     --center: center;
     --space-between: space-between;
@@ -91,6 +90,10 @@
     /* font weight */
     --fw-600: 600;
     --fw-500: 500;
+}
+
+html::-webkit-scrollbar {
+  display: none; 
 }
 
 /* Global Styles */
@@ -120,6 +123,12 @@ ul,
 p {
     list-style: none;
     margin: 0 !important;
+    padding: 0 !important;
+}
+
+input {
+    border: none;
+    outline: none;
 }
 
 button {
@@ -145,7 +154,7 @@ select {
     font-size: var(--fs-14) !important;
     border: none;
     background-color: inherit;
-}   
+}
 
 .divider {
     width: 100%;
