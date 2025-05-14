@@ -93,7 +93,7 @@
 }
 
 html::-webkit-scrollbar {
-  display: none; 
+    display: none;
 }
 
 /* Global Styles */
@@ -138,6 +138,8 @@ button {
 
 img {
     max-width: 100%;
+    height: auto;
+    image-rendering: auto;
 }
 
 img:hover {
