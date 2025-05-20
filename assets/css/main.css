@@ -49,24 +49,26 @@
 :root {
     /* Colors */
     --white: #FFFFFF;
-    --black: #000000;
-    --gray: #808080;
+    --black: #111111;
+    --gray: #757575;
     --gray-5555: #555555;
     --dark-navy-blue: #253380;
-    --light-navy-blue: #00A2C2;
+    --light-navy-blue: #007F99;
     --yellow: #FFD700;
     --purple: #800080;
-    --red-color: #FF0000;
+    --red-color: #EB0000;
     --green: #008000;
 
     /* Background Colors */
-    --bg-console: #24B0C5;
-    --bg-phone: #E8426A;
-    --bg-camera: #6944E6;
+    --bg-default: #545454;
+    --bg-console: #177E91;
+    --bg-phone: #E01F50;
+    --bg-camera: #4E21DE;
     --bg-selling: #F1F3F7;
     --bg-divider: #E5E8EC;
     --bg-insta: #cc39a4;
     --bg-facebook: #367cf4;
+    --bg-yellow: #807800;
 
     /* Layout */
     --container-width: 1440px;
@@ -169,7 +171,6 @@ select {
     justify-content: var(--center);
     align-items: var(--center);
 }
-
 
 .hide {
     top: -200px !important;

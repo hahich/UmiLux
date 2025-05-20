@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .section-categories-console {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 500px;
+            background: #000000;
+            color: #ffffff;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .section-categories-console::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: #00a2c2;
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .section-categories-console:hover::before {
+            left: 0;
+        }
+
+        .section-categories-console:not(:hover)::before {
+            left: -100%;
+            transition: left 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="section-categories-console section-categories-shop section-fadein">
+        <div class="section-categories-text">
+            <p>Gamepad <br> Save Up To $69</p>
+            <a href="./index.html"><button class="section-categories-buy">Shop Gamnepad</button></a>
+        </div>
+
+        <div class="section-categories-img">
+            <img src="./assets/img/categories/console-lg.png" alt="console" loading="lazy">
+        </div>
+    </div>
+</body>
+
+</html>
