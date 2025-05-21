@@ -99,10 +99,6 @@ html::-webkit-scrollbar {
     display: none;
 }
 
-h1, p, span {
-    line-height: 1 !important;
-}
-
 /* Global Styles */
 html,
 body {
