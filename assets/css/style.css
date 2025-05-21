@@ -880,7 +880,8 @@
 .section-text-price,
 .section-sell-current-price {
     font-size: var(--fs-18);
-    color: var(--light-navy-blue)
+    color: var(--black);
+    font-weight: var(--fw-600);
 }
 
 .rating-wrapper {
