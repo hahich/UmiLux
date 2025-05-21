@@ -115,7 +115,6 @@ main {
 a {
     text-decoration: none !important;
     color: var(--black) !important;
-    font-weight: var(--fw-500);
 }
 
 a:hover {
