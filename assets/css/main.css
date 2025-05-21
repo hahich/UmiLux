@@ -51,10 +51,10 @@
     /* Colors */
     --white: #FFFFFF;
     --black: #111111;
-    --gray: #525252;
+    --gray: #111111;
     --gray-5555: #555555;
     --dark-navy-blue: #253380;
-    --light-navy-blue: #006075;
+    --light-navy-blue: #00819E;
     --yellow: #FFD700;
     --purple: #800080;
     --red-color: #EB0000;
@@ -110,10 +110,6 @@ main {
     display: flex;
     flex-direction: column;
     gap: 60px;
-}
-
-h1 {
-    font-size: var(--header-font-size) !important;
 }
 
 a {
