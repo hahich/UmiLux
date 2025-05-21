@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .section-categories-console {
+        .section-categories__console {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -19,7 +19,7 @@
             z-index: 1;
         }
 
-        .section-categories-console::before {
+        .section-categories__console::before {
             content: "";
             position: absolute;
             top: 0;
@@ -31,11 +31,11 @@
             z-index: -1;
         }
 
-        .section-categories-console:hover::before {
+        .section-categories__console:hover::before {
             left: 0;
         }
 
-        .section-categories-console:not(:hover)::before {
+        .section-categories__console:not(:hover)::before {
             left: -100%;
             transition: left 0.5s ease;
         }
@@ -43,7 +43,7 @@
 </head>
 
 <body>
-    <div class="section-categories-console section-categories-shop section-fadein">
+    <div class="section-categories__console section-categories-shop section-fadein">
         <div class="section-categories-text">
             <p>Gamepad <br> Save Up To $69</p>
             <a href="./index.html"><button class="section-categories-buy">Shop Gamnepad</button></a>

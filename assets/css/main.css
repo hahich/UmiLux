@@ -43,6 +43,7 @@
     src: url(../fonts/Geostar_Fill/GeostarFill-Regular.ttf);
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 /* Root Variables */
@@ -174,4 +175,14 @@ select {
 
 .hide {
     top: -200px !important;
+}
+
+svg:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+svg:not(:hover) {
+    transform: scale(1.0);
+    transition: transform 0.3s ease-in-out;
 }

@@ -15,7 +15,7 @@
 }
 
 .left-header span:nth-child(2),
-.right-header a {
+.header-top__right a {
     letter-spacing: 1px
 }
 
@@ -65,24 +65,24 @@
 }
 
 .left-header,
-.right-header {
+.header-top__right {
     gap: var(--gap-25);
     color: var(--white)
 }
 
-.right-header a {
+.header-top__right a {
     color: var(--white) !important
 }
 
-.language-option,
-.currency-option {
+.header-top__language-option,
+.header-top__currency-option {
     gap: 8px;
     cursor: pointer;
     position: relative
 }
 
-.language-option svg,
-.currency-option svg {
+.header-top__language-option svg,
+.header-top__currency-option svg {
     width: 8px;
     height: 4px
 }
@@ -436,7 +436,7 @@
     transform: scale(.9)
 }
 
-.banner-text .shop-now:hover {
+.shop-now:hover {
     background: var(--black);
     color: var(--white)
 }
@@ -1473,11 +1473,11 @@
     transform: none
 }
 
-.mobile-menu-btn {
+.mobile-btn_menu {
     border: none
 }
 
-.mobile-menu-overlay {
+.mobile-menu__overlay {
     position: fixed;
     top: 0;
     left: -100%;
@@ -1488,15 +1488,15 @@
     transition: left 0.3s ease-in-out
 }
 
-.mobile-menu-overlay.active {
+.mobile-menu__overlay.active {
     left: 0
 }
 
-.mobile-menu-overlay.gray {
+.mobile-menu__overlay.gray {
     background: var(--gray)
 }
 
-.mobile-menu-header {
+.mobile-header__menu {
     background: #ff4500;
     color: var(--white);
     padding: 10px 20px;
@@ -1505,11 +1505,11 @@
     align-items: var(--center)
 }
 
-.mobile-menu-header span {
+.mobile-header__menu span {
     font-size: 16px
 }
 
-.mobile-menu-title {
+.mobile-menu__title {
     display: var(--flex);
     justify-content: space-between;
     align-items: var(--center);
@@ -1517,7 +1517,7 @@
 }
 
 .mobile-categories-btn,
-.mobile-close-btn {
+.mobile-btn__close {
     cursor: pointer
 }
 
@@ -1546,11 +1546,11 @@
     background: var(--white)
 }
 
-.mobile-menu-overlay.gray .mobile-menu-list li {
+.mobile-menu__overlay.gray .mobile-menu-list li {
     background: var(--gray)
 }
 
-.mobile-menu-overlay.gray .mobile-menu-list li:hover {
+.mobile-menu__overlay.gray .mobile-menu-list li:hover {
     background: var(--gray-5555)
 }
 
