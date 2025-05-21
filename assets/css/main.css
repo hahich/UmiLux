@@ -117,7 +117,8 @@ a {
     color: var(--black) !important;
 }
 
-a:hover {
+a:hover,
+a:hover p{
     color: var(--light-navy-blue) !important;
     transition: color 0.3s ease-in-out !important;
 }
