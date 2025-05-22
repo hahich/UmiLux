@@ -4,55 +4,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pure JS Slider with Autoplay</title>
     <style>
-        .section-categories__console {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 500px;
-            background: #000000;
-            color: #ffffff;
-            border-radius: 30px;
-            position: relative;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
             overflow: hidden;
-            z-index: 1;
         }
 
-        .section-categories__console::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background-color: #00a2c2;
-            transition: left 0.5s ease;
-            z-index: -1;
+        .gallery {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.3s ease;
         }
 
-        .section-categories__console:hover::before {
-            left: 0;
+        .gallery-item {
+            flex: 0 0 auto;
+            width: 300px;
+            height: 200px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border-radius: 8px;
         }
 
-        .section-categories__console:not(:hover)::before {
-            left: -100%;
-            transition: left 0.5s ease;
+        /* Desktop: Static gallery */
+        @media (min-width: 1024px) {
+            .gallery {
+                flex-wrap: wrap;
+                transform: none !important;
+                cursor: default;
+            }
+
+            .gallery-item {
+                flex: 1 1 calc(33.333% - 20px);
+            }
+        }
+
+        /* Mobile & Tablet: Slider */
+        @media (max-width: 1023px) {
+            .gallery {
+                cursor: grab;
+                touch-action: pan-y;
+            }
+
+            .gallery.dragging {
+                cursor: grabbing;
+                user-select: none;
+            }
+
+            .gallery-item {
+                width: 80%;
+                max-width: 300px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="section-categories__console section-categories-shop section-fadein">
-        <div class="section-categories-text">
-            <p>Gamepad <br> Save Up To $69</p>
-            <a href="./index.html"><button class="section-categories-buy">Shop Gamnepad</button></a>
-        </div>
-
-        <div class="section-categories-img">
-            <img src="./assets/img/categories/console-lg.png" alt="console" loading="lazy">
+    <div class="gallery-container">
+        <div class="gallery">
+            <div class="gallery-item">Item 1</div>
+            <div class="gallery-item">Item 2</div>
+            <div class="gallery-item">Item 3</div>
+            <div class="gallery-item">Item 4</div>
+            <div class="gallery-item">Item 5</div>
         </div>
     </div>
+
+    <script>
+        const gallery = document.querySelector('.gallery');
+        const galleryContainer = document.querySelector('.gallery-container');
+        let isDragging = false;
+        let startPos = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+        let animationID;
+        let autoplayInterval = null;
+
+        function startDragging(e) {
+            if (window.innerWidth >= 1024) return; // Không drag trên desktop
+            isDragging = true;
+            startPos = getPositionX(e);
+            gallery.classList.add('dragging');
+            cancelAnimationFrame(animationID);
+            clearInterval(autoplayInterval); // Dừng autoplay khi kéo
+        }
+
+        function stopDragging() {
+            if (window.innerWidth >= 1024) return;
+            isDragging = false;
+            prevTranslate = currentTranslate;
+            gallery.classList.remove('dragging');
+            startAutoplay(); // Bật lại autoplay sau khi kéo
+        }
+
+        function drag(e) {
+            if (!isDragging || window.innerWidth >= 1024) return;
+            const currentPosition = getPositionX(e);
+            currentTranslate = prevTranslate + currentPosition - startPos;
+            setSliderPosition();
+        }
+
+        function getPositionX(e) {
+            return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+        }
+
+        function setSliderPosition() {
+            gallery.style.transform = `translateX(${currentTranslate}px)`;
+            // Giới hạn drag
+            const maxTranslate = 0;
+            const minTranslate = -(gallery.scrollWidth - gallery.parentElement.clientWidth);
+            if (currentTranslate > maxTranslate) currentTranslate = maxTranslate;
+            if (currentTranslate < minTranslate) currentTranslate = minTranslate;
+            gallery.style.transform = `translateX(${currentTranslate}px)`;
+        }
+
+        function startAutoplay() {
+            if (window.innerWidth >= 1024) return; // Không autoplay trên desktop
+            clearInterval(autoplayInterval);
+            autoplayInterval = setInterval(() => {
+                if (!isDragging) {
+                    const itemWidth = gallery.querySelector('.gallery-item').offsetWidth + 20; // 20px là gap
+                    currentTranslate -= itemWidth;
+                    const minTranslate = -(gallery.scrollWidth - gallery.parentElement.clientWidth);
+                    if (currentTranslate < minTranslate) {
+                        currentTranslate = 0; // Quay lại đầu khi hết
+                    }
+                    prevTranslate = currentTranslate;
+                    setSliderPosition();
+                }
+            }, 5000); // Chuyển slide mỗi 5s
+        }
+
+        // Mouse events
+        gallery.addEventListener('mousedown', startDragging);
+        gallery.addEventListener('mousemove', drag);
+        gallery.addEventListener('mouseup', stopDragging);
+        gallery.addEventListener('mouseleave', stopDragging);
+
+        // Touch events
+        gallery.addEventListener('touchstart', startDragging);
+        gallery.addEventListener('touchmove', drag);
+        gallery.addEventListener('touchend', stopDragging);
+
+        // Ngăn scroll khi drag trên mobile
+        gallery.addEventListener('touchmove', (e) => {
+            if (isDragging) e.preventDefault();
+        }, { passive: false });
+
+        // Xử lý thay đổi kích thước màn hình
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                gallery.style.transform = 'translateX(0)';
+                currentTranslate = 0;
+                prevTranslate = 0;
+                clearInterval(autoplayInterval); // Dừng autoplay trên desktop
+            } else {
+                startAutoplay(); // Bật autoplay trên mobile/tablet
+            }
+        });
+
+        // Bắt đầu autoplay khi tải trang
+        startAutoplay();
+    </script>
 </body>
 
 </html>
